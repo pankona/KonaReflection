@@ -115,18 +115,22 @@ include_directories(
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
-  Classes/SplashScene.cpp
-  Classes/DrawableBall.cpp
   Classes/Ball.cpp
+  Classes/DrawableBall.cpp
+  Classes/Field.cpp
+  Classes/GameControl.cpp
+  Classes/SplashScene.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
   Classes/AppDelegate.h
+  Classes/Ball.h
+  Classes/DrawableBall.h
+  Classes/Field.h
+  Classes/GameControl.h
   Classes/SplashScene.h
   Classes/Position.h
-  Classes/DrawableBall.h
-  Classes/Ball.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

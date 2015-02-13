@@ -1,23 +1,17 @@
 #include "SplashScene.h"
 #include "DrawableBall.h"
+#include <iostream>
 
 USING_NS_CC;
 
-Scene*
-Splash::createScene() {
-    auto scene = Scene::create();
-    auto layer = Splash::create();
-    scene->addChild(layer);
-    return scene;
-}
-
 bool
 Splash::init() {
-    if (!Layer::init()) {
+    if (!Scene::init()) {
         return false;
     }
 
-    initializeSprites();
+    // Initialize Layers and Models
+    gameControl.initialize(this);
 
     scheduleUpdate();
     return true;
@@ -26,14 +20,4 @@ Splash::init() {
 void
 Splash::update(float delta) {
     gameControl.update(delta);
-}
-
-void
-Splash::initializeSprites() {
-
-    DrawableBall* dBall = new DrawableBall();
-    dBall->createDrawNode();
-    this->addChild(dBall->getDrawNode());
-
-    gameControl.addDBall(dBall);
 }

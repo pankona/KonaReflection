@@ -27,7 +27,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     director->setDisplayStats(true);
     director->setAnimationInterval(1.0 / 30);
-    auto scene = Splash::createScene();
+    auto scene = Splash::create();
     director->runWithScene(scene);
     return true;
 }

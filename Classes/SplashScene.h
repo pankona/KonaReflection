@@ -6,17 +6,14 @@
 
 USING_NS_CC;
 
-class Splash : public cocos2d::Layer {
+class Splash : public cocos2d::Scene {
 private:
-    void initializeSprites();
     GameControl gameControl;
 
 public:
-    static cocos2d::Scene* createScene();
     virtual bool init();
     virtual void update(float delta);
     CREATE_FUNC(Splash);
-
 };
 
 #endif // __Splash_SCENE_H__

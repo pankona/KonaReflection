@@ -10,7 +10,6 @@ Splash::init() {
         return false;
     }
 
-    // Initialize Layers and Models
     gameControl.initialize(this);
 
     scheduleUpdate();

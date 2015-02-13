@@ -1,5 +1,4 @@
 #include "SplashScene.h"
-#include <array>
 
 USING_NS_CC;
 

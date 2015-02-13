@@ -1,4 +1,5 @@
 #include "SplashScene.h"
+#include "DrawableBall.h"
 
 USING_NS_CC;
 
@@ -17,17 +18,19 @@ Splash::init() {
     }
 
     configureField();
+    scheduleUpdate();
     return true;
 }
 
 void
 Splash::update(float delta) {
-
+    field.progress(delta);
 }
 
 void
 Splash::configureField() {
-    DrawableBall dBall;
-    dBall.createDrawNode();
-    this->addChild(dBall.getDrawNode());
+    DrawableBall* dBall = new DrawableBall();
+    dBall->createDrawNode();
+    this->addChild(dBall->getDrawNode());
+    field.addDBall(dBall);
 }

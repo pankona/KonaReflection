@@ -34,3 +34,21 @@ DrawableBall::createDrawNode() {
     float weight = 5.0f;
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::RED);
 }
+
+void
+DrawableBall::update(float delta) {
+    // calculate position ball should be placed at next frame.
+    Position current_position = this->ball.getPosition();
+    int direction = this->ball.getDirection();
+    int speed = this->ball.getSpeed();
+
+    Position new_position;
+    new_position.x = current_position.x + speed;
+    new_position.y = current_position.y + speed;
+
+    // ZZZ. This is not good. View should not change Model.
+    // ToDo: Ball needs to calculate next position by itself.
+    this->ball.setPosition(new_position);
+    this->drawNode->setPosition(new_position.x, new_position.y);
+}
+

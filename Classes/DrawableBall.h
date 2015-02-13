@@ -11,13 +11,13 @@ class DrawableBall : public cocos2d::DrawNode {
 private:    
     Ball ball;
     DrawNode* drawNode;
-
 public:
     void createDrawNode();
     DrawableBall();
     DrawableBall(Ball);
     void setBall(Ball);
     DrawNode* getDrawNode();
+    void update(float);
 };
 
 #endif // __DRAWABLEBALL_H__

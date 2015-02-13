@@ -2,14 +2,14 @@
 #define __SPLASH_SCENE_H__
 
 #include "cocos2d.h"
-#include "Field.h"
+#include "GameControl.h"
 
 USING_NS_CC;
 
 class Splash : public cocos2d::Layer {
 private:
-    void configureField();
-    Field field;
+    void initializeSprites();
+    GameControl gameControl;
 
 public:
     static cocos2d::Scene* createScene();

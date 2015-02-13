@@ -2,22 +2,27 @@
 #include "Field.h"
 
 void
-Field::addDBall(DrawableBall* in_dball) {
-    this->dBall = in_dball;
+Field::addBall(Ball* in_ball) {
+    this->ball = in_ball;
 }
 
-DrawableBall *
-Field::getDBall() {
-    return this->dBall;
+Ball*
+Field::getBall() {
+    return this->ball;
 }
 
 void
-Field::moveDBall(float delta) {
-    this->dBall->update(delta);
+Field::moveBall(float delta) {
+    // calculate ball's position at next frame
+    Position current_position = ball->getPosition();
+    Position new_position;
+    new_position.x = current_position.x + ball->getSpeed();
+    new_position.y = current_position.y + ball->getSpeed();
+    ball->setPosition(new_position);
 }
 
 void
 Field::progress(float delta) {
-    moveDBall(delta);
+    moveBall(delta);
 }
 

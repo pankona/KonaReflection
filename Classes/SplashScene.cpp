@@ -17,20 +17,23 @@ Splash::init() {
         return false;
     }
 
-    configureField();
+    initializeSprites();
+
     scheduleUpdate();
     return true;
 }
 
 void
 Splash::update(float delta) {
-    field.progress(delta);
+    gameControl.update(delta);
 }
 
 void
-Splash::configureField() {
+Splash::initializeSprites() {
+
     DrawableBall* dBall = new DrawableBall();
     dBall->createDrawNode();
     this->addChild(dBall->getDrawNode());
-    field.addDBall(dBall);
+
+    gameControl.addDBall(dBall);
 }

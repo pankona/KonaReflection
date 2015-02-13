@@ -1,17 +1,17 @@
 #ifndef __FIELD_H__
 #define __FIELD_H__
 
-#include "DrawableBall.h"
+#include "Ball.h"
 
 class Field {
 private:
     int width;
     int height;
-    DrawableBall *dBall;
-    void moveDBall(float);
+    Ball* ball;
+    void moveBall(float);
 public:
-    void addDBall(DrawableBall*);
-    DrawableBall* getDBall();
+    void addBall(Ball*);
+    Ball* getBall();
     void progress(float);
 };
 

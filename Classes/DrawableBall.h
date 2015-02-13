@@ -16,8 +16,9 @@ public:
     DrawableBall();
     DrawableBall(Ball);
     void setBall(Ball);
+    Ball* getBall();
     DrawNode* getDrawNode();
-    void update(float);
+    void updatePosition();
 };
 
 #endif // __DRAWABLEBALL_H__

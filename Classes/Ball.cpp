@@ -5,7 +5,7 @@ Ball::Ball() {
     this->position.y = 50;
     this->radius = 50;
     this->direction = 60;
-    this->speed = 10;
+    this->speed = 15;
 }
 
 void

@@ -2,7 +2,6 @@
 #include "Field.h"
 
 #include <cmath>
-#include <stdio.h>
 
 void
 Field::addBall(Ball* in_ball) {
@@ -14,7 +13,6 @@ Field::getBall() {
     return this->ball;
 }
 
-#define M_PI (3.141592)
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
 void
@@ -24,24 +22,21 @@ Field::moveBall(float delta) {
 
     // check collision to window edge
     // width edge check
-    if (500 <= current_position.x || 0 >= current_position.x) {
+    if (this->width - 50 <= current_position.x + ball->getRadius() || 0 - 45 >= current_position.x) {
         // turn over
-        printf ("turn over x. cpx = %d, cpy = %d\n", current_position.x, current_position.y);
         int direction = ball->getDirection();
         int new_direction = (180 - direction) % 360;
         ball->setDirection(new_direction);
     }
 
     // height edge check
-    if (500 <= current_position.y || 0 >= current_position.y) {
+    if (this->height - 50 <= current_position.y + ball->getRadius() || 0 - 45 >= current_position.y) {
         // turn over
-        printf ("turn over y. cpx = %d, cpy = %d\n", current_position.x, current_position.y);
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;
         ball->setDirection(new_direction);
     }
 
-    printf ("current direction = %d\n", ball->getDirection());
     int speed = ball->getSpeed();
     float new_x = cos(rad2deg((float)ball->getDirection())) * (float)speed;
     float new_y = sin(rad2deg((float)ball->getDirection())) * (float)speed;

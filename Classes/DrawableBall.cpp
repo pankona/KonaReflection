@@ -36,7 +36,7 @@ DrawableBall::createDrawNode() {
         Point(position.x + radius, position.y + radius),
         Point(position.x, position.y + radius),
     };
-    float weight = 5.0f;
+    float weight = 1.0f;
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::RED);
 }
 

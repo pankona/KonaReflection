@@ -18,7 +18,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("Cocos2dTest", Rect(0, 0, 1200, 900));
+        glview = GLViewImpl::createWithRect("Cocos2dTest", Rect(0, 0, 600, 450));
         director->setOpenGLView(glview);
     }
 

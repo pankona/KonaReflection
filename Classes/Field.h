@@ -10,6 +10,7 @@ private:
     Ball* ball;
     void moveBall(float);
 public:
+    void setFieldSize(int, int);
     void addBall(Ball*);
     Ball* getBall();
     void progress(float);

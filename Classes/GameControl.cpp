@@ -1,5 +1,6 @@
 
 #include "GameControl.h"
+#include <stdio.h>
 
 void
 GameControl::update(float delta) {
@@ -20,4 +21,7 @@ GameControl::initialize(cocos2d::Scene* baseScene) {
     baseScene->addChild(dBall->getDrawNode());
 
     this->addDBall(dBall);
+
+    Size screenSize = Director::getInstance()->getVisibleSize();
+    field.setFieldSize((int)screenSize.width, (int)screenSize.height);
 }

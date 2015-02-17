@@ -24,6 +24,11 @@ ViewManager::initialize(Scene* baseScene) {
     baseScene->addChild(dBall->getDrawNode());
     mm.getField()->addBall(dBall->getBall());
 
+    // bar configuration
+    dBar = new DrawableBar();
+    dBar->createDrawNode();
+    baseScene->addChild(dBar->getDrawNode());
+    mm.getField()->setBar(dBar->getBar());
 }
 
 void

@@ -23,10 +23,10 @@ DrawableBall::createDrawNode() {
     int radius = ball->getRadius();
 
     std::array<Point, 4> vertexes = {
-        Point(position.x, position.y),
-        Point(position.x + radius, position.y),
-        Point(position.x + radius, position.y + radius),
-        Point(position.x, position.y + radius),
+        Point(0, 0),
+        Point(radius, 0),
+        Point(radius, radius),
+        Point(0, radius),
     };
     float weight = 1.0f;
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::RED);

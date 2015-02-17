@@ -2,12 +2,14 @@
 #define __FIELD_H__
 
 #include "Ball.h"
+#include "Bar.h"
 
 class Field {
 private:
     int width;
     int height;
     Ball* ball;
+    Bar* bar;
     void moveBall(float);
 public:
     int getWidth();
@@ -15,6 +17,8 @@ public:
     void setFieldSize(int, int);
     void addBall(Ball*);
     Ball* getBall();
+    void setBar(Bar*);
+    Bar* getBar();
     void progress(float);
 };
 

@@ -13,6 +13,16 @@ Field::getBall() {
     return ball;
 }
 
+void
+Field::setBar(Bar *in_bar) {
+    bar = in_bar;
+}
+
+Bar*
+Field::getBar() {
+    return bar;
+}
+
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
 void
@@ -22,7 +32,7 @@ Field::moveBall(float delta) {
 
     // check collision to window edge
     // width edge check
-    if (this->width - 50 <= current_position.x + ball->getRadius() || 0 - 45 >= current_position.x) {
+    if (this->width <= current_position.x + ball->getRadius() || 0 >= current_position.x) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (180 - direction) % 360;
@@ -30,7 +40,7 @@ Field::moveBall(float delta) {
     }
 
     // height edge check
-    if (this->height - 50 <= current_position.y + ball->getRadius() || 0 - 45 >= current_position.y) {
+    if (this->height <= current_position.y + ball->getRadius() || 0 >= current_position.y) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;

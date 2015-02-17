@@ -5,6 +5,7 @@
 #include "ModelManager.h"
 #include "DrawableBall.h"
 #include "DrawableField.h"
+#include "DrawableBar.h"
 
 USING_NS_CC;
 
@@ -13,6 +14,7 @@ private:
     ModelManager mm;
     DrawableBall *dBall;
     DrawableField *dField;
+    DrawableBar *dBar;
     void updateView();
 
 public:

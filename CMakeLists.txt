@@ -116,8 +116,10 @@ include_directories(
 set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/Ball.cpp
+  Classes/Bar.cpp
   Classes/BaseScene.cpp
   Classes/DrawableBall.cpp
+  Classes/DrawableBar.cpp
   Classes/DrawableField.cpp
   Classes/Field.cpp
   Classes/GameControl.cpp
@@ -129,8 +131,10 @@ set(GAME_SRC
 set(GAME_HEADERS
   Classes/AppDelegate.h
   Classes/Ball.h
+  Classes/Bar.h
   Classes/BaseScene.h
   Classes/DrawableBall.h
+  Classes/DrawableBar.h
   Classes/DrawableField.h
   Classes/Field.h
   Classes/GameControl.h

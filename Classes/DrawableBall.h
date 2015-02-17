@@ -9,14 +9,13 @@ USING_NS_CC;
 class DrawableBall {
 
 private:    
-    Ball ball;
+    Ball* ball;
     DrawNode* drawNode;
 
 public:
     DrawableBall();
-    DrawableBall(Ball);
 
-    void setBall(Ball);
+    void setBall(Ball*);
     Ball* getBall();
 
     void createDrawNode();

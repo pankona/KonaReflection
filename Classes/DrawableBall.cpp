@@ -2,20 +2,12 @@
 #include <array>
 
 DrawableBall::DrawableBall() {
-}
-
-DrawableBall::DrawableBall(Ball in_ball) {
-    setBall(in_ball);
-}
-
-void 
-DrawableBall::setBall(Ball in_ball) {
-    this->ball = in_ball;
+    ball = new Ball();
 }
 
 Ball*
 DrawableBall::getBall() {
-    return &ball;
+    return ball;
 }
 
 DrawNode*
@@ -26,9 +18,9 @@ DrawableBall::getDrawNode() {
 void
 DrawableBall::createDrawNode() {
     drawNode = DrawNode::create();
-    Position position = ball.getPosition();
+    Position position = ball->getPosition();
     drawNode->setPosition(position.x, position.y);
-    int radius = ball.getRadius();
+    int radius = ball->getRadius();
 
     std::array<Point, 4> vertexes = {
         Point(position.x, position.y),
@@ -42,7 +34,7 @@ DrawableBall::createDrawNode() {
 
 void
 DrawableBall::updatePosition() {
-    Position new_position = this->ball.getPosition();
+    Position new_position = ball->getPosition();
     this->drawNode->setPosition(new_position.x, new_position.y);
 }
 

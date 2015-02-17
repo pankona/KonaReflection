@@ -5,12 +5,12 @@
 
 void
 Field::addBall(Ball* in_ball) {
-    this->ball = in_ball;
+    ball = in_ball;
 }
 
 Ball*
 Field::getBall() {
-    return this->ball;
+    return ball;
 }
 
 #define rad2deg(a) ((a) / 180.0 * M_PI)

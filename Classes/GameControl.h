@@ -2,19 +2,17 @@
 #define __GAMECONTROL_H__
 
 #include "cocos2d.h"
-#include "DrawableBall.h"
-#include "Field.h"
-#include "Ball.h"
+#include "ViewManager.h"
+
+USING_NS_CC;
 
 class GameControl {
 private:
-    Field field;
-    DrawableBall* dball;
+    ViewManager  vm;
 
 public:
-    void initialize(cocos2d::Scene*);
+    void initialize(Scene*);
     void update(float);
-    void addDBall(DrawableBall*);
 };
 
 #endif // __FIELD_H__

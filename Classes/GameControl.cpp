@@ -1,27 +1,11 @@
-
 #include "GameControl.h"
-#include <stdio.h>
 
 void
 GameControl::update(float delta) {
-    field.progress(delta);
-    dball->updatePosition();
+    vm.progress(delta);
 }
 
 void
-GameControl::addDBall(DrawableBall* in_dball) {
-    dball = in_dball;
-    field.addBall(in_dball->getBall());
-}
-
-void
-GameControl::initialize(cocos2d::Scene* baseScene) {
-    DrawableBall* dBall = new DrawableBall();
-    dBall->createDrawNode();
-    baseScene->addChild(dBall->getDrawNode());
-
-    this->addDBall(dBall);
-
-    Size screenSize = Director::getInstance()->getVisibleSize();
-    field.setFieldSize((int)screenSize.width, (int)screenSize.height);
+GameControl::initialize(Scene* baseScene) {
+    vm.initialize(baseScene);
 }

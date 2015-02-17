@@ -1,4 +1,5 @@
 #include "GameControl.h"
+#include <stdio.h>
 
 void
 GameControl::update(float delta) {

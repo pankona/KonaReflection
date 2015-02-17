@@ -3,6 +3,13 @@
 
 DrawableField::DrawableField(Field *in_field) {
     field = in_field;
+
+    auto listener = EventListenerTouchOneByOne::create();
+    listener->onTouchBegan = [this](Touch* touch, Event* event) {
+        field->onTouch((int)touch->getLocation().x, (int)touch->getLocation().y);
+        return true;
+    };
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, drawNode);
 }
 
 DrawNode*

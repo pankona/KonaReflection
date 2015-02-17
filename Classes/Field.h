@@ -20,6 +20,7 @@ public:
     void setBar(Bar*);
     Bar* getBar();
     void progress(float);
+    void onTouch(int, int);
 };
 
 #endif // __FIELD_H__

@@ -2,6 +2,7 @@
 #include "Field.h"
 
 #include <cmath>
+#include <stdio.h>
 
 void
 Field::addBall(Ball* in_ball) {
@@ -76,5 +77,10 @@ Field::getWidth() {
 int
 Field::getHeight() {
     return height;
+}
+
+void
+Field::onTouch(int x, int y) {
+    printf("onTouch. x = %d, y = %y\n", x, y);
 }
 

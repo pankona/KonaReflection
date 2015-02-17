@@ -1,11 +1,10 @@
-#include "SplashScene.h"
+#include "BaseScene.h"
 #include "DrawableBall.h"
-#include <iostream>
 
 USING_NS_CC;
 
 bool
-Splash::init() {
+BaseScene::init() {
     if (!Scene::init()) {
         return false;
     }
@@ -17,6 +16,6 @@ Splash::init() {
 }
 
 void
-Splash::update(float delta) {
+BaseScene::update(float delta) {
     gameControl.update(delta);
 }

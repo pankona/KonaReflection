@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "SplashScene.h"
+#include "BaseScene.h"
 
 USING_NS_CC;
 
@@ -24,7 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     director->setDisplayStats(false);
     director->setAnimationInterval(1.0 / 30);
-    auto scene = Splash::create();
+    auto scene = BaseScene::create();
     director->runWithScene(scene);
     return true;
 }

@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "ModelManager.h"
 #include "DrawableBall.h"
+#include "DrawableField.h"
 
 USING_NS_CC;
 
@@ -11,6 +12,7 @@ class ViewManager {
 private:    
     ModelManager mm;
     DrawableBall *dBall;
+    DrawableField *dField;
     void updateView();
 
 public:

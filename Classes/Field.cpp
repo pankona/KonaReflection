@@ -57,3 +57,14 @@ Field::setFieldSize(int in_width, int in_height) {
     this->width = in_width;
     this->height = in_height;
 }
+
+int
+Field::getWidth() {
+    return width;
+}
+
+int
+Field::getHeight() {
+    return height;
+}
+

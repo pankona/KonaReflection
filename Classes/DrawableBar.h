@@ -11,12 +11,11 @@ class DrawableBar {
 private:    
     Bar* bar;
     DrawNode* drawNode;
+    void createDrawNode();
 
 public:
     DrawableBar();
     Bar* getBar();
-
-    void createDrawNode();
     DrawNode* getDrawNode();
 };
 

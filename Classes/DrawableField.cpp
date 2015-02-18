@@ -1,15 +1,7 @@
 #include "DrawableField.h"
 #include <array>
 
-DrawableField::DrawableField(Field *in_field) {
-    field = in_field;
-
-}
-
-DrawNode*
-DrawableField::getDrawNode() {
-    return drawNode;
-}
+// private methods
 
 void
 DrawableField::createDrawNode() {
@@ -27,7 +19,7 @@ DrawableField::createDrawNode() {
 }
 
 void
-DrawableField::setOnTouchListener() {
+DrawableField::prepareOnTouchListener() {
     if (drawNode == NULL) {
         return;
     }
@@ -40,3 +32,18 @@ DrawableField::setOnTouchListener() {
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, drawNode);
 }
+
+// public methods
+
+DrawableField::DrawableField(Field *in_field) {
+    field = in_field;
+    createDrawNode();
+    prepareOnTouchListener();
+}
+
+DrawNode*
+DrawableField::getDrawNode() {
+    return drawNode;
+}
+
+

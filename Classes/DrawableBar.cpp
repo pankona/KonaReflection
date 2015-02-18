@@ -1,19 +1,7 @@
 #include "DrawableBar.h"
 #include <array>
 
-DrawableBar::DrawableBar() {
-    bar = new Bar();
-}
-
-Bar*
-DrawableBar::getBar() {
-    return bar;
-}
-
-DrawNode*
-DrawableBar::getDrawNode() {
-    return drawNode;
-}
+// private methods
 
 void
 DrawableBar::createDrawNode() {
@@ -31,4 +19,22 @@ DrawableBar::createDrawNode() {
     float weight = 1.0f;
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::GREEN, weight, Color4F::GREEN);
 }
+
+// public methods
+
+DrawableBar::DrawableBar() {
+    bar = new Bar();
+    createDrawNode();
+}
+
+Bar*
+DrawableBar::getBar() {
+    return bar;
+}
+
+DrawNode*
+DrawableBar::getDrawNode() {
+    return drawNode;
+}
+
 

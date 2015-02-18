@@ -1,19 +1,7 @@
 #include "DrawableBall.h"
 #include <array>
 
-DrawableBall::DrawableBall() {
-    ball = new Ball();
-}
-
-Ball*
-DrawableBall::getBall() {
-    return ball;
-}
-
-DrawNode*
-DrawableBall::getDrawNode() {
-    return this->drawNode;
-}
+// private methods
 
 void
 DrawableBall::createDrawNode() {
@@ -32,9 +20,27 @@ DrawableBall::createDrawNode() {
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::RED);
 }
 
+// public methods
+
+DrawableBall::DrawableBall() {
+    ball = new Ball();
+    createDrawNode();
+}
+
+Ball*
+DrawableBall::getBall() {
+    return ball;
+}
+
+DrawNode*
+DrawableBall::getDrawNode() {
+    return drawNode;
+}
+
+
 void
 DrawableBall::updatePosition() {
     Position new_position = ball->getPosition();
-    this->drawNode->setPosition(new_position.x, new_position.y);
+    drawNode->setPosition(new_position.x, new_position.y);
 }
 

@@ -11,13 +11,13 @@ class DrawableField {
 private:    
     Field* field;
     DrawNode* drawNode;
+    void createDrawNode();
+    void prepareOnTouchListener();
 
 public:
     DrawableField(Field*);
-
-    void createDrawNode();
     DrawNode* getDrawNode();
-    void setOnTouchListener();
+
 };
 
 #endif // __DRAWABLEFIELD_H__

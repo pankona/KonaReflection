@@ -11,16 +11,12 @@ class DrawableBall {
 private:    
     Ball* ball;
     DrawNode* drawNode;
+    void createDrawNode();
 
 public:
     DrawableBall();
-
-    void setBall(Ball*);
     Ball* getBall();
-
-    void createDrawNode();
     DrawNode* getDrawNode();
-
     void updatePosition();
 };
 

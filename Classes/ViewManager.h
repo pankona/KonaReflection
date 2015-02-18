@@ -18,7 +18,6 @@ private:
     void updateView();
 
 public:
-    ViewManager();
     void initialize(Scene* baseScene);
     void progress(float delta);
 };

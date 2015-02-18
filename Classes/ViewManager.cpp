@@ -1,7 +1,12 @@
 #include "ViewManager.h"
 
-ViewManager::ViewManager() {
+// private methods
+void
+ViewManager::updateView() {
+    dBall->updatePosition();
 }
+
+// public methods
 
 void
 ViewManager::initialize(Scene* baseScene) {
@@ -15,19 +20,15 @@ ViewManager::initialize(Scene* baseScene) {
 
     // field configuration
     dField = new DrawableField(mm.getField());
-    dField->createDrawNode();
     baseScene->addChild(dField->getDrawNode());
-    dField->setOnTouchListener();
 
     // ball configuration
     dBall = new DrawableBall();
-    dBall->createDrawNode();
     baseScene->addChild(dBall->getDrawNode());
     mm.getField()->addBall(dBall->getBall());
 
     // bar configuration
     dBar = new DrawableBar();
-    dBar->createDrawNode();
     baseScene->addChild(dBar->getDrawNode());
     mm.getField()->setBar(dBar->getBar());
 }
@@ -38,8 +39,4 @@ ViewManager::progress(float delta) {
     updateView();
 }
 
-void
-ViewManager::updateView() {
-    dBall->updatePosition();
-}
 

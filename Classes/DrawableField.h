@@ -11,12 +11,15 @@ class DrawableField {
 private:    
     Field* field;
     DrawNode* drawNode;
+    Sprite* sprite;
     void createDrawNode();
+    void createSprite();
     void prepareOnTouchListener();
 
 public:
     DrawableField(Field*);
     DrawNode* getDrawNode();
+    Sprite* getSprite();
 
 };
 

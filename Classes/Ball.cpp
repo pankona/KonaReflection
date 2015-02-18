@@ -1,11 +1,11 @@
 #include "Ball.h"
 
 Ball::Ball() {
-    position.x = 50;
-    position.y = 50;
+    position.x = 100;
+    position.y = 100;
     radius = 50;
     direction = 60;
-    speed = 15;
+    speed = 0;
 }
 
 void

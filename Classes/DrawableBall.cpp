@@ -20,11 +20,22 @@ DrawableBall::createDrawNode() {
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::RED);
 }
 
+void
+DrawableBall::createSprite() {
+    Rect rect = Rect(0, 0, ball->getRadius(), ball->getRadius());
+    sprite = Sprite::create();
+    sprite->setTextureRect(rect);
+    sprite->setColor(Color3B::RED);
+    Position position = ball->getPosition();
+    sprite->setPosition(position.x, position.y);
+}
+
 // public methods
 
 DrawableBall::DrawableBall() {
     ball = new Ball();
-    createDrawNode();
+    //createDrawNode();
+    createSprite();
 }
 
 Ball*
@@ -37,10 +48,15 @@ DrawableBall::getDrawNode() {
     return drawNode;
 }
 
+Sprite*
+DrawableBall::getSprite() {
+    return sprite;
+}
 
 void
 DrawableBall::updatePosition() {
     Position new_position = ball->getPosition();
-    drawNode->setPosition(new_position.x, new_position.y);
+    //drawNode->setPosition(new_position.x, new_position.y);
+    sprite->setPosition(new_position.x, new_position.y);
 }
 

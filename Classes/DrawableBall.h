@@ -11,12 +11,15 @@ class DrawableBall {
 private:    
     Ball* ball;
     DrawNode* drawNode;
+    Sprite* sprite;
     void createDrawNode();
+    void createSprite();
 
 public:
     DrawableBall();
     Ball* getBall();
     DrawNode* getDrawNode();
+    Sprite* getSprite();
     void updatePosition();
 };
 

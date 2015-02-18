@@ -16,7 +16,7 @@ Field::moveBall(float delta) {
 
     // check collision to window edge
     // width edge check
-    if (this->width <= current_position.x + ball->getRadius() || 0 >= current_position.x) {
+    if (width <= current_position.x + ball->getRadius() || 0 >= current_position.x) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (180 - direction) % 360;
@@ -24,7 +24,7 @@ Field::moveBall(float delta) {
     }
 
     // height edge check
-    if (this->height <= current_position.y + ball->getRadius() || 0 >= current_position.y) {
+    if (height <= current_position.y + ball->getRadius() || 0 >= current_position.y) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;

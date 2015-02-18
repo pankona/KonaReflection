@@ -19,6 +19,15 @@ DrawableField::createDrawNode() {
 }
 
 void
+DrawableField::createSprite() {
+    Rect rect = Rect(0, 0, field->getWidth(), field->getHeight());
+    sprite = Sprite::create();
+    sprite->setTextureRect(rect);
+    sprite->setColor(Color3B::WHITE);
+    sprite->setPosition(0, 0);
+}
+
+void
 DrawableField::prepareOnTouchListener() {
     if (drawNode == NULL) {
         return;
@@ -41,13 +50,19 @@ DrawableField::prepareOnTouchListener() {
 
 DrawableField::DrawableField(Field *in_field) {
     field = in_field;
-    createDrawNode();
+    //createDrawNode();
+    createSprite();
     prepareOnTouchListener();
 }
 
 DrawNode*
 DrawableField::getDrawNode() {
     return drawNode;
+}
+
+Sprite*
+DrawableField::getSprite() {
+    return sprite;
 }
 
 

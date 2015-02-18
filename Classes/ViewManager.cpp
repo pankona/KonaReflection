@@ -1,4 +1,5 @@
 #include "ViewManager.h"
+#include <stdio.h>
 
 // private methods
 void
@@ -21,16 +22,16 @@ ViewManager::initialize(Scene* baseScene) {
 
     // field configuration
     dField = new DrawableField(mm.getField());
-    baseScene->addChild(dField->getDrawNode());
+    baseScene->addChild(dField->getSprite());
 
     // ball configuration
     dBall = new DrawableBall();
-    baseScene->addChild(dBall->getDrawNode());
+    baseScene->addChild(dBall->getSprite());
     mm.getField()->addBall(dBall->getBall());
 
     // bar configuration
     dBar = new DrawableBar();
-    baseScene->addChild(dBar->getDrawNode());
+    baseScene->addChild(dBar->getSprite());
     mm.getField()->setBar(dBar->getBar());
 }
 

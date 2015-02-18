@@ -20,11 +20,21 @@ DrawableBar::createDrawNode() {
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::GREEN, weight, Color4F::GREEN);
 }
 
+void
+DrawableBar::createSprite() {
+    Rect rect = Rect(0, 0, bar->getWidth(), bar->getHeight());
+    sprite = Sprite::create();
+    sprite->setTextureRect(rect);
+    sprite->setColor(Color3B::GREEN);
+    Position position = bar->getPosition();
+    sprite->setPosition(position.x, position.y);
+}
 // public methods
 
 DrawableBar::DrawableBar() {
     bar = new Bar();
-    createDrawNode();
+    //createDrawNode();
+    createSprite();
 }
 
 Bar*
@@ -35,6 +45,11 @@ DrawableBar::getBar() {
 DrawNode*
 DrawableBar::getDrawNode() {
     return drawNode;
+}
+
+Sprite*
+DrawableBar::getSprite() {
+    return sprite;
 }
 
 void

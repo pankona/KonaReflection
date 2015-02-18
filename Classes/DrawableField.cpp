@@ -4,17 +4,11 @@
 DrawableField::DrawableField(Field *in_field) {
     field = in_field;
 
-    auto listener = EventListenerTouchOneByOne::create();
-    listener->onTouchBegan = [this](Touch* touch, Event* event) {
-        field->onTouch((int)touch->getLocation().x, (int)touch->getLocation().y);
-        return true;
-    };
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, drawNode);
 }
 
 DrawNode*
 DrawableField::getDrawNode() {
-    return this->drawNode;
+    return drawNode;
 }
 
 void
@@ -32,3 +26,17 @@ DrawableField::createDrawNode() {
     drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::WHITE);
 }
 
+void
+DrawableField::setOnTouchListener() {
+    if (drawNode == NULL) {
+        return;
+    }
+
+    auto onTouchListener = EventListenerTouchOneByOne::create();
+    onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
+        field->onTouch((int)touch->getLocation().x, (int)touch->getLocation().y);
+        return true;
+    };
+
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, drawNode);
+}

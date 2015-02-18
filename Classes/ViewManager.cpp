@@ -17,6 +17,7 @@ ViewManager::initialize(Scene* baseScene) {
     dField = new DrawableField(mm.getField());
     dField->createDrawNode();
     baseScene->addChild(dField->getDrawNode());
+    dField->setOnTouchListener();
 
     // ball configuration
     dBall = new DrawableBall();

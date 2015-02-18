@@ -81,6 +81,7 @@ Field::getHeight() {
 
 void
 Field::onTouch(int x, int y) {
-    printf("onTouch. x = %d, y = %y\n", x, y);
+    printf("onTouch. x = %d, y = %d\n", x, y);
+    // ToDo: implement
 }
 

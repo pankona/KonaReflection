@@ -17,6 +17,7 @@ public:
 
     void createDrawNode();
     DrawNode* getDrawNode();
+    void setOnTouchListener();
 };
 
 #endif // __DRAWABLEFIELD_H__

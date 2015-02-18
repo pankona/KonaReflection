@@ -4,6 +4,7 @@
 void
 ViewManager::updateView() {
     dBall->updatePosition();
+    dBar->updatePosition();
 }
 
 // public methods

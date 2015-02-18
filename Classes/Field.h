@@ -11,7 +11,10 @@ private:
     Ball* ball;
     Bar* bar;
     void moveBall(float);
+    bool isTouchOnRightSide(int);
+    void moveBar(float delta);
 public:
+    Field();
     int getWidth();
     int getHeight();
     void setFieldSize(int, int);
@@ -20,7 +23,8 @@ public:
     void setBar(Bar*);
     Bar* getBar();
     void progress(float);
-    void onTouch(int, int);
+    void onTouchBegan(int, int);
+    void onTouchEnded();
 };
 
 #endif // __FIELD_H__

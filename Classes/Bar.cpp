@@ -1,10 +1,14 @@
 #include "Bar.h"
 
+// public methods
+
 Bar::Bar() {
     position.x = 100;
     position.y = 100;
     width = 100;
     height = 10;
+    direction = BarDirection::NONE;
+    speed = 5;
 }
 
 void
@@ -36,4 +40,24 @@ Bar::setHeight(int in_height) {
 int
 Bar::getHeight() {
     return height;
+}
+
+void
+Bar::setSpeed(int in_speed) {
+    speed = in_speed;
+}
+
+int
+Bar::getSpeed() {
+    return speed;
+}
+
+void
+Bar::setDirection(BarDirection in_direction) {
+    direction = (int) in_direction;
+}
+
+BarDirection
+Bar::getDirection() {
+    return (BarDirection) direction;
 }

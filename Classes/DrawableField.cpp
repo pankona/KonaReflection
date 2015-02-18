@@ -26,8 +26,12 @@ DrawableField::prepareOnTouchListener() {
 
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
-        field->onTouch((int)touch->getLocation().x, (int)touch->getLocation().y);
+        field->onTouchBegan((int)touch->getLocation().x, (int)touch->getLocation().y);
         return true;
+    };
+
+    onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
+        field->onTouchEnded();
     };
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, drawNode);

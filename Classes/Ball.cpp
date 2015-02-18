@@ -1,51 +1,51 @@
 #include "Ball.h"
 
 Ball::Ball() {
-    this->position.x = 50;
-    this->position.y = 50;
-    this->radius = 50;
-    this->direction = 60;
-    this->speed = 15;
+    position.x = 50;
+    position.y = 50;
+    radius = 50;
+    direction = 60;
+    speed = 15;
 }
 
 void
 Ball::setPosition(Position in_position) {
-    this->position.x = in_position.x;
-    this->position.y = in_position.y;
+    position.x = in_position.x;
+    position.y = in_position.y;
 }
 
 Position
 Ball::getPosition() {
-    return this->position;
+    return position;
 }
 
 void
-Ball::setDirection(int direction) {
-    this->direction = direction;
+Ball::setDirection(int in_direction) {
+    direction = in_direction;
 }
 
 int
 Ball::getDirection() {
-    return this->direction;
+    return direction;
 }
 
 void
 Ball::setSpeed(int in_speed) {
-    this->speed = in_speed;
+    speed = in_speed;
 }
 
 int
 Ball::getSpeed() {
-    return this->speed;
+    return speed;
 }
 
 void
 Ball::setRadius(int in_radius) {
-    this->radius = in_radius;
+    radius = in_radius;
 }
 
 int
 Ball::getRadius() {
-    return this->radius;
+    return radius;
 }
 

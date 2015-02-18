@@ -1,28 +1,11 @@
 
 #include "Field.h"
+#include "BarDirection.h"
 
 #include <cmath>
 #include <stdio.h>
 
-void
-Field::addBall(Ball* in_ball) {
-    ball = in_ball;
-}
-
-Ball*
-Field::getBall() {
-    return ball;
-}
-
-void
-Field::setBar(Bar *in_bar) {
-    bar = in_bar;
-}
-
-Bar*
-Field::getBar() {
-    return bar;
-}
+// private mothods
 
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
@@ -58,9 +41,64 @@ Field::moveBall(float delta) {
     ball->setPosition(new_position);
 }
 
+bool
+Field::isTouchOnRightSide(int in_x) {
+    int center_of_width = width / 2;
+    if (in_x > center_of_width) {
+        return true;
+    }
+    return false;
+}
+
+void
+Field::moveBar(float delta) {
+    if (bar->getDirection() == BarDirection::NONE) {
+        return;
+    }
+
+    Position currentPosition = bar->getPosition();
+    Position newPosition;
+    if (bar->getDirection() == BarDirection::RIGHT) {
+        newPosition.x = currentPosition.x + bar->getSpeed();
+    } else if (bar->getDirection() == BarDirection::LEFT) {
+        newPosition.x = currentPosition.x - bar->getSpeed();
+    } else {
+        // should never reach
+        newPosition.x = currentPosition.x;
+    }
+    newPosition.y = currentPosition.y;
+    bar->setPosition(newPosition);
+}
+
+// public methods
+
+Field::Field() {
+}
+
+void
+Field::addBall(Ball* in_ball) {
+    ball = in_ball;
+}
+
+Ball*
+Field::getBall() {
+    return ball;
+}
+
+void
+Field::setBar(Bar *in_bar) {
+    bar = in_bar;
+}
+
+Bar*
+Field::getBar() {
+    return bar;
+}
+
 void
 Field::progress(float delta) {
     moveBall(delta);
+    moveBar(delta);
 }
 
 void
@@ -80,8 +118,15 @@ Field::getHeight() {
 }
 
 void
-Field::onTouch(int x, int y) {
-    printf("onTouch. x = %d, y = %d\n", x, y);
-    // ToDo: implement
+Field::onTouchBegan(int x, int y) {
+    if (isTouchOnRightSide(x)) {
+        bar->setDirection(BarDirection::RIGHT);
+    } else {
+        bar->setDirection(BarDirection::LEFT);
+    }
 }
 
+void
+Field::onTouchEnded() {
+    bar->setDirection(BarDirection::NONE);
+}

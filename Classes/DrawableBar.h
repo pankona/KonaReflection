@@ -17,6 +17,7 @@ public:
     DrawableBar();
     Bar* getBar();
     DrawNode* getDrawNode();
+    void updatePosition();
 };
 
 #endif // __DRAWABLEBar_H__

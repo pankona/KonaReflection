@@ -37,4 +37,8 @@ DrawableBar::getDrawNode() {
     return drawNode;
 }
 
-
+void
+DrawableBar::updatePosition() {
+    Position position = bar->getPosition();
+    drawNode->setPosition(position.x, position.y);
+}

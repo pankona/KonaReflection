@@ -1,22 +1,9 @@
 #include "DrawableField.h"
 #include <array>
 
+#include <stdio.h>
+
 // private methods
-
-void
-DrawableField::createDrawNode() {
-    drawNode = DrawNode::create();
-    drawNode->setPosition(0, 0);
-
-    std::array<Point, 4> vertexes = {
-        Point(0, 0),
-        Point(field->getWidth(), 0),
-        Point(field->getWidth(), field->getHeight()),
-        Point(0, field->getHeight()),
-    };
-    float weight = 1.0f;
-    drawNode->drawPolygon(vertexes.data(), vertexes.size(), Color4F::WHITE, weight, Color4F::WHITE);
-}
 
 void
 DrawableField::createSprite() {
@@ -24,17 +11,18 @@ DrawableField::createSprite() {
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::WHITE);
-    sprite->setPosition(0, 0);
+    sprite->setPosition(field->getWidth() / 2 , field->getHeight() / 2);
 }
 
 void
 DrawableField::prepareOnTouchListener() {
-    if (drawNode == NULL) {
+    if (sprite == NULL) {
         return;
     }
 
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
+        log ("x = %d, y = %d", (int)touch->getLocation().x, (int)touch->getLocation().y);
         field->onTouchBegan((int)touch->getLocation().x, (int)touch->getLocation().y);
         return true;
     };
@@ -43,21 +31,15 @@ DrawableField::prepareOnTouchListener() {
         field->onTouchEnded();
     };
 
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, drawNode);
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
 }
 
 // public methods
 
 DrawableField::DrawableField(Field *in_field) {
     field = in_field;
-    //createDrawNode();
     createSprite();
     prepareOnTouchListener();
-}
-
-DrawNode*
-DrawableField::getDrawNode() {
-    return drawNode;
 }
 
 Sprite*

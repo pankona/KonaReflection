@@ -10,7 +10,6 @@ class DrawableField {
 
 private:    
     Field* field;
-    DrawNode* drawNode;
     Sprite* sprite;
     void createDrawNode();
     void createSprite();
@@ -18,9 +17,7 @@ private:
 
 public:
     DrawableField(Field*);
-    DrawNode* getDrawNode();
     Sprite* getSprite();
-
 };
 
 #endif // __DRAWABLEFIELD_H__

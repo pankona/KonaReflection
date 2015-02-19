@@ -9,14 +9,14 @@
 
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
+// calculate ball's position at next frame
 void
 Field::moveBall(float delta) {
-    // calculate ball's position at next frame
     Position current_position = ball->getPosition();
 
     // check collision to window edge
     // width edge check
-    if (width <= current_position.x + ball->getRadius() || 0 >= current_position.x) {
+    if (width <= current_position.x + ball->getRadius() / 2 || 0 >= current_position.x - ball->getRadius() / 2) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (180 - direction) % 360;
@@ -24,7 +24,7 @@ Field::moveBall(float delta) {
     }
 
     // height edge check
-    if (height <= current_position.y + ball->getRadius() || 0 >= current_position.y) {
+    if (height <= current_position.y + ball->getRadius() / 2 || 0 >= current_position.y - ball->getRadius() / 2) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;
@@ -43,7 +43,9 @@ Field::moveBall(float delta) {
 
 bool
 Field::isTouchOnRightSide(int in_x) {
-    int center_of_width = width / 2;
+    int center_of_width = this->width / 2;
+    printf ("in_x = %d\n", in_x);
+    printf ("width = %d, center_of_width = %d\n", this->width, center_of_width);
     if (in_x > center_of_width) {
         return true;
     }
@@ -103,8 +105,8 @@ Field::progress(float delta) {
 
 void
 Field::setFieldSize(int in_width, int in_height) {
-    this->width = in_width;
-    this->height = in_height;
+    width = in_width;
+    height = in_height;
 }
 
 int
@@ -120,8 +122,10 @@ Field::getHeight() {
 void
 Field::onTouchBegan(int x, int y) {
     if (isTouchOnRightSide(x)) {
+        printf ("touch is right side\n");
         bar->setDirection(BarDirection::RIGHT);
     } else {
+        printf ("touch is left side\n");
         bar->setDirection(BarDirection::LEFT);
     }
 }

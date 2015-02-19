@@ -19,6 +19,7 @@ ViewManager::initialize(Scene* baseScene) {
     // get screen size
     Size screenSize = Director::getInstance()->getVisibleSize();
     mm.getField()->setFieldSize((int)screenSize.width, (int)screenSize.height);
+    log ("set screen size w = %d, h = %d", (int)screenSize.width, (int)screenSize.height);
 
     // field configuration
     dField = new DrawableField(mm.getField());

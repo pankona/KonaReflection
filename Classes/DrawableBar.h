@@ -10,7 +10,6 @@ class DrawableBar {
 
 private:    
     Bar* bar;
-    DrawNode* drawNode;
     Sprite* sprite;
     void createDrawNode();
     void createSprite();
@@ -18,7 +17,6 @@ private:
 public:
     DrawableBar();
     Bar* getBar();
-    DrawNode* getDrawNode();
     Sprite* getSprite();
     void updatePosition();
 };

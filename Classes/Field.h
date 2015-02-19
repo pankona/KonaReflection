@@ -13,6 +13,7 @@ private:
     void moveBall(float);
     bool isTouchOnRightSide(int);
     void moveBar(float delta);
+
 public:
     Field();
     int getWidth();

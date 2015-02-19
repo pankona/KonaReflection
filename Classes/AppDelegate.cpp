@@ -24,6 +24,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     director->setDisplayStats(false);
     director->setAnimationInterval(1.0 / 30);
+    glview->setDesignResolutionSize(600, 450, ResolutionPolicy::SHOW_ALL);
     auto scene = BaseScene::create();
     director->runWithScene(scene);
     return true;

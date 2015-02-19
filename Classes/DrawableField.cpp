@@ -27,6 +27,10 @@ DrawableField::prepareOnTouchListener() {
         return true;
     };
 
+    onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
+        field->onTouchMoved((int)touch->getLocation().x, (int)touch->getLocation().y);
+    };
+
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         field->onTouchEnded();
     };

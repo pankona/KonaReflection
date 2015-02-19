@@ -131,6 +131,17 @@ Field::onTouchBegan(int x, int y) {
 }
 
 void
+Field::onTouchMoved(int x, int y) {
+    if (isTouchOnRightSide(x)) {
+        printf ("touch is moved to right side\n");
+        bar->setDirection(BarDirection::RIGHT);
+    } else {
+        printf ("touch is moved to left side\n");
+        bar->setDirection(BarDirection::LEFT);
+    }
+}
+
+void
 Field::onTouchEnded() {
     bar->setDirection(BarDirection::NONE);
 }

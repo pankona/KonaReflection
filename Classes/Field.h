@@ -25,6 +25,7 @@ public:
     Bar* getBar();
     void progress(float);
     void onTouchBegan(int, int);
+    void onTouchMoved(int, int);
     void onTouchEnded();
     void onCollisionBallAndBar();
 };

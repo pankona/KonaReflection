@@ -26,6 +26,7 @@ public:
     void progress(float);
     void onTouchBegan(int, int);
     void onTouchEnded();
+    void onCollisionBallAndBar();
 };
 
 #endif // __FIELD_H__

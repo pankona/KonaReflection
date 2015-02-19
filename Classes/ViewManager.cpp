@@ -6,6 +6,13 @@ void
 ViewManager::updateView() {
     dBall->updatePosition();
     dBar->updatePosition();
+
+    Rect ballRect = dBall->getSprite()->getBoundingBox();
+    Rect barRect = dBar->getSprite()->getBoundingBox();
+    if (ballRect.intersectsRect(barRect)) {
+        mm.getField()->onCollisionBallAndBar();
+    }
+
 }
 
 // public methods

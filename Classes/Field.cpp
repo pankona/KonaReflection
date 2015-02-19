@@ -134,3 +134,45 @@ void
 Field::onTouchEnded() {
     bar->setDirection(BarDirection::NONE);
 }
+
+void
+Field::onCollisionBallAndBar() {
+    Position ballPosition = ball->getPosition();
+    Position barPosition = bar->getPosition();
+    int ballRadius = ball->getRadius();
+    int barWidth = bar->getWidth();
+
+    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 && 
+        ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
+        int direction = ball->getDirection();
+        int new_direction = (360 - direction) % 360;
+        ball->setDirection(new_direction);
+    } else {
+        // if bar and ball has same direction, increase ball speed
+        if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
+            (ball->getDirection() > 270 && ball->getDirection() < 360)) {
+            if (bar->getDirection() == BarDirection::RIGHT) {
+                // fix me
+            } else {
+                // turn over
+                int direction = ball->getDirection();
+                int new_direction = (180 - direction) % 360;
+                ball->setDirection(new_direction);
+            }
+        } else {
+            if (bar->getDirection() == BarDirection::LEFT) {
+                // fix me
+            } else {
+                // turn over
+                int direction = ball->getDirection();
+                int new_direction = (180 - direction) % 360;
+                ball->setDirection(new_direction);
+            }
+        }
+    }
+}
+
+
+
+
+

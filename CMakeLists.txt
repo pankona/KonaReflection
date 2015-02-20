@@ -123,6 +123,7 @@ set(GAME_SRC
   Classes/DrawableField.cpp
   Classes/Field.cpp
   Classes/GameControl.cpp
+  Classes/ModelEvent.cpp
   Classes/ModelManager.cpp
   Classes/ViewManager.cpp
   ${PLATFORM_SPECIFIC_SRC}
@@ -138,8 +139,10 @@ set(GAME_HEADERS
   Classes/DrawableField.h
   Classes/Field.h
   Classes/GameControl.h
-  Classes/Position.h
+  Classes/ModelEvent.h
+  Classes/ModelEventObserver.h
   Classes/ModelManager.h
+  Classes/Position.h
   Classes/ViewManager.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )

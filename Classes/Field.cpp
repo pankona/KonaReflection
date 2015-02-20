@@ -12,7 +12,6 @@
 // calculate ball's position at next frame
 void
 Field::moveBall(float delta) {
-    notify();
     Position current_position = ball->getPosition();
 
     // check collision to window edge
@@ -102,6 +101,9 @@ void
 Field::progress(float delta) {
     moveBall(delta);
     moveBar(delta);
+
+    // notify completion of progress to ViewManager
+    notify();
 }
 
 void

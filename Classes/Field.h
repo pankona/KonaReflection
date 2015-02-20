@@ -3,8 +3,9 @@
 
 #include "Ball.h"
 #include "Bar.h"
+#include "ModelEvent.h"
 
-class Field {
+class Field : public ModelEvent {
 private:
     int width;
     int height;

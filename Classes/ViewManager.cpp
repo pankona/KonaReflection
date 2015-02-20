@@ -31,6 +31,7 @@ ViewManager::initialize(Scene* baseScene) {
     // field configuration
     dField = new DrawableField(mm.getField());
     baseScene->addChild(dField->getSprite());
+    mm.getField()->addObserver(this);
 
     // ball configuration
     dBall = new DrawableBall();
@@ -46,7 +47,9 @@ ViewManager::initialize(Scene* baseScene) {
 void
 ViewManager::progress(float delta) {
     mm.progress(delta);
-    updateView();
 }
 
-
+void
+ViewManager::onUpdate() {
+    updateView();
+}

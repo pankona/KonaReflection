@@ -6,10 +6,11 @@
 #include "DrawableBall.h"
 #include "DrawableField.h"
 #include "DrawableBar.h"
+#include "ModelEventObserver.h"
 
 USING_NS_CC;
 
-class ViewManager {
+class ViewManager : public ModelEventObserver {
 private:    
     ModelManager mm;
     DrawableBall *dBall;
@@ -20,6 +21,7 @@ private:
 public:
     void initialize(Scene* baseScene);
     void progress(float delta);
+    void onUpdate();
 };
 
 #endif // __VIEWMANAGER_H__

@@ -18,13 +18,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("Cocos2dTest", Rect(0, 0, 600, 450));
+        glview = GLViewImpl::createWithRect("Cocos2dTest", Rect(0, 0, 450, 600));
         director->setOpenGLView(glview);
     }
 
     director->setDisplayStats(false);
-    director->setAnimationInterval(1.0 / 30);
-    glview->setDesignResolutionSize(600, 450, ResolutionPolicy::SHOW_ALL);
+    director->setAnimationInterval(1.0 / 60);
+    glview->setDesignResolutionSize(450, 600, ResolutionPolicy::SHOW_ALL);
     auto scene = BaseScene::create();
     director->runWithScene(scene);
     return true;

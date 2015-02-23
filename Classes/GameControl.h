@@ -3,11 +3,13 @@
 
 #include "cocos2d.h"
 #include "ViewManager.h"
+#include "Modelmanager.h"
 
 USING_NS_CC;
 
 class GameControl {
 private:
+    ModelManager mm;
     ViewManager  vm;
 
 public:

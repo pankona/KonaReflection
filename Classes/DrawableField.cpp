@@ -1,49 +1,20 @@
 #include "DrawableField.h"
-#include <array>
-
-#include <stdio.h>
 
 // private methods
 
 void
-DrawableField::createSprite() {
-    Rect rect = Rect(0, 0, field->getWidth(), field->getHeight());
+DrawableField::createSprite(int in_width, int in_height) {
+    Rect rect = Rect(0, 0, in_width, in_height);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::WHITE);
-    sprite->setPosition(field->getWidth() / 2 , field->getHeight() / 2);
-}
-
-void
-DrawableField::prepareOnTouchListener() {
-    if (sprite == NULL) {
-        return;
-    }
-
-    auto onTouchListener = EventListenerTouchOneByOne::create();
-    onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
-        log ("x = %d, y = %d", (int)touch->getLocation().x, (int)touch->getLocation().y);
-        field->onTouchBegan((int)touch->getLocation().x, (int)touch->getLocation().y);
-        return true;
-    };
-
-    onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
-        field->onTouchMoved((int)touch->getLocation().x, (int)touch->getLocation().y);
-    };
-
-    onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
-        field->onTouchEnded();
-    };
-
-    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
+    sprite->setPosition(in_width / 2 , in_height / 2);
 }
 
 // public methods
 
-DrawableField::DrawableField(Field *in_field) {
-    field = in_field;
-    createSprite();
-    prepareOnTouchListener();
+DrawableField::DrawableField(int in_width, int in_height) {
+    createSprite(in_width, in_height);
 }
 
 Sprite*
@@ -51,4 +22,24 @@ DrawableField::getSprite() {
     return sprite;
 }
 
+void
+DrawableField::setOnTouchCallback() {
 
+    if (sprite == NULL) {
+        return;
+    }
+
+    // temporary tag
+    auto onTouchListener = EventListenerTouchOneByOne::create();
+    onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
+        return true;
+    };
+
+    onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
+    };
+
+    onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
+    };
+
+    Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
+}

@@ -2,23 +2,20 @@
 #define __DRAWABLEBALL_H__
 
 #include "cocos2d.h"
-#include "Ball.h"
+#include "Position.h"
 
 USING_NS_CC;
 
 class DrawableBall {
 
 private:    
-    Ball* ball;
     Sprite* sprite;
-    void createDrawNode();
-    void createSprite();
+    void createSprite(int);
 
 public:
-    DrawableBall();
-    Ball* getBall();
+    DrawableBall(int);
     Sprite* getSprite();
-    void updatePosition();
+    void setPosition(Position);
 };
 
 #endif // __DRAWABLEBALL_H__

@@ -2,23 +2,20 @@
 #define __DRAWABLEBAR_H__
 
 #include "cocos2d.h"
-#include "Bar.h"
+#include "Position.h"
 
 USING_NS_CC;
 
 class DrawableBar {
 
 private:    
-    Bar* bar;
     Sprite* sprite;
-    void createDrawNode();
-    void createSprite();
+    void createSprite(int, int);
 
 public:
-    DrawableBar();
-    Bar* getBar();
+    DrawableBar(int, int);
     Sprite* getSprite();
-    void updatePosition();
+    void setPosition(Position);
 };
 
 #endif // __DRAWABLEBar_H__

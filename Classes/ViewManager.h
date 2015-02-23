@@ -2,26 +2,26 @@
 #define __VIEWMANAGER_H__
 
 #include "cocos2d.h"
-#include "ModelManager.h"
 #include "DrawableBall.h"
 #include "DrawableField.h"
 #include "DrawableBar.h"
-#include "ModelEventObserver.h"
 
 USING_NS_CC;
 
-class ViewManager : public ModelEventObserver {
+class ViewManager {
 private:    
-    ModelManager mm;
-    DrawableBall *dBall;
-    DrawableField *dField;
-    DrawableBar *dBar;
-    void updateView();
+    DrawableBall* dBall;
+    DrawableField* dField;
+    DrawableBar* dBar;
 
 public:
     void initialize(Scene* baseScene);
-    void progress(float delta);
-    void onUpdate();
+    void updateView();
+    void setBallPosition(Position);
+    void setBarPosition(Position);
+    void onTouchBegan(int, Event*, int, int);
+    void onTouchMoved(int, Event*, int, int);
+    void onTouchEnded(int, Event*);
 };
 
 #endif // __VIEWMANAGER_H__

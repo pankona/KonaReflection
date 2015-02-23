@@ -1,55 +1,60 @@
 #include "ViewManager.h"
 #include <stdio.h>
 
-// private methods
-void
-ViewManager::updateView() {
-    dBall->updatePosition();
-    dBar->updatePosition();
-
-    Rect ballRect = dBall->getSprite()->getBoundingBox();
-    Rect barRect = dBar->getSprite()->getBoundingBox();
-    if (ballRect.intersectsRect(barRect)) {
-        mm.getField()->onCollisionBallAndBar();
-    }
-
-}
-
 // public methods
 
 void
 ViewManager::initialize(Scene* baseScene) {
 
-    // initialize model manager
-    mm.initialize();
-
     // get screen size
     Size screenSize = Director::getInstance()->getVisibleSize();
-    mm.getField()->setFieldSize((int)screenSize.width, (int)screenSize.height);
     log ("set screen size w = %d, h = %d", (int)screenSize.width, (int)screenSize.height);
 
     // field configuration
-    dField = new DrawableField(mm.getField());
+    dField = new DrawableField(screenSize.width, screenSize.height);
+    dField->setOnTouchCallback();
     baseScene->addChild(dField->getSprite());
-    mm.getField()->addObserver(this);
 
     // ball configuration
-    dBall = new DrawableBall();
+    dBall = new DrawableBall(50);
     baseScene->addChild(dBall->getSprite());
-    mm.getField()->addBall(dBall->getBall());
 
     // bar configuration
-    dBar = new DrawableBar();
+    dBar = new DrawableBar(100, 20);
     baseScene->addChild(dBar->getSprite());
-    mm.getField()->setBar(dBar->getBar());
 }
 
 void
-ViewManager::progress(float delta) {
-    mm.progress(delta);
+ViewManager::updateView() {
+    Rect ballRect = dBall->getSprite()->getBoundingBox();
+    Rect barRect = dBar->getSprite()->getBoundingBox();
+    if (ballRect.intersectsRect(barRect)) {
+        // ToDo: notify to game controller
+        log ("ball and bar collistion detected.");
+    }
 }
 
 void
-ViewManager::onUpdate() {
-    updateView();
+ViewManager::setBallPosition(Position p) {
+    dBall->setPosition(p);
+}
+
+void
+ViewManager::setBarPosition(Position p) {
+    dBar->setPosition(p);
+}
+
+void
+ViewManager::onTouchBegan(int tag, Event* event, int, int) {
+    log ("[VM] onTouchBegan.");
+}
+
+void
+ViewManager::onTouchMoved(int tag, Event* event, int, int) {
+    log ("[VM] onTouchMoved.");
+}
+
+void
+ViewManager::onTouchEnded(int tag, Event* event) {
+    log ("[VM] onTouchEnded.");
 }

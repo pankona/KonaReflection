@@ -3,10 +3,12 @@
 
 void
 GameControl::update(float delta) {
-    vm.progress(delta);
+    mm.progress(delta);
+    vm.updateView();
 }
 
 void
 GameControl::initialize(Scene* baseScene) {
+    mm.initialize();
     vm.initialize(baseScene);
 }

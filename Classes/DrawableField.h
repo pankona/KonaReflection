@@ -2,22 +2,19 @@
 #define __DRAWABLEFIELD_H__
 
 #include "cocos2d.h"
-#include "Field.h"
 
 USING_NS_CC;
 
 class DrawableField {
 
-private:    
-    Field* field;
+private:
     Sprite* sprite;
-    void createDrawNode();
-    void createSprite();
-    void prepareOnTouchListener();
+    void createSprite(int, int);
 
 public:
-    DrawableField(Field*);
+    DrawableField(int, int);
     Sprite* getSprite();
+    void setOnTouchCallback();
 };
 
 #endif // __DRAWABLEFIELD_H__

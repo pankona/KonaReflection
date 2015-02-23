@@ -1,27 +1,19 @@
 #include "DrawableBar.h"
-#include <array>
 
 // private methods
 
 void
-DrawableBar::createSprite() {
-    Rect rect = Rect(0, 0, bar->getWidth(), bar->getHeight());
+DrawableBar::createSprite(int in_width, int in_height) {
+    Rect rect = Rect(0, 0, in_width, in_height);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::GREEN);
-    Position position = bar->getPosition();
-    sprite->setPosition(position.x, position.y);
+    sprite->setPosition(0, 0);
 }
 // public methods
 
-DrawableBar::DrawableBar() {
-    bar = new Bar();
-    createSprite();
-}
-
-Bar*
-DrawableBar::getBar() {
-    return bar;
+DrawableBar::DrawableBar(int in_width, int in_height) {
+    createSprite(in_width, in_height);
 }
 
 Sprite*
@@ -30,7 +22,6 @@ DrawableBar::getSprite() {
 }
 
 void
-DrawableBar::updatePosition() {
-    Position position = bar->getPosition();
-    sprite->setPosition(position.x, position.y);
+DrawableBar::setPosition(Position p) {
+    sprite->setPosition(p.x, p.y);
 }

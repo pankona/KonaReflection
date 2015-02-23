@@ -1,28 +1,20 @@
 #include "DrawableBall.h"
-#include <array>
 
 // private methods
 
 void
-DrawableBall::createSprite() {
-    Rect rect = Rect(0, 0, ball->getRadius(), ball->getRadius());
+DrawableBall::createSprite(int in_radius) {
+    Rect rect = Rect(0, 0, in_radius, in_radius);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::RED);
-    Position position = ball->getPosition();
-    sprite->setPosition(position.x, position.y);
+    sprite->setPosition(0, 0);
 }
 
 // public methods
 
-DrawableBall::DrawableBall() {
-    ball = new Ball();
-    createSprite();
-}
-
-Ball*
-DrawableBall::getBall() {
-    return ball;
+DrawableBall::DrawableBall(int in_radius) {
+    createSprite(in_radius);
 }
 
 Sprite*
@@ -31,8 +23,7 @@ DrawableBall::getSprite() {
 }
 
 void
-DrawableBall::updatePosition() {
-    Position new_position = ball->getPosition();
-    sprite->setPosition(new_position.x, new_position.y);
+DrawableBall::setPosition(Position p) {
+    sprite->setPosition(p.x, p.y);
 }
 

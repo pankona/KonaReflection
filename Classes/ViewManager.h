@@ -10,14 +10,16 @@ USING_NS_CC;
 
 class ViewManager {
 private:    
+    Scene* baseScene;
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
 
 public:
     void initialize(Scene* baseScene);
-    void initializeBar(int, int);
-    void initializeBall(int);
+    void initializeBar(int, int, Position);
+    void initializeField(int, int);
+    void initializeBall(int, Position);
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);

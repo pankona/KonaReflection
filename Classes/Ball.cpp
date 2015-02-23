@@ -14,6 +14,12 @@ Ball::setPosition(Position in_position) {
     position.y = in_position.y;
 }
 
+void
+Ball::setPosition(int in_x, int in_y) {
+    position.x = in_x;
+    position.y = in_y;
+}
+
 Position
 Ball::getPosition() {
     return position;

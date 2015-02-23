@@ -2,6 +2,7 @@
 #define __DRAWABLEFIELD_H__
 
 #include "cocos2d.h"
+#include "Position.h"
 
 USING_NS_CC;
 
@@ -9,10 +10,10 @@ class DrawableField {
 
 private:
     Sprite* sprite;
-    void createSprite(int, int, Position);
+    void createSprite(int, int);
 
 public:
-    DrawableField(int, int, Position);
+    DrawableField(int, int);
     Sprite* getSprite();
     void setOnTouchCallback();
 };

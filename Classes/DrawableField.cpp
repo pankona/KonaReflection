@@ -3,18 +3,18 @@
 // private methods
 
 void
-DrawableField::createSprite(int in_width, int in_height, Position in_initPosition) {
+DrawableField::createSprite(int in_width, int in_height) {
     Rect rect = Rect(0, 0, in_width, in_height);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::WHITE);
-    sprite->setPosition(in_initPosition.x + in_width / 2 , in_initPosition.y + in_height / 2);
+    sprite->setPosition(in_width / 2, in_height / 2);
 }
 
 // public methods
 
-DrawableField::DrawableField(int in_width, int in_height, Position in_initPosition) {
-    createSprite(in_width, in_height, in_initPosition);
+DrawableField::DrawableField(int in_width, int in_height) {
+    createSprite(in_width, in_height);
 }
 
 Sprite*

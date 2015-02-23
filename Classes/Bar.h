@@ -16,6 +16,7 @@ private:
 public:
     Bar();
     void setPosition(Position);
+    void setPosition(int, int);
     Position getPosition();
     void setWidth(int);
     int getWidth();

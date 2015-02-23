@@ -1,6 +1,7 @@
 #include "ModelManager.h"
 #include "BarDirection.h"
 #include <cmath>
+#include <stdio.h>
 
 // private methods 
 
@@ -155,12 +156,44 @@ ModelManager::onCollisionBallAndBar() {
     }
 }
 
+void
+ModelManager::initializeBar() {
+    // init bar position
+    bar->setPosition(field->getWidth() / 2, field->getHeight() / 4);
+}
+
 Position
 ModelManager::getBarPosition() {
     return bar->getPosition();
 }
 
+int
+ModelManager::getBarWidth() {
+    return bar->getWidth();
+}
+
+int
+ModelManager::getBarHeight() {
+    return bar->getHeight();
+}
+
+void
+ModelManager::initializeBall() {
+    // init ball position
+    ball->setPosition(field->getWidth() / 2, bar->getPosition().y + bar->getHeight() + ball->getRadius());
+}
+
 Position
 ModelManager::getBallPosition() {
     return ball->getPosition();
+}
+
+int
+ModelManager::getBallRadius() {
+    return ball->getRadius();
+}
+
+void
+ModelManager::setFieldSize(int in_width, int in_height) {
+    field->setFieldSize(in_width, in_height);
 }

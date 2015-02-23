@@ -9,9 +9,11 @@ private:
     int speed;
     Position position;
     int radius;
+
 public:
     Ball();
     void setPosition(Position);
+    void setPosition(int, int);
     Position getPosition();
     void setDirection(int);
     int getDirection();

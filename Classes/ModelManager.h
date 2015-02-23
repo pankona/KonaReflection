@@ -24,8 +24,16 @@ public:
     void onTouchEnded();
     void onCollisionBallAndBar();
 
+    void initializeBar();
     Position getBarPosition();
+    int getBarWidth();
+    int getBarHeight();
+
+    void initializeBall();
     Position getBallPosition();
+    int getBallRadius();
+
+    void setFieldSize(int, int);
 };
 
 #endif // __MODELMANAGER_H__

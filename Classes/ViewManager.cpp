@@ -4,8 +4,8 @@
 // public methods
 
 void
-ViewManager::initialize(Scene* baseScene) {
-
+ViewManager::initialize(Scene* in_baseScene) {
+    baseScene = in_baseScene;
 }
 
 void
@@ -16,9 +16,9 @@ ViewManager::initializeBar(int in_width, int in_height, Position in_initialPosit
 }
 
 void
-ViewManager::initializeField(int in_width, int in_height, Position in_initialPosition) {
+ViewManager::initializeField(int in_width, int in_height) {
     // field configuration
-    dField = new DrawableField(in_width, in_height, in_initialPosition);
+    dField = new DrawableField(in_width, in_height);
     dField->setOnTouchCallback();
     baseScene->addChild(dField->getSprite());
 }
@@ -36,7 +36,7 @@ ViewManager::updateView() {
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
         // ToDo: notify to game controller
-        log ("ball and bar collistion detected.");
+        //log ("ball and bar collistion detected.");
     }
 }
 

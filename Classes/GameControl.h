@@ -3,7 +3,7 @@
 
 #include "cocos2d.h"
 #include "ViewManager.h"
-#include "Modelmanager.h"
+#include "ModelManager.h"
 
 USING_NS_CC;
 

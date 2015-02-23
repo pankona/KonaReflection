@@ -5,10 +5,11 @@
 #include "DrawableBall.h"
 #include "DrawableField.h"
 #include "DrawableBar.h"
+#include "ViewEventListener.h"
 
 USING_NS_CC;
 
-class ViewManager {
+class ViewManager : public ViewEventListener {
 private:    
     Scene* baseScene;
     DrawableBall* dBall;
@@ -23,9 +24,7 @@ public:
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
-    void onTouchBegan(int, Event*, int, int);
-    void onTouchMoved(int, Event*, int, int);
-    void onTouchEnded(int, Event*);
+    void onEvent(ViewEventListener::EventTag);
 };
 
 #endif // __VIEWMANAGER_H__

@@ -19,7 +19,7 @@ void
 ViewManager::initializeField(int in_width, int in_height) {
     // field configuration
     dField = new DrawableField(in_width, in_height);
-    dField->setOnTouchCallback();
+    dField->addViewEventListener(this);
     baseScene->addChild(dField->getSprite());
 }
 
@@ -51,16 +51,6 @@ ViewManager::setBarPosition(Position p) {
 }
 
 void
-ViewManager::onTouchBegan(int tag, Event* event, int, int) {
-    log ("[VM] onTouchBegan.");
-}
-
-void
-ViewManager::onTouchMoved(int tag, Event* event, int, int) {
-    log ("[VM] onTouchMoved.");
-}
-
-void
-ViewManager::onTouchEnded(int tag, Event* event) {
-    log ("[VM] onTouchEnded.");
+ViewManager::onEvent(ViewEventListener::EventTag in_event) {
+    log ("on event");
 }

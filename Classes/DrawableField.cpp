@@ -23,23 +23,32 @@ DrawableField::getSprite() {
 }
 
 void
-DrawableField::setOnTouchCallback() {
+DrawableField::addViewEventListener(ViewEventListener *in_listener) {
 
-    if (sprite == NULL) {
+    if (in_listener == NULL || sprite == NULL) {
         return;
     }
 
-    // temporary tag
+    listener = in_listener;
+
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
+        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_BEGAN);
         return true;
     };
 
     onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
+        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_MOVED);
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
+        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_ENDED);
     };
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
+}
+
+void
+DrawableField::ViewEventNotify(ViewEventListener::EventTag in_event) {
+     listener->onEvent(in_event);
 }

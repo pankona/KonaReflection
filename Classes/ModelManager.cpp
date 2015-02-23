@@ -2,6 +2,8 @@
 #include "BarDirection.h"
 #include <cmath>
 
+// private methods 
+
 bool
 ModelManager::isTouchOnRightSide(int in_x) {
     int width = field->getWidth();
@@ -151,4 +153,14 @@ ModelManager::onCollisionBallAndBar() {
             }
         }
     }
+}
+
+Position
+ModelManager::getBarPosition() {
+    return bar->getPosition();
+}
+
+Position
+ModelManager::getBallPosition() {
+    return ball->getPosition();
 }

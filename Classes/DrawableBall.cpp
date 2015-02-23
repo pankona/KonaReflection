@@ -3,18 +3,18 @@
 // private methods
 
 void
-DrawableBall::createSprite(int in_radius) {
+DrawableBall::createSprite(int in_radius, Position in_initPosition) {
     Rect rect = Rect(0, 0, in_radius, in_radius);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::RED);
-    sprite->setPosition(0, 0);
+    sprite->setPosition(in_initPosition.x, in_initPosition.y);
 }
 
 // public methods
 
-DrawableBall::DrawableBall(int in_radius) {
-    createSprite(in_radius);
+DrawableBall::DrawableBall(int in_radius, Position in_initPosition) {
+    createSprite(in_radius, in_initPosition);
 }
 
 Sprite*

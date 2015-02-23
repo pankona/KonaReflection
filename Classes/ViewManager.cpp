@@ -6,22 +6,28 @@
 void
 ViewManager::initialize(Scene* baseScene) {
 
-    // get screen size
-    Size screenSize = Director::getInstance()->getVisibleSize();
-    log ("set screen size w = %d, h = %d", (int)screenSize.width, (int)screenSize.height);
+}
 
+void
+ViewManager::initializeBar(int in_width, int in_height, Position in_initialPosition) {
+    // bar configuration
+    dBar = new DrawableBar(in_width, in_height, in_initialPosition);
+    baseScene->addChild(dBar->getSprite());
+}
+
+void
+ViewManager::initializeField(int in_width, int in_height, Position in_initialPosition) {
     // field configuration
-    dField = new DrawableField(screenSize.width, screenSize.height);
+    dField = new DrawableField(in_width, in_height, in_initialPosition);
     dField->setOnTouchCallback();
     baseScene->addChild(dField->getSprite());
+}
 
+void
+ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
     // ball configuration
-    dBall = new DrawableBall(50);
+    dBall = new DrawableBall(in_radius, in_initialPosition);
     baseScene->addChild(dBall->getSprite());
-
-    // bar configuration
-    dBar = new DrawableBar(100, 20);
-    baseScene->addChild(dBar->getSprite());
 }
 
 void

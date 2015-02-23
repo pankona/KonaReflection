@@ -16,6 +16,8 @@ private:
 
 public:
     void initialize(Scene* baseScene);
+    void initializeBar(int, int);
+    void initializeBall(int);
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);

@@ -10,10 +10,10 @@ class DrawableBall {
 
 private:    
     Sprite* sprite;
-    void createSprite(int);
+    void createSprite(int, Position);
 
 public:
-    DrawableBall(int);
+    DrawableBall(int, Position);
     Sprite* getSprite();
     void setPosition(Position);
 };

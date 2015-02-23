@@ -9,10 +9,10 @@ class DrawableField {
 
 private:
     Sprite* sprite;
-    void createSprite(int, int);
+    void createSprite(int, int, Position);
 
 public:
-    DrawableField(int, int);
+    DrawableField(int, int, Position);
     Sprite* getSprite();
     void setOnTouchCallback();
 };

@@ -23,6 +23,9 @@ public:
     void onTouchMoved(int, int);
     void onTouchEnded();
     void onCollisionBallAndBar();
+
+    Position getBarPosition();
+    Position getBallPosition();
 };
 
 #endif // __MODELMANAGER_H__

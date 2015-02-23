@@ -3,12 +3,12 @@
 
 void
 GameControl::update(float delta) {
-    //mm.progress(delta);
+    mm.progress(delta);
 
     // these should be treated on callback from model manager.
-    //vm.setBarPosition(mm.getBarPosition());
-    //vm.setBallPosition(mm.getBallPosition());
-    //vm.updateView();
+    vm.setBarPosition(mm.getBarPosition());
+    vm.setBallPosition(mm.getBallPosition());
+    vm.updateView();
 }
 
 void

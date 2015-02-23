@@ -33,22 +33,24 @@ DrawableField::addViewEventListener(ViewEventListener *in_listener) {
 
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
-        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_BEGAN);
+        Position p;
+        p.x = touch->getLocation().x;
+        p.y = touch->getLocation().y;
+        listener->onTouchBegan(p);;
         return true;
     };
 
     onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
-        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_MOVED);
+        Position p;
+        p.x = touch->getLocation().x;
+        p.y = touch->getLocation().y;
+        listener->onTouchMoved(p);
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
-        ViewEventNotify(ViewEventListener::EventTag::ON_TOUCH_ENDED);
+        listener->onTouchEnded();
     };
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
 }
 
-void
-DrawableField::ViewEventNotify(ViewEventListener::EventTag in_event) {
-     listener->onEvent(in_event);
-}

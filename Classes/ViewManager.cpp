@@ -36,7 +36,7 @@ ViewManager::updateView() {
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
         // ToDo: notify to game controller
-        //log ("ball and bar collistion detected.");
+        log ("ball and bar collistion detected.");
     }
 }
 
@@ -51,6 +51,19 @@ ViewManager::setBarPosition(Position p) {
 }
 
 void
-ViewManager::onEvent(ViewEventListener::EventTag in_event) {
-    log ("on event");
+ViewManager::onTouchBegan(Position in_position) {
+    // ToDo: notify to game control
+    log ("onTouchBegan. p = (%d, %d)", in_position.x, in_position.y);
+}
+
+void
+ViewManager::onTouchMoved(Position in_position) {
+    // ToDo: notify to game control
+  log ("onTouchMoved. p = (%d, %d)", in_position.x, in_position.y);
+}
+
+void
+ViewManager::onTouchEnded() {
+    // ToDo: notify to game control
+  log ("onTouchEnded");
 }

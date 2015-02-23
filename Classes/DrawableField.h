@@ -18,7 +18,6 @@ public:
     DrawableField(int, int);
     Sprite* getSprite();
     void addViewEventListener(ViewEventListener*);
-    void ViewEventNotify(ViewEventListener::EventTag);
 };
 
 #endif // __DRAWABLEFIELD_H__

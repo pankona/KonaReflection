@@ -1,14 +1,13 @@
 #ifndef __VIEWEVENTLISTENER_H__
 #define __VIEWEVENTLISTENER_H__
 
+#include "Position.h"
+
 class ViewEventListener {
 public:
-    enum EventTag {
-        ON_TOUCH_BEGAN,
-        ON_TOUCH_MOVED,
-        ON_TOUCH_ENDED
-    };
-    virtual void onEvent(EventTag) = 0;
+    virtual void onTouchBegan(Position) = 0;
+    virtual void onTouchMoved(Position) = 0;
+    virtual void onTouchEnded() = 0;
 };
 
 #endif /* __EVENTLISTENER_H__ */

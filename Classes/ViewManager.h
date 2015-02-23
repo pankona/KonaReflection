@@ -24,7 +24,10 @@ public:
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
-    void onEvent(ViewEventListener::EventTag);
+
+    void onTouchBegan(Position);
+    void onTouchMoved(Position);
+    void onTouchEnded();
 };
 
 #endif // __VIEWMANAGER_H__

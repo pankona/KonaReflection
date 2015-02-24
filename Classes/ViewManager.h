@@ -9,6 +9,7 @@
 
 USING_NS_CC;
 
+//class ViewManager : public ViewEventListener {
 class ViewManager : public ViewEventListener {
 private:    
     Scene* baseScene;

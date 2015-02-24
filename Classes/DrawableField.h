@@ -7,17 +7,18 @@
 
 USING_NS_CC;
 
-class DrawableField {
+class DrawableField /* listenable */ {
 
 private:
     Sprite* sprite;
+    std::vector<ViewEventListener*> listeners;
     void createSprite(int, int);
-    ViewEventListener* listener; // should be array
 
 public:
     DrawableField(int, int);
     Sprite* getSprite();
     void addViewEventListener(ViewEventListener*);
+    void removeViewEventListener(ViewEventListener*);
 };
 
 #endif // __DRAWABLEFIELD_H__

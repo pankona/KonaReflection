@@ -23,20 +23,18 @@ DrawableField::getSprite() {
 }
 
 void
-DrawableField::addViewEventListener(ViewEventListener *in_listener) {
+DrawableField::addViewEventListener(ViewEventListener* in_listener) {
 
-    if (in_listener == NULL || sprite == NULL) {
-        return;
-    }
-
-    listener = in_listener;
+    listeners.push_back(in_listener);
 
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
         Position p;
         p.x = touch->getLocation().x;
         p.y = touch->getLocation().y;
-        listener->onTouchBegan(p);;
+        for (ViewEventListener* listener : listeners) {
+            listener->onTouchBegan(p);
+        }
         return true;
     };
 
@@ -44,13 +42,26 @@ DrawableField::addViewEventListener(ViewEventListener *in_listener) {
         Position p;
         p.x = touch->getLocation().x;
         p.y = touch->getLocation().y;
-        listener->onTouchMoved(p);
+        for (ViewEventListener* listener : listeners) {
+            listener->onTouchMoved(p);
+        }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
-        listener->onTouchEnded();
+        for (ViewEventListener* listener : listeners) {
+            listener->onTouchEnded();
+        }
     };
 
     Director::getInstance()->getEventDispatcher()->addEventListenerWithSceneGraphPriority(onTouchListener, sprite);
 }
+
+void
+DrawableField::removeViewEventListener(ViewEventListener* in_listener) {
+    auto it = std::find(listeners.begin(), listeners.end(), in_listener);
+    if (it != listeners.end()) {
+        listeners.erase(it);
+    }
+}
+
 

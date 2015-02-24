@@ -10,8 +10,9 @@ private:
     Field* field;
     Bar* bar;
     Ball* ball;
+    Position lastTouchedPosition;
 
-    bool isTouchOnRightSide(int);
+    bool isTouchOnRightSideOfBar(int);
     void moveBall(float);
     void moveBar(float);
 

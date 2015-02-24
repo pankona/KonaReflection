@@ -6,12 +6,9 @@
 // private methods 
 
 bool
-ModelManager::isTouchOnRightSide(int in_x) {
-    int width = field->getWidth();
-    int center_of_width = width / 2;
-    printf ("in_x = %d\n", in_x);
-    printf ("width = %d, center_of_width = %d\n", width, center_of_width);
-    if (in_x > center_of_width) {
+ModelManager::isTouchOnRightSideOfBar(int in_x) {
+    int barPositionX = bar->getPosition().x;
+    if (in_x > barPositionX) {
         return true;
     }
     return false;
@@ -20,6 +17,12 @@ ModelManager::isTouchOnRightSide(int in_x) {
 void
 ModelManager::moveBar(float delta) {
     if (bar->getDirection() == BarDirection::NONE) {
+        return;
+    }
+
+    if (lastTouchedPosition.x > bar->getPosition().x - bar->getWidth() / 3 &&
+        lastTouchedPosition.x < bar->getPosition().x + bar->getWidth() / 3) {
+        bar->setDirection(BarDirection::NONE);
         return;
     }
 
@@ -94,22 +97,24 @@ ModelManager::progress(float delta) {
 
 void
 ModelManager::onTouchBegan(int x, int y) {
-    if (isTouchOnRightSide(x)) {
-        printf ("touch is right side\n");
+    lastTouchedPosition.x = x;
+    lastTouchedPosition.y = y;
+
+    if (isTouchOnRightSideOfBar(x)) {
         bar->setDirection(BarDirection::RIGHT);
     } else {
-        printf ("touch is left side\n");
         bar->setDirection(BarDirection::LEFT);
     }
 }
 
 void
 ModelManager::onTouchMoved(int x, int y) {
-    if (isTouchOnRightSide(x)) {
-        printf ("touch is moved to right side\n");
+    lastTouchedPosition.x = x;
+    lastTouchedPosition.y = y;
+
+    if (isTouchOnRightSideOfBar(x)) {
         bar->setDirection(BarDirection::RIGHT);
     } else {
-        printf ("touch is moved to left side\n");
         bar->setDirection(BarDirection::LEFT);
     }
 }

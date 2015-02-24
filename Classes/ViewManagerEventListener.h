@@ -6,7 +6,8 @@ public:
      enum ViewManagerEvent {
         TOUCH_BEGAN,
         TOUCH_MOVED,
-        TOUCH_ENDED
+        TOUCH_ENDED,
+        BAR_AND_BALL_COLLISION
     };
 
    virtual void onViewManagerEvent(ViewManagerEvent, void*) = 0;

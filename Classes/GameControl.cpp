@@ -34,5 +34,25 @@ GameControl::initialize(Scene* baseScene) {
 
 void
 GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
-    log ("%s", __func__);
+
+    Position *p;
+
+    switch (in_event) {
+        case ViewManagerEvent::BAR_AND_BALL_COLLISION:
+            mm.onCollisionBallAndBar();
+            break;
+        case ViewManagerEvent::TOUCH_BEGAN:
+            p = (Position*) arg;
+            mm.onTouchBegan(p->x, p->y);
+            break;
+        case ViewManagerEvent::TOUCH_MOVED:
+            p = (Position*) arg;
+            mm.onTouchMoved(p->x, p->y);
+            break;
+        case ViewManagerEvent::TOUCH_ENDED:
+            mm.onTouchEnded();
+            break;
+        default:
+            break;
+    }
 }

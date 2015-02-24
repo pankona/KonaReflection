@@ -45,8 +45,7 @@ ViewManager::updateView() {
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
-        // ToDo: notify to game controller
-        log ("ball and bar collistion detected.");
+        eventNotify(ViewManagerEventListener::ViewManagerEvent::BAR_AND_BALL_COLLISION, NULL);
     }
 }
 

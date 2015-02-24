@@ -1,5 +1,4 @@
 #include "Bar.h"
-#include <stdio.h>
 
 // public methods
 
@@ -61,7 +60,6 @@ Bar::getSpeed() {
 
 void
 Bar::setDirection(BarDirection in_direction) {
-    printf ("in_direction = %d\n", in_direction);
     direction = (int) in_direction;
 }
 

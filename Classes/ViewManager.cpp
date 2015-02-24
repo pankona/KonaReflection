@@ -61,22 +61,16 @@ ViewManager::setBarPosition(Position p) {
 
 void
 ViewManager::onTouchBegan(Position in_position) {
-    // ToDo: notify to game control
-    log ("onTouchBegan. p = (%d, %d)", in_position.x, in_position.y);
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
 }
 
 void
 ViewManager::onTouchMoved(Position in_position) {
-    // ToDo: notify to game control
-    log ("onTouchMoved. p = (%d, %d)", in_position.x, in_position.y);
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_MOVED, &in_position);
 }
 
 void
 ViewManager::onTouchEnded() {
-    // ToDo: notify to game control
-    log ("onTouchEnded");
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_ENDED, NULL);
 }
 

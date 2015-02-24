@@ -141,7 +141,9 @@ set(GAME_HEADERS
   Classes/GameControl.h
   Classes/ModelManager.h
   Classes/Position.h
+  Classes/ViewEventListener.h
   Classes/ViewManager.h
+  Classes/ViewManagerEventListener.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

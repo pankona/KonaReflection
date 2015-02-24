@@ -4,10 +4,11 @@
 #include "cocos2d.h"
 #include "ViewManager.h"
 #include "ModelManager.h"
+#include "ViewManagerEventListener.h"
 
 USING_NS_CC;
 
-class GameControl {
+class GameControl : public ViewManagerEventListener {
 private:
     ModelManager mm;
     ViewManager  vm;
@@ -15,6 +16,7 @@ private:
 public:
     void initialize(Scene*);
     void update(float);
+    void onViewManagerEvent(ViewManagerEventListener::ViewManagerEvent, void*);
 };
 
 #endif // __FIELD_H__

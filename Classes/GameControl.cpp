@@ -15,6 +15,7 @@ void
 GameControl::initialize(Scene* baseScene) {
     mm.initialize();
     vm.initialize(baseScene);
+    vm.addViewManagerEventListener(this);
 
     // get screen size
     Size screenSize = Director::getInstance()->getVisibleSize();
@@ -29,4 +30,9 @@ GameControl::initialize(Scene* baseScene) {
     mm.initializeBall();
     vm.initializeBall(mm.getBallRadius(), mm.getBallPosition());
     log ("ball initialized with parameter: r = %d, p = (%d, %d)", mm.getBallRadius(), mm.getBallPosition().x, mm.getBallPosition().y);
+}
+
+void
+GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
+    log ("%s", __func__);
 }

@@ -6,16 +6,18 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "ViewEventListener.h"
+#include "ViewManagerEventListener.h"
 
 USING_NS_CC;
 
-//class ViewManager : public ViewEventListener {
 class ViewManager : public ViewEventListener {
 private:    
+    std::vector<ViewManagerEventListener*> listeners;
     Scene* baseScene;
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
+    void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
 public:
     void initialize(Scene* baseScene);
@@ -25,6 +27,9 @@ public:
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
+
+    void addViewManagerEventListener(ViewManagerEventListener*);
+    void removeViewManagerEventListener(ViewManagerEventListener*);
 
     void onTouchBegan(Position);
     void onTouchMoved(Position);

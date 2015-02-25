@@ -6,6 +6,7 @@
 #include "DrawableBall.h"
 #include "DrawableField.h"
 #include "DrawableBar.h"
+#include "DrawableBlock.h"
 #include "ViewEventListener.h"
 #include "ViewManagerEventListener.h"
 
@@ -18,6 +19,7 @@ private:
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
+    std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
 public:

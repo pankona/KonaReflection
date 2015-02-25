@@ -89,6 +89,8 @@ ViewManager::removeViewManagerEventListener(ViewManagerEventListener* in_listene
 
 void
 ViewManager::addBlock(int in_width, int in_height, Position in_position) {
-    // ToDo implement
+    DrawableBlock* dBlock = new DrawableBlock(in_width, in_height, in_position);
+    baseScene->addChild(dBlock->getSprite());
+    dBlocks.push_back(dBlock);
 }
 

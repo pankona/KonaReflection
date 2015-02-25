@@ -207,16 +207,20 @@ void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
     int numOfBlocksPerLine = 5;
-    int blockWidth = field->getWidth() / numOfBlocksPerLine;
+    int lineNumOfBlocks = 5;
+    int blockWidth = field->getWidth() / numOfBlocksPerLine - 2;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
 
-    for (int i = 0; i < numOfBlocksPerLine; i ++) {
-        Block* block = new Block();
-        block->setSize(blockWidth, blockHeight);
-        block->setPosition((i * blockWidth) + (blockWidth / 2), fieldHeight - (blockHeight / 2));
-        blocks.push_back(block);
+    for (int j = 0; j < lineNumOfBlocks; j++) {
+        for (int i = 0; i < numOfBlocksPerLine; i++) {
+            Block* block = new Block();
+            block->setSize(blockWidth, blockHeight);
+            block->setPosition(1 + (i * blockWidth) + (blockWidth / 2) + i, fieldHeight - (blockHeight / 2) - 1 - (blockHeight * j) - j);
+            blocks.push_back(block);
+        }
     }
+
 }
 
 int

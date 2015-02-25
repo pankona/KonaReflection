@@ -4,12 +4,14 @@
 #include "Field.h"
 #include "Bar.h"
 #include "Ball.h"
+#include "Block.h"
 
 class ModelManager {
 private:    
     Field* field;
     Bar* bar;
     Ball* ball;
+    std::vector<Block*> blocks;
     Position lastTouchedPosition;
 
     bool isTouchOnRightSideOfBar(int);
@@ -35,6 +37,9 @@ public:
     int getBallRadius();
 
     void setFieldSize(int, int);
+
+    void initializeBlocks();
+    std::vector<Block*> getBlocks();
 };
 
 #endif // __MODELMANAGER_H__

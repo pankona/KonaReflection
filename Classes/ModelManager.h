@@ -5,6 +5,7 @@
 #include "Bar.h"
 #include "Ball.h"
 #include "Block.h"
+#include <vector>
 
 class ModelManager {
 private:    

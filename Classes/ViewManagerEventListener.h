@@ -7,7 +7,8 @@ public:
         TOUCH_BEGAN,
         TOUCH_MOVED,
         TOUCH_ENDED,
-        BAR_AND_BALL_COLLISION
+        BALL_AND_BAR_COLLISION,
+        BALL_AND_BLOCK_COLLISION,
     };
 
    virtual void onViewManagerEvent(ViewManagerEvent, void*) = 0;

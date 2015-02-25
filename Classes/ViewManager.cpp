@@ -45,7 +45,16 @@ ViewManager::updateView() {
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
-        eventNotify(ViewManagerEventListener::ViewManagerEvent::BAR_AND_BALL_COLLISION, NULL);
+        eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BAR_COLLISION, NULL);
+    }
+
+    int blockNum = dBlocks.size();
+    for (int i = 0; i < blockNum; i++) {
+        DrawableBlock* block = dBlocks.at(i);
+        Rect blockRect = block->getSprite()->getBoundingBox();
+        if (ballRect.intersectsRect(blockRect)) {
+            eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BLOCK_COLLISION, NULL);
+        }
     }
 }
 

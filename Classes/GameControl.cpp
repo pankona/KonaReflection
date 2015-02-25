@@ -43,7 +43,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     Position *p;
 
     switch (in_event) {
-        case ViewManagerEvent::BAR_AND_BALL_COLLISION:
+        case ViewManagerEvent::BALL_AND_BAR_COLLISION:
             mm.onCollisionBallAndBar();
             break;
         case ViewManagerEvent::TOUCH_BEGAN:
@@ -56,6 +56,10 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             break;
         case ViewManagerEvent::TOUCH_ENDED:
             mm.onTouchEnded();
+            break;
+        case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
+            // ToDo implement
+            log ("ball and block collistion detected.");
             break;
         default:
             break;

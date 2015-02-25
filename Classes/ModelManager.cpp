@@ -219,8 +219,26 @@ ModelManager::initializeBlocks() {
     }
 }
 
-std::vector<Block*>
-ModelManager::getBlocks() {
-    return blocks;
+int
+ModelManager::getBlockNum() {
+    return blocks.size();
+}
+
+int
+ModelManager::getBlockWidth(int index) {
+    Block* block = blocks.at(index);
+    return block->getWidth();
+}
+
+int
+ModelManager::getBlockHeight(int index) {
+    Block* block = blocks.at(index);
+    return block->getHeight();
+}
+
+Position
+ModelManager::getBlockPosition(int index) {
+    Block* block = blocks.at(index);
+    return block->getPosition();
 }
 

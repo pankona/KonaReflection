@@ -39,7 +39,10 @@ public:
     void setFieldSize(int, int);
 
     void initializeBlocks();
-    std::vector<Block*> getBlocks();
+    int getBlockNum();
+    int getBlockWidth(int);
+    int getBlockHeight(int);
+    Position getBlockPosition(int);
 };
 
 #endif // __MODELMANAGER_H__

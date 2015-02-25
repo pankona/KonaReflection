@@ -86,3 +86,9 @@ ViewManager::removeViewManagerEventListener(ViewManagerEventListener* in_listene
         listeners.erase(it);
     }
 }
+
+void
+ViewManager::addBlock(int in_width, int in_height, Position in_position) {
+    // ToDo implement
+}
+

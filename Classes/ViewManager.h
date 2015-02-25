@@ -2,6 +2,7 @@
 #define __VIEWMANAGER_H__
 
 #include "cocos2d.h"
+#include "Position.h"
 #include "DrawableBall.h"
 #include "DrawableField.h"
 #include "DrawableBar.h"
@@ -34,6 +35,8 @@ public:
     void onTouchBegan(Position);
     void onTouchMoved(Position);
     void onTouchEnded();
+
+    void addBlock(int, int, Position);
 };
 
 #endif // __VIEWMANAGER_H__

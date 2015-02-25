@@ -33,7 +33,7 @@ GameControl::initialize(Scene* baseScene) {
 
     mm.initializeBlocks();
     for (int i = 0; i < mm.getBlockNum(); i++) {
-        //vm.addBlock(mm.getBlockWidth(i), mm.getBlockHeight(i), mm.getBlockPosition(i));
+        vm.addBlock(mm.getBlockWidth(i), mm.getBlockHeight(i), mm.getBlockPosition(i));
     }
 }
 

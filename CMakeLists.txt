@@ -121,6 +121,7 @@ set(GAME_SRC
   Classes/Block.cpp
   Classes/DrawableBall.cpp
   Classes/DrawableBar.cpp
+  Classes/DrawableBlock.cpp
   Classes/DrawableField.cpp
   Classes/Field.cpp
   Classes/GameControl.cpp
@@ -137,6 +138,7 @@ set(GAME_HEADERS
   Classes/Block.h
   Classes/DrawableBall.h
   Classes/DrawableBar.h
+  Classes/DrawableBlock.h
   Classes/DrawableField.h
   Classes/ViewEventListener.h
   Classes/Field.h

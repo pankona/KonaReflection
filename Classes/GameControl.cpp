@@ -30,6 +30,11 @@ GameControl::initialize(Scene* baseScene) {
     mm.initializeBall();
     vm.initializeBall(mm.getBallRadius(), mm.getBallPosition());
     log ("ball initialized with parameter: r = %d, p = (%d, %d)", mm.getBallRadius(), mm.getBallPosition().x, mm.getBallPosition().y);
+
+    mm.initializeBlocks();
+    for (int i = 0; i < mm.getBlockNum(); i++) {
+        //vm.addBlock(mm.getBlockWidth(i), mm.getBlockHeight(i), mm.getBlockPosition(i));
+    }
 }
 
 void

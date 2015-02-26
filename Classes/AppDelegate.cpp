@@ -23,7 +23,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     director->setDisplayStats(false);
-    director->setAnimationInterval(1.0 / 45);
+    director->setAnimationInterval(1.0 / 60);
     glview->setDesignResolutionSize(450, 600, ResolutionPolicy::SHOW_ALL);
     auto scene = BaseScene::create();
     director->runWithScene(scene);

@@ -206,10 +206,10 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 10;
+    int numOfBlocksPerLine = 6;
     int lineNumOfBlocks = 5;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
-    int blockHeight = 30;
+    int blockHeight = 50;
     int fieldHeight = field->getHeight();
 
     for (int j = 0; j < lineNumOfBlocks; j++) {

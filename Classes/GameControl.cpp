@@ -77,8 +77,10 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             mm.onTouchEnded();
             break;
         case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
-            // ToDo implement
-            log ("ball and block collistion detected.");
+            int* blockIndex;
+            blockIndex = (int*) arg;
+            log ("collision block = %d", *blockIndex);
+            mm.onCollisionBallAndBlock(*blockIndex);
             break;
         default:
             break;

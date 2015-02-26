@@ -3,7 +3,7 @@
 #include <cmath>
 #include <stdio.h>
 
-// private methods 
+// private methods
 
 bool
 ModelManager::isTouchOnRightSideOfBar(int in_x) {
@@ -131,7 +131,7 @@ ModelManager::onCollisionBallAndBar() {
     int ballRadius = ball->getRadius();
     int barWidth = bar->getWidth();
 
-    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 && 
+    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;
@@ -247,3 +247,27 @@ ModelManager::getBlockPosition(int index) {
     return block->getPosition();
 }
 
+void
+ModelManager::onCollisionBallAndBlock(int in_blockIndex) {
+    Block* block = blocks.at(in_blockIndex);
+    Position blockPosition = block->getPosition();
+    int blockWidth = block->getWidth();
+    int blockHeight = block->getHeight();
+
+    Position ballPosition = ball->getPosition();
+    int ballRadius = ball->getRadius();
+
+    if (ballPosition.x + ballRadius > blockPosition.x - blockWidth / 2 &&
+        ballPosition.x - ballRadius < blockPosition.x + blockWidth / 2) {
+        // turn over (y)
+        int direction = ball->getDirection();
+        int new_direction = (360 - direction) % 360;
+        ball->setDirection(new_direction);
+    } else if (ballPosition.y + ballRadius > blockPosition.y - blockHeight / 2 &&
+               ballPosition.y - ballRadius < blockPosition.y + blockHeight) {
+        // turn over (x)
+        int direction = ball->getDirection();
+        int new_direction = (180 - direction) % 360;
+        ball->setDirection(new_direction);
+    }
+}

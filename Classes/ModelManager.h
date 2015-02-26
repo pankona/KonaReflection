@@ -5,19 +5,22 @@
 #include "Bar.h"
 #include "Ball.h"
 #include "Block.h"
+#include "ModelManagerEventListener.h"
 #include <vector>
 
 class ModelManager {
-private:    
+private:
     Field* field;
     Bar* bar;
     Ball* ball;
     std::vector<Block*> blocks;
     Position lastTouchedPosition;
+    std::vector<ModelManagerEventListener*> listeners;
 
     bool isTouchOnRightSideOfBar(int);
     void moveBall(float);
     void moveBar(float);
+    void eventNotify(ModelManagerEventListener::ModelManagerEvent, void*);
 
 public:
     ModelManager();
@@ -45,6 +48,8 @@ public:
     int getBlockWidth(int);
     int getBlockHeight(int);
     Position getBlockPosition(int);
+
+    void addModelManagerEventListener(ModelManagerEventListener*);
 };
 
 #endif // __MODELMANAGER_H__

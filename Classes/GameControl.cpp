@@ -16,6 +16,7 @@ GameControl::update(float delta) {
 void
 GameControl::initialize(Scene* baseScene) {
     mm.initialize();
+    mm.addModelManagerEventListener(this);
     vm.initialize(baseScene);
     vm.addViewManagerEventListener(this);
 
@@ -96,3 +97,14 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             break;
     }
 }
+
+void
+GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
+    switch (in_event) {
+        case ModelManagerEvent::BLOCK_DIED:
+            break;
+        default:
+            break;
+    }
+}
+

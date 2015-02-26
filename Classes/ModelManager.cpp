@@ -76,6 +76,14 @@ ModelManager::moveBall(float delta) {
     ball->setPosition(new_position);
 }
 
+
+void
+ModelManager::eventNotify(ModelManagerEventListener::ModelManagerEvent in_event, void* arg) {
+    for (ModelManagerEventListener* listener : listeners) {
+        listener->onModelManagerEvent(in_event, arg);
+    }
+}
+
 // public method
 
 ModelManager::ModelManager() {
@@ -280,4 +288,9 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
         int new_direction = (180 - direction) % 360;
         ball->setDirection(new_direction);
     }
+}
+
+void
+ModelManager::addModelManagerEventListener(ModelManagerEventListener* in_listener) {
+    listeners.push_back(in_listener);
 }

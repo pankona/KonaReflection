@@ -8,7 +8,7 @@
 
 USING_NS_CC;
 
-class GameControl : public ViewManagerEventListener {
+class GameControl : public ViewManagerEventListener, public ModelManagerEventListener {
 private:
     ModelManager mm;
     ViewManager  vm;
@@ -18,6 +18,7 @@ public:
     void initialize(Scene*);
     void update(float);
     void onViewManagerEvent(ViewManagerEventListener::ViewManagerEvent, void*);
+    void onModelManagerEvent(ModelManagerEventListener::ModelManagerEvent, void*);
 };
 
 #endif // __FIELD_H__

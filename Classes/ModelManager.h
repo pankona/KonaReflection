@@ -27,7 +27,7 @@ public:
     void onTouchMoved(int, int);
     void onTouchEnded();
     void onCollisionBallAndBar();
-    void onCollisionBallAndBlock(int);
+    void onCollisionBallAndBlock(int, bool);
 
     void initializeBar();
     Position getBarPosition();

@@ -8,6 +8,8 @@ GameControl::update(float delta) {
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
+
+    collidedBlockNum = 0;
     vm.updateView();
 }
 
@@ -79,8 +81,16 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
         case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
             int* blockIndex;
             blockIndex = (int*) arg;
-            log ("collision block = %d", *blockIndex);
-            mm.onCollisionBallAndBlock(*blockIndex);
+
+            // only one time ball can turn over by block per one frame.
+            bool needBallTurnOver;
+            if (collidedBlockNum == 0) {
+                needBallTurnOver = true;
+            } else {
+                needBallTurnOver = false;
+            }
+            mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
+            collidedBlockNum++;
             break;
         default:
             break;

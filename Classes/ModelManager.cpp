@@ -248,8 +248,13 @@ ModelManager::getBlockPosition(int index) {
 }
 
 void
-ModelManager::onCollisionBallAndBlock(int in_blockIndex) {
+ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOver) {
     Block* block = blocks.at(in_blockIndex);
+
+    if (!in_needBallTurnOver) {
+        return;
+    }
+
     Position blockPosition = block->getPosition();
     int blockWidth = block->getWidth();
     int blockHeight = block->getHeight();

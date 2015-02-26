@@ -12,6 +12,7 @@ class GameControl : public ViewManagerEventListener {
 private:
     ModelManager mm;
     ViewManager  vm;
+    int collidedBlockNum;
 
 public:
     void initialize(Scene*);

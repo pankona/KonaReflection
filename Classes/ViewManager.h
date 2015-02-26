@@ -39,6 +39,7 @@ public:
     void onTouchEnded();
 
     void addBlock(int, int, Position);
+    void setBlockColor(int, Color3B);
 };
 
 #endif // __VIEWMANAGER_H__

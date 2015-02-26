@@ -16,6 +16,7 @@ public:
     DrawableBlock(int, int, Position);
     Sprite* getSprite();
     void setPosition(Position);
+    void setColor(Color3B);
 };
 
 #endif // __DRAWABLEBLOCK_H__

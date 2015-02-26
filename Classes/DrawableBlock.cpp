@@ -27,3 +27,7 @@ DrawableBlock::setPosition(Position p) {
     sprite->setPosition(p.x, p.y);
 }
 
+void
+DrawableBlock::setColor(Color3B in_color) {
+    sprite->setColor(in_color);
+}

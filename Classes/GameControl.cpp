@@ -34,6 +34,25 @@ GameControl::initialize(Scene* baseScene) {
     mm.initializeBlocks();
     for (int i = 0; i < mm.getBlockNum(); i++) {
         vm.addBlock(mm.getBlockWidth(i), mm.getBlockHeight(i), mm.getBlockPosition(i));
+
+        // temporary implementation. set colors to blocks.
+        switch (i % 4) {
+            case 0:
+                vm.setBlockColor(i, Color3B::BLUE);
+                break;
+            case 1:
+                vm.setBlockColor(i, Color3B::MAGENTA);
+                break;
+            case 2:
+                vm.setBlockColor(i, Color3B::GRAY);
+                break;
+            case 3:
+                vm.setBlockColor(i, Color3B::ORANGE);
+                break;
+            default:
+                vm.setBlockColor(i, Color3B::BLACK);
+                break;
+        }
     }
 }
 

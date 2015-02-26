@@ -103,3 +103,11 @@ ViewManager::addBlock(int in_width, int in_height, Position in_position) {
     dBlocks.push_back(dBlock);
 }
 
+void
+ViewManager::setBlockColor(int index, Color3B in_color) {
+    DrawableBlock* dBlock = dBlocks.at(index);
+    if (dBlock == NULL) {
+        return;
+    }
+    dBlock->setColor(in_color);
+}

@@ -37,7 +37,7 @@ void
 ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
     // ball configuration
     dBall = new DrawableBall(in_radius, in_initialPosition);
-    baseScene->addChild(dBall->getSprite());
+    baseScene->addChild(dBall->getSprite(), 100);
 }
 
 void
@@ -51,6 +51,9 @@ ViewManager::updateView() {
     int blockNum = dBlocks.size();
     for (int i = 0; i < blockNum; i++) {
         DrawableBlock* block = dBlocks.at(i);
+        if (!block->isStillAlive()) {
+            continue;
+        }
         Rect blockRect = block->getSprite()->getBoundingBox();
         if (ballRect.intersectsRect(blockRect)) {
             eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BLOCK_COLLISION, &i);
@@ -110,4 +113,12 @@ ViewManager::setBlockColor(int index, Color3B in_color) {
         return;
     }
     dBlock->setColor(in_color);
+}
+
+void
+ViewManager::markBlockAsKilled(int in_index) {
+    DrawableBlock *dBlock = dBlocks.at(in_index);
+    dBlock->markAsKilled();
+    // Fix me. should be transparent.
+    dBlock->setColor(Color3B::WHITE);
 }

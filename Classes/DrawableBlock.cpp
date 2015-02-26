@@ -15,6 +15,7 @@ DrawableBlock::createSprite(int in_width, int in_height, Position in_initPositio
 
 DrawableBlock::DrawableBlock(int in_width, int in_height, Position in_initPosition) {
     createSprite(in_width, in_height, in_initPosition);
+    stillAlive = true;
 }
 
 Sprite*
@@ -30,4 +31,14 @@ DrawableBlock::setPosition(Position p) {
 void
 DrawableBlock::setColor(Color3B in_color) {
     sprite->setColor(in_color);
+}
+
+void
+DrawableBlock::markAsKilled() {
+    stillAlive = false;
+}
+
+bool
+DrawableBlock::isStillAlive() {
+    return stillAlive;
 }

@@ -40,6 +40,7 @@ public:
 
     void addBlock(int, int, Position);
     void setBlockColor(int, Color3B);
+    void markBlockAsKilled(int);
 };
 
 #endif // __VIEWMANAGER_H__

@@ -48,6 +48,7 @@ public:
     int getBlockWidth(int);
     int getBlockHeight(int);
     Position getBlockPosition(int);
+    void killBlock(int);
 
     void addModelManagerEventListener(ModelManagerEventListener*);
 };

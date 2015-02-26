@@ -102,6 +102,9 @@ void
 GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
     switch (in_event) {
         case ModelManagerEvent::BLOCK_DIED:
+            int* blockIndex;
+            blockIndex = (int *)arg;
+            vm.markBlockAsKilled(*blockIndex);
             break;
         default:
             break;

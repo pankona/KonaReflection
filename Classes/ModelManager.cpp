@@ -265,7 +265,7 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
 
     block->decreaseLife(1);
     if (!block->stillAlive()) {
-        // ToDo implement to kill block
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BLOCK_DIED, &in_blockIndex);
     }
 
     if (!in_needBallTurnOver) {

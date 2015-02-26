@@ -15,8 +15,10 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/Ball.cpp \
                    ../../Classes/Bar.cpp \
                    ../../Classes/BaseScene.cpp \
+                   ../../Classes/Block.cpp \
                    ../../Classes/DrawableBall.cpp \
                    ../../Classes/DrawableBar.cpp \
+                   ../../Classes/DrawableBlock.cpp \
                    ../../Classes/DrawableField.cpp \
                    ../../Classes/Field.cpp \
                    ../../Classes/GameControl.cpp \

@@ -4,7 +4,7 @@
 
 void
 DrawableBall::createSprite(int in_radius, Position in_initPosition) {
-    Rect rect = Rect(0, 0, in_radius, in_radius);
+    Rect rect = Rect(0, 0, in_radius * 2, in_radius * 2);
     sprite = Sprite::create();
     sprite->setTextureRect(rect);
     sprite->setColor(Color3B::RED);

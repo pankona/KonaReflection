@@ -3,7 +3,7 @@
 Ball::Ball() {
     position.x = 100;
     position.y = 100;
-    radius = 50;
+    radius = 25;
     direction = 60;
     speed = 10;
 }

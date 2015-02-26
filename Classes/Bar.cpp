@@ -8,7 +8,7 @@ Bar::Bar() {
     width = 100;
     height = 10;
     direction = BarDirection::NONE;
-    speed = 15;
+    speed = 10;
 }
 
 void

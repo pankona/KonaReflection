@@ -206,9 +206,9 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 5;
+    int numOfBlocksPerLine = 10;
     int lineNumOfBlocks = 5;
-    int blockWidth = field->getWidth() / numOfBlocksPerLine - 2;
+    int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
 
@@ -216,7 +216,8 @@ ModelManager::initializeBlocks() {
         for (int i = 0; i < numOfBlocksPerLine; i++) {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
-            block->setPosition(1 + (i * blockWidth) + (blockWidth / 2) + i, fieldHeight - (blockHeight / 2) - 1 - (blockHeight * j) - j);
+            block->setPosition((i * blockWidth) + (blockWidth / 2),
+                               fieldHeight - (blockHeight / 2) - (blockHeight * j));
             blocks.push_back(block);
         }
     }

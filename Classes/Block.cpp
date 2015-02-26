@@ -50,3 +50,19 @@ int
 Block::getLife() {
     return life;
 }
+
+void
+Block::decreaseLife(int in_damage) {
+    life -= in_damage;
+    if (life < 0) {
+        life = 0;
+    }
+}
+
+bool
+Block::stillAlive() {
+    if (life == 0) {
+        return false;
+    }
+    return true;
+}

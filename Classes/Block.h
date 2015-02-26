@@ -23,6 +23,8 @@ public:
 
     void setLife(int);
     int getLife();
+    void decreaseLife(int);
+    bool stillAlive();
 };
 
 #endif // __BLOCK_H__

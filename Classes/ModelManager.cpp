@@ -218,6 +218,7 @@ ModelManager::initializeBlocks() {
             block->setSize(blockWidth, blockHeight);
             block->setPosition((i * blockWidth) + (blockWidth / 2),
                                fieldHeight - (blockHeight / 2) - (blockHeight * j));
+            block->setLife(1);
             blocks.push_back(block);
         }
     }
@@ -250,14 +251,18 @@ ModelManager::getBlockPosition(int index) {
 void
 ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOver) {
     Block* block = blocks.at(in_blockIndex);
+    Position blockPosition = block->getPosition();
+    int blockWidth = block->getWidth();
+    int blockHeight = block->getHeight();
+
+    block->decreaseLife(1);
+    if (!block->stillAlive()) {
+        // ToDo implement to kill block
+    }
 
     if (!in_needBallTurnOver) {
         return;
     }
-
-    Position blockPosition = block->getPosition();
-    int blockWidth = block->getWidth();
-    int blockHeight = block->getHeight();
 
     Position ballPosition = ball->getPosition();
     int ballRadius = ball->getRadius();

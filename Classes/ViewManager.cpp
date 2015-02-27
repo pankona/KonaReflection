@@ -119,6 +119,4 @@ void
 ViewManager::markBlockAsKilled(int in_index) {
     DrawableBlock *dBlock = dBlocks.at(in_index);
     dBlock->markAsKilled();
-    // Fix me. should be transparent.
-    dBlock->setColor(Color3B::WHITE);
 }

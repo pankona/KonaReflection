@@ -40,6 +40,9 @@ public:
     void initializeBall();
     Position getBallPosition();
     int getBallRadius();
+    void setBallSpeed(int);
+
+    void setBallAndBarPositionX(int);
 
     void setFieldSize(int, int);
 

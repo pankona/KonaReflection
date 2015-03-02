@@ -8,6 +8,7 @@ USING_NS_CC;
 
 class SceneManager : public SceneEndListener {
 private:
+    Scene* scene;
 public:
     void initialize();
     void onSceneEnd();

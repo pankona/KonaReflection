@@ -7,12 +7,12 @@ void
 SceneManager::initialize() {
 
     auto director = Director::getInstance();
-    auto scene = TitleScene::create();
-    scene->addSceneEndListener(this);
+    scene = TitleScene::create();
+    ((TitleScene*)scene)->addSceneEndListener(this);
     director->runWithScene(scene);
 }
 
 void
 SceneManager::onSceneEnd() {
-    log ("on scene end.");
+    log ("[%s] on scene end.", __func__);
 }

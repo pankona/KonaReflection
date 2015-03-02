@@ -6,6 +6,7 @@
 void
 TitleControl::notifySceneEnd() {
     for (SceneEndListener* listener : listeners) {
+        log ("[TitleControl] notifySceneEnd");
         listener->onSceneEnd();
     }
 }
@@ -23,7 +24,8 @@ TitleControl::initialize(Scene* baseScene) {
 
 void
 TitleControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
-    log ("event fired");
+    log ("[%s] event fired", __func__);
+    notifySceneEnd();
 }
 
 void

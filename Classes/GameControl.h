@@ -10,6 +10,11 @@ USING_NS_CC;
 
 class GameControl : public ViewManagerEventListener, public ModelManagerEventListener {
 private:
+    enum GameState {
+        READY,
+        STARTED
+    };
+    GameState gameState;
     ModelManager mm;
     ViewManager  vm;
     int collidedBlockNum;

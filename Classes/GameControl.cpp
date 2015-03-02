@@ -15,6 +15,8 @@ GameControl::update(float delta) {
 
 void
 GameControl::initialize(Scene* baseScene) {
+    gameState = GameState::READY;
+
     mm.initialize();
     mm.addModelManagerEventListener(this);
     vm.initialize(baseScene);
@@ -63,6 +65,23 @@ void
 GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
 
     Position *p;
+
+    if (gameState == GameState::READY) {
+        switch (in_event) {
+            case ViewManagerEvent::TOUCH_BEGAN:
+            case ViewManagerEvent::TOUCH_MOVED:
+                p = (Position*) arg;
+                mm.setBallAndBarPositionX(p->x);
+                break;
+            case ViewManagerEvent::TOUCH_ENDED:
+                gameState = GameState::STARTED;
+                mm.setBallSpeed(10); // Fix me: should refer configuration
+                break;
+            default:
+                break;
+        }
+        return;
+    }
 
     switch (in_event) {
         case ViewManagerEvent::BALL_AND_BAR_COLLISION:

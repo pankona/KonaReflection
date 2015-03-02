@@ -26,8 +26,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setAnimationInterval(1.0 / 60);
     glview->setDesignResolutionSize(450, 600, ResolutionPolicy::SHOW_ALL);
 
-    SceneManager sm;
-    sm.initialize();
+    sceneManager.initialize();
     return true;
 }
 

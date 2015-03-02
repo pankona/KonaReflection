@@ -138,6 +138,7 @@ set(GAME_SRC
 set(GAME_HEADERS
   Classes/AppDelegate.h
   Classes/SceneManager.h
+  Classes/SceneEndListener.h
   Classes/Ball.h
   Classes/Bar.h
   Classes/BaseScene.h

@@ -1,5 +1,4 @@
 #include "BaseScene.h"
-#include "DrawableBall.h"
 
 USING_NS_CC;
 

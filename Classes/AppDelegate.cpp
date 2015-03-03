@@ -1,5 +1,5 @@
 #include "AppDelegate.h"
-#include "BaseScene.h"
+#include "SceneManager.h"
 
 USING_NS_CC;
 
@@ -25,8 +25,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
     director->setDisplayStats(false);
     director->setAnimationInterval(1.0 / 60);
     glview->setDesignResolutionSize(450, 600, ResolutionPolicy::SHOW_ALL);
-    auto scene = BaseScene::create();
-    director->runWithScene(scene);
+
+    sceneManager.initialize();
     return true;
 }
 

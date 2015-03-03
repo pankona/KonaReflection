@@ -115,6 +115,7 @@ include_directories(
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
+  Classes/SceneManager.cpp
   Classes/Ball.cpp
   Classes/Bar.cpp
   Classes/BaseScene.cpp
@@ -127,11 +128,17 @@ set(GAME_SRC
   Classes/GameControl.cpp
   Classes/ModelManager.cpp
   Classes/ViewManager.cpp
+  Classes/TitleControl.cpp
+  Classes/TitleScene.cpp
+  Classes/TitleViewManager.cpp
+  Classes/DrawableTitle.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
   Classes/AppDelegate.h
+  Classes/SceneManager.h
+  Classes/SceneEndListener.h
   Classes/Ball.h
   Classes/Bar.h
   Classes/BaseScene.h
@@ -148,6 +155,10 @@ set(GAME_HEADERS
   Classes/ViewEventListener.h
   Classes/ViewManager.h
   Classes/ViewManagerEventListener.h
+  Classes/TitleControl.h
+  Classes/TitleScene.h
+  Classes/TitleViewManager.h
+  Classes/DrawableTitle.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

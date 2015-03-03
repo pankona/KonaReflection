@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
+#include "BaseScene.h"
 
 USING_NS_CC;
 
@@ -14,5 +15,12 @@ SceneManager::initialize() {
 
 void
 SceneManager::onSceneEnd() {
-    log ("[%s] on scene end.", __func__);
+    auto currentScene = scene;
+
+    // go to next scene
+    scene = BaseScene::create();
+    auto transition = TransitionFade::create(0.5, scene);
+    Director::getInstance()->replaceScene(transition);
+
+    // ToDo: destroy current scene
 }

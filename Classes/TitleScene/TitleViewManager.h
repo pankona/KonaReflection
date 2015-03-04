@@ -5,6 +5,7 @@
 #include "ViewEventListener.h"
 #include "ViewManagerEventListener.h"
 #include "DrawableTitle.h"
+#include "DrawableLabel.h"
 
 USING_NS_CC;
 
@@ -13,7 +14,8 @@ private:
     std::vector<ViewManagerEventListener*> listeners;
     Scene* baseScene;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
-    DrawableTitle *dTitle;
+    DrawableTitle* dTitle;
+    DrawableLabel* dLabel;
 
 public:
     void initialize(Scene* baseScene);

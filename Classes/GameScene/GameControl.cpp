@@ -125,6 +125,8 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             blockIndex = (int *)arg;
             vm.markBlockAsKilled(*blockIndex);
             break;
+        case ModelManagerEvent::ALL_BLOCK_DESTROYED:
+            break;
         default:
             break;
     }

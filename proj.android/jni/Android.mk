@@ -20,9 +20,14 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/DrawableBar.cpp \
                    ../../Classes/DrawableBlock.cpp \
                    ../../Classes/DrawableField.cpp \
+                   ../../Classes/DrawableTitle.cpp \
                    ../../Classes/Field.cpp \
                    ../../Classes/GameControl.cpp \
                    ../../Classes/ModelManager.cpp \
+                   ../../Classes/SceneManager.cpp \
+                   ../../Classes/TitleControl.cpp \
+                   ../../Classes/TitleScene.cpp \
+                   ../../Classes/TitleViewManager.cpp \
                    ../../Classes/ViewManager.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes

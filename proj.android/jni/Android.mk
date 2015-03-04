@@ -13,6 +13,7 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/SceneManager/SceneManager.cpp \
+                   ../../Classes/TitleScene/DrawableLabel.cpp \
                    ../../Classes/TitleScene/DrawableTitle.cpp \
                    ../../Classes/TitleScene/TitleControl.cpp \
                    ../../Classes/TitleScene/TitleScene.cpp \

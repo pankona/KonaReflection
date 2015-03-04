@@ -7,14 +7,17 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
+#include "SelfTimer.h"
+#include "SelfTimerListener.h"
 #include "ViewEventListener.h"
 #include "ViewManagerEventListener.h"
 
 USING_NS_CC;
 
-class ViewManager : public ViewEventListener {
+class ViewManager : public ViewEventListener, public SelfTimerListener {
 private:    
     std::vector<ViewManagerEventListener*> listeners;
+    std::vector<SelfTimer*> timers;
     Scene* baseScene;
     DrawableBall* dBall;
     DrawableField* dField;
@@ -30,6 +33,9 @@ public:
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
+    void removeBall();
+    void setTimer(int, int);
+    void onTimerExpired(int);
 
     void addViewManagerEventListener(ViewManagerEventListener*);
     void removeViewManagerEventListener(ViewManagerEventListener*);

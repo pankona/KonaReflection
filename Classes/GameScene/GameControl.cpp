@@ -112,6 +112,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
             collidedBlockNum++;
             break;
+        case ViewManagerEvent::TIMER_EXPIRED:
+            log ("timer fired.");
+            break;
         default:
             break;
     }
@@ -126,6 +129,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.markBlockAsKilled(*blockIndex);
             break;
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
+            mm.setBallSpeed(0);
+            vm.removeBall();
+            vm.setTimer(3, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             break;
         default:
             break;

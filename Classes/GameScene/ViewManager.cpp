@@ -120,3 +120,20 @@ ViewManager::markBlockAsKilled(int in_index) {
     DrawableBlock *dBlock = dBlocks.at(in_index);
     dBlock->markAsKilled();
 }
+
+void
+ViewManager::removeBall() {
+}
+
+void
+ViewManager::setTimer(int in_delay, int in_event_desc) {
+    SelfTimer* timer = new SelfTimer(in_delay, in_event_desc);
+    timer->addSelfTimerListener(this);
+    timers.push_back(timer);
+    timer->run();
+}
+
+void
+ViewManager::onTimerExpired(int in_eventDescriptor) {
+    eventNotify(ViewManagerEventListener::ViewManagerEvent::TIMER_EXPIRED, &in_eventDescriptor);
+}

@@ -9,6 +9,7 @@ public:
         TOUCH_ENDED,
         BALL_AND_BAR_COLLISION,
         BALL_AND_BLOCK_COLLISION,
+        TIMER_EXPIRED
     };
 
    virtual void onViewManagerEvent(ViewManagerEvent, void*) = 0;

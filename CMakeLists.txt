@@ -119,6 +119,7 @@ include_directories(
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
+  Classes/Common/SelfTimer.cpp
   Classes/SceneManager/SceneManager.cpp
   Classes/TitleScene/DrawableLabel.cpp
   Classes/TitleScene/DrawableTitle.cpp
@@ -145,6 +146,7 @@ set(GAME_HEADERS
   Classes/Common/ModelManagerEventListener.h
   Classes/Common/Position.h
   Classes/Common/SceneEndListener.h
+  Classes/Common/SelfTimer.h
   Classes/Common/ViewEventListener.h
   Classes/Common/ViewManagerEventListener.h
   Classes/SceneManager/SceneManager.h

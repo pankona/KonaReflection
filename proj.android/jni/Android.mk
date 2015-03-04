@@ -12,25 +12,29 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
-                   ../../Classes/Ball.cpp \
-                   ../../Classes/Bar.cpp \
-                   ../../Classes/BaseScene.cpp \
-                   ../../Classes/Block.cpp \
-                   ../../Classes/DrawableBall.cpp \
-                   ../../Classes/DrawableBar.cpp \
-                   ../../Classes/DrawableBlock.cpp \
-                   ../../Classes/DrawableField.cpp \
-                   ../../Classes/DrawableTitle.cpp \
-                   ../../Classes/Field.cpp \
-                   ../../Classes/GameControl.cpp \
-                   ../../Classes/ModelManager.cpp \
-                   ../../Classes/SceneManager.cpp \
-                   ../../Classes/TitleControl.cpp \
-                   ../../Classes/TitleScene.cpp \
-                   ../../Classes/TitleViewManager.cpp \
-                   ../../Classes/ViewManager.cpp
+                   ../../Classes/SceneManager/SceneManager.cpp \
+                   ../../Classes/TitleScene/DrawableTitle.cpp \
+                   ../../Classes/TitleScene/TitleControl.cpp \
+                   ../../Classes/TitleScene/TitleScene.cpp \
+                   ../../Classes/TitleScene/TitleViewManager.cpp \
+                   ../../Classes/GameScene/Ball.cpp \
+                   ../../Classes/GameScene/Bar.cpp \
+                   ../../Classes/GameScene/BaseScene.cpp \
+                   ../../Classes/GameScene/Block.cpp \
+                   ../../Classes/GameScene/DrawableBall.cpp \
+                   ../../Classes/GameScene/DrawableBar.cpp \
+                   ../../Classes/GameScene/DrawableBlock.cpp \
+                   ../../Classes/GameScene/DrawableField.cpp \
+                   ../../Classes/GameScene/Field.cpp \
+                   ../../Classes/GameScene/GameControl.cpp \
+                   ../../Classes/GameScene/ModelManager.cpp \
+                   ../../Classes/GameScene/ViewManager.cpp
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
+                    $(LOCAL_PATH)/../../Classes/Common \
+                    $(LOCAL_PATH)/../../Classes/SceneManager \
+                    $(LOCAL_PATH)/../../Classes/TitleScene \
+                    $(LOCAL_PATH)/../../Classes/GameScene
 
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
 

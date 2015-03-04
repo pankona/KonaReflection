@@ -115,50 +115,51 @@ include_directories(
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
-  Classes/SceneManager.cpp
-  Classes/Ball.cpp
-  Classes/Bar.cpp
-  Classes/BaseScene.cpp
-  Classes/Block.cpp
-  Classes/DrawableBall.cpp
-  Classes/DrawableBar.cpp
-  Classes/DrawableBlock.cpp
-  Classes/DrawableField.cpp
-  Classes/Field.cpp
-  Classes/GameControl.cpp
-  Classes/ModelManager.cpp
-  Classes/ViewManager.cpp
-  Classes/TitleControl.cpp
-  Classes/TitleScene.cpp
-  Classes/TitleViewManager.cpp
-  Classes/DrawableTitle.cpp
+  Classes/SceneManager/SceneManager.cpp
+  Classes/TitleScene/DrawableTitle.cpp
+  Classes/TitleScene/TitleControl.cpp
+  Classes/TitleScene/TitleScene.cpp
+  Classes/TitleScene/TitleViewManager.cpp
+  Classes/GameScene/Ball.cpp
+  Classes/GameScene/Bar.cpp
+  Classes/GameScene/BaseScene.cpp
+  Classes/GameScene/Block.cpp
+  Classes/GameScene/DrawableBall.cpp
+  Classes/GameScene/DrawableBar.cpp
+  Classes/GameScene/DrawableBlock.cpp
+  Classes/GameScene/DrawableField.cpp
+  Classes/GameScene/Field.cpp
+  Classes/GameScene/GameControl.cpp
+  Classes/GameScene/ModelManager.cpp
+  Classes/GameScene/ViewManager.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
 
 set(GAME_HEADERS
   Classes/AppDelegate.h
-  Classes/SceneManager.h
-  Classes/SceneEndListener.h
-  Classes/Ball.h
-  Classes/Bar.h
-  Classes/BaseScene.h
-  Classes/Block.h
-  Classes/DrawableBall.h
-  Classes/DrawableBar.h
-  Classes/DrawableBlock.h
-  Classes/DrawableField.h
-  Classes/ViewEventListener.h
-  Classes/Field.h
-  Classes/GameControl.h
-  Classes/ModelManager.h
-  Classes/Position.h
-  Classes/ViewEventListener.h
-  Classes/ViewManager.h
-  Classes/ViewManagerEventListener.h
-  Classes/TitleControl.h
-  Classes/TitleScene.h
-  Classes/TitleViewManager.h
-  Classes/DrawableTitle.h
+  Classes/Common/ModelManagerEventListener.h
+  Classes/Common/Position.h
+  Classes/Common/SceneEndListener.h
+  Classes/Common/ViewEventListener.h
+  Classes/Common/ViewManagerEventListener.h
+  Classes/SceneManager/SceneManager.h
+  Classes/TitleScene/DrawableTitle.h
+  Classes/TitleScene/TitleControl.h
+  Classes/TitleScene/TitleScene.h
+  Classes/TitleScene/TitleViewManager.h
+  Classes/GameScene/Ball.h
+  Classes/GameScene/Bar.h
+  Classes/GameScene/BarDirection.h
+  Classes/GameScene/BaseScene.h
+  Classes/GameScene/Block.h
+  Classes/GameScene/DrawableBall.h
+  Classes/GameScene/DrawableBar.h
+  Classes/GameScene/DrawableBlock.h
+  Classes/GameScene/DrawableField.h
+  Classes/GameScene/Field.h
+  Classes/GameScene/GameControl.h
+  Classes/GameScene/ModelManager.h
+  Classes/GameScene/ViewManager.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )
 

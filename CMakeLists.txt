@@ -111,11 +111,16 @@ include_directories(
   /usr/include/GLFW
   ${COCOS2D_ROOT}/cocos
   Classes
+  Classes/Common
+  Classes/SceneManager
+  Classes/TitleScene
+  Classes/GameScene
 )
 
 set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/SceneManager/SceneManager.cpp
+  Classes/TitleScene/DrawableLabel.cpp
   Classes/TitleScene/DrawableTitle.cpp
   Classes/TitleScene/TitleControl.cpp
   Classes/TitleScene/TitleScene.cpp
@@ -143,6 +148,7 @@ set(GAME_HEADERS
   Classes/Common/ViewEventListener.h
   Classes/Common/ViewManagerEventListener.h
   Classes/SceneManager/SceneManager.h
+  Classes/TitleScene/DrawableLabel.h
   Classes/TitleScene/DrawableTitle.h
   Classes/TitleScene/TitleControl.h
   Classes/TitleScene/TitleScene.h

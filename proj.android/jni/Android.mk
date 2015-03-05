@@ -12,9 +12,9 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
+                   ../../Classes/Common/DrawableLabel.cpp \
                    ../../Classes/Common/SelfTimer.cpp \
                    ../../Classes/SceneManager/SceneManager.cpp \
-                   ../../Classes/TitleScene/DrawableLabel.cpp \
                    ../../Classes/TitleScene/DrawableTitle.cpp \
                    ../../Classes/TitleScene/TitleControl.cpp \
                    ../../Classes/TitleScene/TitleScene.cpp \
@@ -26,6 +26,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameScene/DrawableBall.cpp \
                    ../../Classes/GameScene/DrawableBar.cpp \
                    ../../Classes/GameScene/DrawableBlock.cpp \
+                   ../../Classes/GameScene/DrawableCongurat.cpp \
                    ../../Classes/GameScene/DrawableField.cpp \
                    ../../Classes/GameScene/Field.cpp \
                    ../../Classes/GameScene/GameControl.cpp \

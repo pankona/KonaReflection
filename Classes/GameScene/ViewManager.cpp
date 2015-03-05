@@ -150,4 +150,7 @@ ViewManager::onTimerExpired(int in_eventDescriptor) {
 
 void
 ViewManager::showConguratulation(Position in_p) {
+    dCongurat = new DrawableCongurat(in_p.x, in_p.y);
+    baseScene->addChild(dCongurat->getLayer());
+    // ToDo: free dCongurat
 }

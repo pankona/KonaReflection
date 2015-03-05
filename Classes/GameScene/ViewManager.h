@@ -7,6 +7,7 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
+#include "DrawableCongurat.h"
 #include "SelfTimer.h"
 #include "SelfTimerListener.h"
 #include "ViewEventListener.h"
@@ -22,6 +23,7 @@ private:
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
+    DrawableCongurat* dCongurat;
     std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 

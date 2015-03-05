@@ -120,8 +120,8 @@ include_directories(
 set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/Common/SelfTimer.cpp
+  Classes/Common/DrawableLabel.cpp
   Classes/SceneManager/SceneManager.cpp
-  Classes/TitleScene/DrawableLabel.cpp
   Classes/TitleScene/DrawableTitle.cpp
   Classes/TitleScene/TitleControl.cpp
   Classes/TitleScene/TitleScene.cpp
@@ -133,6 +133,7 @@ set(GAME_SRC
   Classes/GameScene/DrawableBall.cpp
   Classes/GameScene/DrawableBar.cpp
   Classes/GameScene/DrawableBlock.cpp
+  Classes/GameScene/DrawableCongurat.cpp
   Classes/GameScene/DrawableField.cpp
   Classes/GameScene/Field.cpp
   Classes/GameScene/GameControl.cpp
@@ -149,8 +150,8 @@ set(GAME_HEADERS
   Classes/Common/SelfTimer.h
   Classes/Common/ViewEventListener.h
   Classes/Common/ViewManagerEventListener.h
+  Classes/Common/DrawableLabel.h
   Classes/SceneManager/SceneManager.h
-  Classes/TitleScene/DrawableLabel.h
   Classes/TitleScene/DrawableTitle.h
   Classes/TitleScene/TitleControl.h
   Classes/TitleScene/TitleScene.h
@@ -163,6 +164,7 @@ set(GAME_HEADERS
   Classes/GameScene/DrawableBall.h
   Classes/GameScene/DrawableBar.h
   Classes/GameScene/DrawableBlock.h
+  Classes/GameScene/DrawableCongurat.h
   Classes/GameScene/DrawableField.h
   Classes/GameScene/Field.h
   Classes/GameScene/GameControl.h

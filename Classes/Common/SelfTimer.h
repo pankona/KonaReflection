@@ -20,6 +20,7 @@ public:
     SelfTimer(int, int);
     void addSelfTimerListener(SelfTimerListener*);
     void run();
+    Node* getNode();
 };
 
 #endif // __TIMER_H__

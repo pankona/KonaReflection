@@ -42,6 +42,10 @@ ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
 
 void
 ViewManager::updateView() {
+    if (dBall == NULL) {
+        return;
+    }
+
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
@@ -63,6 +67,9 @@ ViewManager::updateView() {
 
 void
 ViewManager::setBallPosition(Position p) {
+    if (dBall == NULL) {
+        return;
+    }
     dBall->setPosition(p);
 }
 
@@ -123,6 +130,8 @@ ViewManager::markBlockAsKilled(int in_index) {
 
 void
 ViewManager::removeBall() {
+    baseScene->removeChild(dBall->getSprite());
+    dBall = NULL;
 }
 
 void
@@ -130,6 +139,7 @@ ViewManager::setTimer(int in_delay, int in_event_desc) {
     SelfTimer* timer = new SelfTimer(in_delay, in_event_desc);
     timer->addSelfTimerListener(this);
     timers.push_back(timer);
+    baseScene->addChild(timer->getNode());
     timer->run();
 }
 

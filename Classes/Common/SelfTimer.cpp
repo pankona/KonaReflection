@@ -5,6 +5,7 @@
 void
 SelfTimer::eventNotify() {
     for (SelfTimerListener* listener : listeners) {
+        log ("[%s] call onTimerExpired.", __FILE__);
         listener->onTimerExpired(eventDescriptor);
     }
 }
@@ -32,3 +33,7 @@ SelfTimer::addSelfTimerListener(SelfTimerListener* in_listener) {
     listeners.push_back(in_listener);
 }
 
+Node*
+SelfTimer::getNode() {
+    return node;
+}

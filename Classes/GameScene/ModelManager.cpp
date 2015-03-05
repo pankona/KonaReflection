@@ -223,7 +223,7 @@ void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
     int numOfBlocksPerLine = 10;
-    int lineNumOfBlocks = 10;
+    int lineNumOfBlocks = 5;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();

@@ -14,6 +14,17 @@ GameControl::update(float delta) {
 }
 
 void
+GameControl::dispatchTimerEvent(int* in_desc) {
+    switch (*in_desc) {
+        case ModelManagerEvent::ALL_BLOCK_DESTROYED:
+            log ("all blocks are destroyed! congratulation!");
+            break;
+        default:
+            break;
+    }
+}
+
+void
 GameControl::initialize(Scene* baseScene) {
     gameState = GameState::READY;
 
@@ -113,7 +124,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             collidedBlockNum++;
             break;
         case ViewManagerEvent::TIMER_EXPIRED:
-            log ("timer fired.");
+            dispatchTimerEvent((int*)arg);
             break;
         default:
             break;
@@ -131,7 +142,7 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
             mm.setBallSpeed(0);
             vm.removeBall();
-            vm.setTimer(3, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
+            vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             break;
         default:
             break;

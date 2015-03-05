@@ -18,6 +18,7 @@ private:
     ModelManager mm;
     ViewManager  vm;
     int collidedBlockNum;
+    void dispatchTimerEvent(int*);
 
 public:
     void initialize(Scene*);

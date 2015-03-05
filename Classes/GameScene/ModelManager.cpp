@@ -6,6 +6,14 @@
 // private methods
 
 bool
+ModelManager::allBlocksDestroyed() {
+    if (blockNum == 0) {
+        return true;
+    }
+    return false;
+}
+
+bool
 ModelManager::isTouchOnRightSideOfBar(int in_x) {
     int barPositionX = bar->getPosition().x;
     if (in_x > barPositionX) {
@@ -214,8 +222,8 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 10;
-    int lineNumOfBlocks = 10;
+    int numOfBlocksPerLine = 1;
+    int lineNumOfBlocks = 1;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
@@ -231,6 +239,7 @@ ModelManager::initializeBlocks() {
         }
     }
 
+    blockNum = blocks.size();
 }
 
 int
@@ -266,6 +275,11 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
     block->decreaseLife(1);
     if (!block->stillAlive()) {
         eventNotify(ModelManagerEventListener::ModelManagerEvent::BLOCK_DIED, &in_blockIndex);
+        blockNum--;
+    }
+
+    if (allBlocksDestroyed()) {
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::ALL_BLOCK_DESTROYED, NULL);
     }
 
     if (!in_needBallTurnOver) {

@@ -14,6 +14,22 @@ GameControl::update(float delta) {
 }
 
 void
+GameControl::dispatchTimerEvent(int* in_desc) {
+    Position p;
+    Size screenSize = Director::getInstance()->getVisibleSize();
+    switch (*in_desc) {
+        case ModelManagerEvent::ALL_BLOCK_DESTROYED:
+            log ("all blocks are destroyed! congratulation!");
+            p.x = screenSize.width / 2;
+            p.y = screenSize.height / 2;
+            vm.showConguratulation(p);
+            break;
+        default:
+            break;
+    }
+}
+
+void
 GameControl::initialize(Scene* baseScene) {
     gameState = GameState::READY;
 
@@ -112,6 +128,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
             collidedBlockNum++;
             break;
+        case ViewManagerEvent::TIMER_EXPIRED:
+            dispatchTimerEvent((int*)arg);
+            break;
         default:
             break;
     }
@@ -124,6 +143,11 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             int* blockIndex;
             blockIndex = (int *)arg;
             vm.markBlockAsKilled(*blockIndex);
+            break;
+        case ModelManagerEvent::ALL_BLOCK_DESTROYED:
+            mm.setBallSpeed(0);
+            vm.removeBall();
+            vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             break;
         default:
             break;

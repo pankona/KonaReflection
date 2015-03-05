@@ -42,6 +42,10 @@ ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
 
 void
 ViewManager::updateView() {
+    if (dBall == NULL) {
+        return;
+    }
+
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
     if (ballRect.intersectsRect(barRect)) {
@@ -63,6 +67,9 @@ ViewManager::updateView() {
 
 void
 ViewManager::setBallPosition(Position p) {
+    if (dBall == NULL) {
+        return;
+    }
     dBall->setPosition(p);
 }
 
@@ -119,4 +126,31 @@ void
 ViewManager::markBlockAsKilled(int in_index) {
     DrawableBlock *dBlock = dBlocks.at(in_index);
     dBlock->markAsKilled();
+}
+
+void
+ViewManager::removeBall() {
+    baseScene->removeChild(dBall->getSprite());
+    dBall = NULL;
+}
+
+void
+ViewManager::setTimer(int in_delay, int in_event_desc) {
+    SelfTimer* timer = new SelfTimer(in_delay, in_event_desc);
+    timer->addSelfTimerListener(this);
+    timers.push_back(timer);
+    baseScene->addChild(timer->getNode());
+    timer->run();
+}
+
+void
+ViewManager::onTimerExpired(int in_eventDescriptor) {
+    eventNotify(ViewManagerEventListener::ViewManagerEvent::TIMER_EXPIRED, &in_eventDescriptor);
+}
+
+void
+ViewManager::showConguratulation(Position in_p) {
+    dCongurat = new DrawableCongurat(in_p.x, in_p.y);
+    baseScene->addChild(dCongurat->getLayer());
+    // ToDo: free dCongurat
 }

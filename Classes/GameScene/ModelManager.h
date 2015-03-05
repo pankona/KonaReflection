@@ -14,9 +14,11 @@ private:
     Bar* bar;
     Ball* ball;
     std::vector<Block*> blocks;
+    int blockNum;
     Position lastTouchedPosition;
     std::vector<ModelManagerEventListener*> listeners;
 
+    bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
     void moveBall(float);
     void moveBar(float);

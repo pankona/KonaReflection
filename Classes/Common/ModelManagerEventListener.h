@@ -4,7 +4,8 @@
 class ModelManagerEventListener {
 public:
     enum ModelManagerEvent {
-        BLOCK_DIED
+        BLOCK_DIED,
+        ALL_BLOCK_DESTROYED
     };
 
    virtual void onModelManagerEvent(ModelManagerEvent, void*) = 0;

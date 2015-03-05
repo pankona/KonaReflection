@@ -7,18 +7,23 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
+#include "DrawableCongurat.h"
+#include "SelfTimer.h"
+#include "SelfTimerListener.h"
 #include "ViewEventListener.h"
 #include "ViewManagerEventListener.h"
 
 USING_NS_CC;
 
-class ViewManager : public ViewEventListener {
+class ViewManager : public ViewEventListener, public SelfTimerListener {
 private:    
     std::vector<ViewManagerEventListener*> listeners;
+    std::vector<SelfTimer*> timers;
     Scene* baseScene;
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
+    DrawableCongurat* dCongurat;
     std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
@@ -30,6 +35,9 @@ public:
     void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
+    void removeBall();
+    void setTimer(int, int);
+    void onTimerExpired(int);
 
     void addViewManagerEventListener(ViewManagerEventListener*);
     void removeViewManagerEventListener(ViewManagerEventListener*);
@@ -41,6 +49,8 @@ public:
     void addBlock(int, int, Position);
     void setBlockColor(int, Color3B);
     void markBlockAsKilled(int);
+
+    void showConguratulation(Position);
 };
 
 #endif // __VIEWMANAGER_H__

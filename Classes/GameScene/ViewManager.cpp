@@ -147,3 +147,7 @@ void
 ViewManager::onTimerExpired(int in_eventDescriptor) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TIMER_EXPIRED, &in_eventDescriptor);
 }
+
+void
+ViewManager::showConguratulation(Position in_p) {
+}

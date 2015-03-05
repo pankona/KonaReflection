@@ -15,9 +15,14 @@ GameControl::update(float delta) {
 
 void
 GameControl::dispatchTimerEvent(int* in_desc) {
+    Position p;
+    Size screenSize = Director::getInstance()->getVisibleSize();
     switch (*in_desc) {
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
             log ("all blocks are destroyed! congratulation!");
+            p.x = screenSize.width / 2;
+            p.y = screenSize.height / 2;
+            vm.showConguratulation(p);
             break;
         default:
             break;

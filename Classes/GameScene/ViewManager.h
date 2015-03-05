@@ -47,6 +47,8 @@ public:
     void addBlock(int, int, Position);
     void setBlockColor(int, Color3B);
     void markBlockAsKilled(int);
+
+    void showConguratulation(Position);
 };
 
 #endif // __VIEWMANAGER_H__

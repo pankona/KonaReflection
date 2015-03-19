@@ -15,16 +15,18 @@ void AppDelegate::initGLContextAttrs() {
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
+	int screen_width = 540;
+	int screen_height = 960;
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-        glview = GLViewImpl::createWithRect("Cocos2dTest", Rect(0, 0, 450, 600));
+        glview = GLViewImpl::createWithRect("KonaReflection", Rect(0, 0, screen_width, screen_height));
         director->setOpenGLView(glview);
     }
 
     director->setDisplayStats(false);
     director->setAnimationInterval(1.0 / 60);
-    glview->setDesignResolutionSize(450, 600, ResolutionPolicy::SHOW_ALL);
+    glview->setDesignResolutionSize(screen_width, screen_height, ResolutionPolicy::SHOW_ALL);
 
     sceneManager.initialize();
     return true;

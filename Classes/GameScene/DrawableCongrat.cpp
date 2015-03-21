@@ -4,10 +4,7 @@
 
 void
 DrawableCongrat::createBaseLayer(int in_width, int in_height) {
-    Rect rect = Rect(0, 0, in_width, in_height);
     baseLayer = Layer::create();
-    //baseLayer->setTextureRect(rect);
-    //baseLayer->setColor(Color3B::BLACK);
     baseLayer->setPosition(in_width / 2, in_height / 2);
 }
 
@@ -16,11 +13,24 @@ DrawableCongrat::createBaseLayer(int in_width, int in_height) {
 DrawableCongrat::DrawableCongrat(int in_width, int in_height) {
     createBaseLayer(in_width, in_height);
 
-    Position congPosition;
-    congPosition.x = in_width / 2;
-    congPosition.y = in_height * 2 / 3;
-    dCongLabel = new DrawableLabel(congPosition, "Congratulation!");
+    // Label for congratulation
+    Position position;
+    position.x = in_width / 2;
+    position.y = in_height * 4 / 4;
+    dCongLabel = new DrawableLabel(position, "Congratulation!");
     baseLayer->addChild(dCongLabel->getLabel());
+
+    // Label for next stage
+    position.x = in_width / 2;
+    position.y = in_height * 2 / 4;
+    dNextStageLabel = new DrawableLabel(position, "Continue");
+    baseLayer->addChild(dNextStageLabel->getLabel());
+
+    // Label for back to title
+    position.x = in_width / 2;
+    position.y = in_height * 1 / 4;
+    dBackToTitleLabel = new DrawableLabel(position, "End Game");
+    baseLayer->addChild(dBackToTitleLabel->getLabel());
 }
 
 Layer*

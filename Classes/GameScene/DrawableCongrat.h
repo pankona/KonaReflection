@@ -13,6 +13,8 @@ class DrawableCongrat /* listenable */ {
 private:
     Layer* baseLayer;
     DrawableLabel* dCongLabel;
+    DrawableLabel* dBackToTitleLabel;
+    DrawableLabel* dNextStageLabel;
     std::vector<ViewEventListener*> listeners;
     void createBaseLayer(int, int);
 

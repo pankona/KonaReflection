@@ -7,7 +7,7 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
-#include "DrawableCongurat.h"
+#include "DrawableCongrat.h"
 #include "SelfTimer.h"
 #include "SelfTimerListener.h"
 #include "ViewEventListener.h"
@@ -23,7 +23,7 @@ private:
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
-    DrawableCongurat* dCongurat;
+    DrawableCongrat* dCongrat;
     std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
@@ -50,7 +50,7 @@ public:
     void setBlockColor(int, Color3B);
     void markBlockAsKilled(int);
 
-    void showConguratulation(Position);
+    void showCongratulation(Position);
 };
 
 #endif // __VIEWMANAGER_H__

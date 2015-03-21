@@ -1,9 +1,9 @@
-#include "DrawableCongurat.h"
+#include "DrawableCongrat.h"
 
 // private methods
 
 void
-DrawableCongurat::createBaseLayer(int in_width, int in_height) {
+DrawableCongrat::createBaseLayer(int in_width, int in_height) {
     Rect rect = Rect(0, 0, in_width, in_height);
     baseLayer = Layer::create();
     //baseLayer->setTextureRect(rect);
@@ -13,23 +13,23 @@ DrawableCongurat::createBaseLayer(int in_width, int in_height) {
 
 // public methods
 
-DrawableCongurat::DrawableCongurat(int in_width, int in_height) {
+DrawableCongrat::DrawableCongrat(int in_width, int in_height) {
     createBaseLayer(in_width, in_height);
 
     Position congPosition;
     congPosition.x = in_width / 2;
     congPosition.y = in_height * 2 / 3;
-    dCongLabel = new DrawableLabel(congPosition, "Conguratulation!");
+    dCongLabel = new DrawableLabel(congPosition, "Congratulation!");
     baseLayer->addChild(dCongLabel->getLabel());
 }
 
 Layer*
-DrawableCongurat::getLayer() {
+DrawableCongrat::getLayer() {
     return baseLayer;
 }
 
 void
-DrawableCongurat::addViewEventListener(ViewEventListener* in_listener) {
+DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
 
     listeners.push_back(in_listener);
 
@@ -63,7 +63,7 @@ DrawableCongurat::addViewEventListener(ViewEventListener* in_listener) {
 }
 
 void
-DrawableCongurat::removeViewEventListener(ViewEventListener* in_listener) {
+DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
     auto it = std::find(listeners.begin(), listeners.end(), in_listener);
     if (it != listeners.end()) {
         listeners.erase(it);

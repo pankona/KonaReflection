@@ -1,5 +1,5 @@
-#ifndef __DRAWABLECONGURAT_H__
-#define __DRAWABLECONGURAT_H__
+#ifndef __DRAWABLECONGRAT_H__
+#define __DRAWABLECONGRAT_H__
 
 #include "cocos2d.h"
 #include "Position.h"
@@ -8,7 +8,7 @@
 
 USING_NS_CC;
 
-class DrawableCongurat /* listenable */ {
+class DrawableCongrat /* listenable */ {
 
 private:
     Layer* baseLayer;
@@ -17,10 +17,10 @@ private:
     void createBaseLayer(int, int);
 
 public:
-    DrawableCongurat(int, int);
+    DrawableCongrat(int, int);
     Layer* getLayer();
     void addViewEventListener(ViewEventListener*);
     void removeViewEventListener(ViewEventListener*);
 };
 
-#endif // __DRAWABLECONGURAT_H__
+#endif // __DRAWABLECONGRAT_H__

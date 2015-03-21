@@ -22,7 +22,7 @@ GameControl::dispatchTimerEvent(int* in_desc) {
             log ("all blocks are destroyed! congratulation!");
             p.x = screenSize.width / 2;
             p.y = screenSize.height / 2;
-            vm.showConguratulation(p);
+            vm.showCongratulation(p);
             break;
         default:
             break;

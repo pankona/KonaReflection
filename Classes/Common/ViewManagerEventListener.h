@@ -9,6 +9,8 @@ public:
         TOUCH_ENDED,
         BALL_AND_BAR_COLLISION,
         BALL_AND_BLOCK_COLLISION,
+        BACK_TO_TITLE,
+        GO_TO_NEXT_STAGE,
         TIMER_EXPIRED
     };
 

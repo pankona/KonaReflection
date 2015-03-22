@@ -96,43 +96,64 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             default:
                 break;
         }
+
         return;
-    }
 
-    switch (in_event) {
-        case ViewManagerEvent::BALL_AND_BAR_COLLISION:
-            mm.onCollisionBallAndBar();
-            break;
-        case ViewManagerEvent::TOUCH_BEGAN:
-            p = (Position*) arg;
-            mm.onTouchBegan(p->x, p->y);
-            break;
-        case ViewManagerEvent::TOUCH_MOVED:
-            p = (Position*) arg;
-            mm.onTouchMoved(p->x, p->y);
-            break;
-        case ViewManagerEvent::TOUCH_ENDED:
-            mm.onTouchEnded();
-            break;
-        case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
-            int* blockIndex;
-            blockIndex = (int*) arg;
+    } else if (gameState == GameState::STARTED) {
 
-            // only one time ball can turn over by block per one frame.
-            bool needBallTurnOver;
-            if (collidedBlockNum == 0) {
-                needBallTurnOver = true;
-            } else {
-                needBallTurnOver = false;
-            }
-            mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
-            collidedBlockNum++;
-            break;
-        case ViewManagerEvent::TIMER_EXPIRED:
-            dispatchTimerEvent((int*)arg);
-            break;
-        default:
-            break;
+        switch (in_event) {
+            case ViewManagerEvent::BALL_AND_BAR_COLLISION:
+                mm.onCollisionBallAndBar();
+                break;
+            case ViewManagerEvent::TOUCH_BEGAN:
+                p = (Position*) arg;
+                mm.onTouchBegan(p->x, p->y);
+                break;
+            case ViewManagerEvent::TOUCH_MOVED:
+                p = (Position*) arg;
+                mm.onTouchMoved(p->x, p->y);
+                break;
+            case ViewManagerEvent::TOUCH_ENDED:
+                mm.onTouchEnded();
+                break;
+            case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
+                int* blockIndex;
+                blockIndex = (int*) arg;
+
+                // only one time ball can turn over by block per one frame.
+                // ToDo: this logic should be move to model manager.
+                bool needBallTurnOver;
+                if (collidedBlockNum == 0) {
+                    needBallTurnOver = true;
+                } else {
+                    needBallTurnOver = false;
+                }
+                mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
+                collidedBlockNum++;
+                break;
+            case ViewManagerEvent::TIMER_EXPIRED:
+                dispatchTimerEvent((int*)arg);
+                break;
+            default:
+                break;
+        }
+
+        return;
+
+    } else if (gameState == GameState::GAMEOVER) {
+
+        switch (in_event) {
+            case ViewManagerEvent::BACK_TO_TITLE:
+                // ToDo: implement
+                break;
+            case ViewManagerEvent::GO_TO_NEXT_STAGE:
+                // ToDo: implement
+                break;
+            default:
+                break;
+        }
+
+        return;
     }
 }
 
@@ -147,7 +168,10 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
             mm.setBallSpeed(0);
             vm.removeBall();
+            // FIXME: should not set model manager event to view manager.
+            // then game control needs to be notified model manager event from view manager.
             vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
+            gameState = GameState::GAMEOVER;
             break;
         default:
             break;

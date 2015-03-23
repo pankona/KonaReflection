@@ -12,7 +12,8 @@ class GameControl : public ViewManagerEventListener, public ModelManagerEventLis
 private:
     enum GameState {
         READY,
-        STARTED
+        STARTED,
+        GAMEOVER
     };
     GameState gameState;
     ModelManager mm;

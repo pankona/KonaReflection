@@ -50,7 +50,7 @@ public:
     void setBlockColor(int, Color3B);
     void markBlockAsKilled(int);
 
-    void showCongratulation(Position);
+    void showCongratulation(int, int);
 };
 
 #endif // __VIEWMANAGER_H__

@@ -8,7 +8,7 @@
 
 USING_NS_CC;
 
-class DrawableCongrat /* listenable */ {
+class DrawableCongrat : public ViewEventListener /* listenable */ {
 
 private:
     Layer* baseLayer;
@@ -23,6 +23,10 @@ public:
     Layer* getLayer();
     void addViewEventListener(ViewEventListener*);
     void removeViewEventListener(ViewEventListener*);
+
+    void onTouchBegan(Position);
+    void onTouchMoved(Position);
+    void onTouchEnded();
 };
 
 #endif // __DRAWABLECONGRAT_H__

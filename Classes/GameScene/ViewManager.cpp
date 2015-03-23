@@ -149,8 +149,8 @@ ViewManager::onTimerExpired(int in_eventDescriptor) {
 }
 
 void
-ViewManager::showCongratulation(Position in_p) {
-    dCongrat = new DrawableCongrat(in_p.x, in_p.y);
+ViewManager::showCongratulation(int in_width, int in_height) {
+    dCongrat = new DrawableCongrat(in_width, in_height);
     baseScene->addChild(dCongrat->getLayer());
     // ToDo: free dCongrat
 }

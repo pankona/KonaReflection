@@ -15,14 +15,11 @@ GameControl::update(float delta) {
 
 void
 GameControl::dispatchTimerEvent(int* in_desc) {
-    Position p;
     Size screenSize = Director::getInstance()->getVisibleSize();
     switch (*in_desc) {
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
             log ("all blocks are destroyed! congratulation!");
-            p.x = screenSize.width / 2;
-            p.y = screenSize.height / 2;
-            vm.showCongratulation(p);
+            vm.showCongratulation((int)screenSize.width, (int)screenSize.height);
             break;
         default:
             break;
@@ -131,9 +128,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
                 collidedBlockNum++;
                 break;
-            case ViewManagerEvent::TIMER_EXPIRED:
-                dispatchTimerEvent((int*)arg);
-                break;
             default:
                 break;
         }
@@ -148,6 +142,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 break;
             case ViewManagerEvent::GO_TO_NEXT_STAGE:
                 // ToDo: implement
+                break;
+            case ViewManagerEvent::TIMER_EXPIRED:
+                dispatchTimerEvent((int*)arg);
                 break;
             default:
                 break;

@@ -5,7 +5,7 @@
 void
 DrawableCongrat::createBaseLayer(int in_width, int in_height) {
     baseLayer = Layer::create();
-    baseLayer->setPosition(in_width / 2, in_height / 2);
+    baseLayer->setPosition(0, 0);
 }
 
 // public methods
@@ -16,20 +16,21 @@ DrawableCongrat::DrawableCongrat(int in_width, int in_height) {
     // Label for congratulation
     Position position;
     position.x = in_width / 2;
-    position.y = in_height * 4 / 4;
+    position.y = in_height * 7 / 10;
     dCongLabel = new DrawableLabel(position, "Congratulation!");
     baseLayer->addChild(dCongLabel->getLabel());
 
     // Label for next stage
     position.x = in_width / 2;
-    position.y = in_height * 2 / 4;
+    position.y = in_height * 5 / 10;
     dNextStageLabel = new DrawableLabel(position, "Continue");
     baseLayer->addChild(dNextStageLabel->getLabel());
 
     // Label for back to title
     position.x = in_width / 2;
-    position.y = in_height * 1 / 4;
+    position.y = in_height * 4 / 10;
     dBackToTitleLabel = new DrawableLabel(position, "End Game");
+    dBackToTitleLabel->addViewEventListener(this);
     baseLayer->addChild(dBackToTitleLabel->getLabel());
 }
 
@@ -80,4 +81,17 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
     }
 }
 
+void
+DrawableCongrat::onTouchBegan(Position in_position) {
+    log ("[%s] onTouchBegan called", __FILE__);
+}
 
+void
+DrawableCongrat::onTouchMoved(Position in_position) {
+    log ("[%s] onTouchMoved called", __FILE__);
+}
+
+void
+DrawableCongrat::onTouchEnded() {
+    log ("[%s] onTouchEnded called", __FILE__);
+}

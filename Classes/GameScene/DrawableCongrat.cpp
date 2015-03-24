@@ -47,18 +47,19 @@ DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
             listener->onTouchBegan(p);
         }
+
         return true;
     };
 
     onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
             listener->onTouchMoved(p);
         }
@@ -83,15 +84,24 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
 
 void
 DrawableCongrat::onTouchBegan(Position in_position) {
-    log ("[%s] onTouchBegan called", __FILE__);
+    // ToDo: need to distinguish from which label this event come.
+    for (ViewEventListener* listener : listeners) {
+        listener->onTouchBegan(in_position);
+    }
 }
 
 void
 DrawableCongrat::onTouchMoved(Position in_position) {
-    log ("[%s] onTouchMoved called", __FILE__);
+    // ToDo: need to distinguish from which label this event come.
+    for (ViewEventListener* listener : listeners) {
+        listener->onTouchMoved(in_position);
+    }
 }
 
 void
 DrawableCongrat::onTouchEnded() {
-    log ("[%s] onTouchEnded called", __FILE__);
+    // ToDo: need to distinguish from which label this event come.
+    for (ViewEventListener* listener : listeners) {
+        listener->onTouchEnded();
+    }
 }

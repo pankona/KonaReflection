@@ -11,14 +11,27 @@ SceneManager::initialize() {
     scene = TitleScene::create();
     ((TitleScene*)scene)->addSceneEndListener(this);
     director->runWithScene(scene);
+    currentScene = TITLE;
 }
 
 void
 SceneManager::onSceneEnd() {
-    auto currentScene = scene;
+    // keep currentScene to destroy later
+    auto sceneToBeDestroyed = scene;
 
     // go to next scene
-    scene = BaseScene::create();
+    switch (currentScene) {
+        case TITLE:
+            scene = BaseScene::create();
+            currentScene = GAME;
+            break;
+        case GAME:
+            scene = TitleScene::create();
+            currentScene = TITLE;
+            break;
+
+
+    }
     auto transition = TransitionFade::create(0.5, scene);
     Director::getInstance()->replaceScene(transition);
 

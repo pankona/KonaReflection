@@ -2,6 +2,14 @@
 #include <stdio.h>
 
 void
+GameControl::notifySceneEnd() {
+    for (SceneEndListener* listener : listeners) {
+        log ("[TitleControl] notifySceneEnd");
+        listener->onSceneEnd();
+    }
+}
+
+void
 GameControl::update(float delta) {
     mm.progress(delta);
 
@@ -137,8 +145,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     } else if (gameState == GameState::GAMEOVER) {
 
         switch (in_event) {
+            case ViewManagerEvent::TOUCH_BEGAN: // FIXME: this is temporary hack
             case ViewManagerEvent::BACK_TO_TITLE:
-                // ToDo: implement
+                notifySceneEnd();
                 break;
             case ViewManagerEvent::GO_TO_NEXT_STAGE:
                 // ToDo: implement
@@ -175,3 +184,7 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
     }
 }
 
+void
+GameControl::addSceneEndListener(SceneEndListener* in_listener) {
+    listeners.push_back(in_listener);
+}

@@ -147,6 +147,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
         switch (in_event) {
             case ViewManagerEvent::TOUCH_BEGAN: // FIXME: this is temporary hack
             case ViewManagerEvent::BACK_TO_TITLE:
+                log ("[%s] notifySceneEnd call.", __FILE__);
                 notifySceneEnd();
                 break;
             case ViewManagerEvent::GO_TO_NEXT_STAGE:

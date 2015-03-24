@@ -23,10 +23,12 @@ SceneManager::onSceneEnd() {
     switch (currentScene) {
         case TITLE:
             scene = BaseScene::create();
+            ((BaseScene*)scene)->addSceneEndListener(this);
             currentScene = GAME;
             break;
         case GAME:
             scene = TitleScene::create();
+            ((TitleScene*)scene)->addSceneEndListener(this);
             currentScene = TITLE;
             break;
 

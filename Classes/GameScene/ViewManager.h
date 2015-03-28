@@ -42,9 +42,9 @@ public:
     void addViewManagerEventListener(ViewManagerEventListener*);
     void removeViewManagerEventListener(ViewManagerEventListener*);
 
-    void onTouchBegan(Position);
-    void onTouchMoved(Position);
-    void onTouchEnded();
+    void onTouchBegan(Node*, Position, void*);
+    void onTouchMoved(Node*, Position, void*);
+    void onTouchEnded(Node*, void*);
 
     void addBlock(int, int, Position);
     void setBlockColor(int, Color3B);

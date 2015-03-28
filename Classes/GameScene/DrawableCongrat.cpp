@@ -84,7 +84,16 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
 
 void
 DrawableCongrat::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
-    // ToDo: need to distinguish from which label this event come.
+
+    if (in_node == dBackToTitleLabel->getLabel()) {
+        log ("[%s] event from BackToTitleLabel", __FILE__);
+    } else if (in_node == dNextStageLabel->getLabel()) {
+        log ("[%s] event from dNextStageLabel", __FILE__);
+    } else {
+        log ("[%s] unknown event", __FILE__);
+        return;
+    }
+
     for (ViewEventListener* listener : listeners) {
         listener->onTouchBegan(in_node, in_position, NULL);
     }
@@ -92,7 +101,6 @@ DrawableCongrat::onTouchBegan(Node *in_node, Position in_position, void* in_arg)
 
 void
 DrawableCongrat::onTouchMoved(Node* in_node, Position in_position, void* in_arg) {
-    // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
         listener->onTouchMoved(in_node, in_position, NULL);
     }
@@ -100,7 +108,6 @@ DrawableCongrat::onTouchMoved(Node* in_node, Position in_position, void* in_arg)
 
 void
 DrawableCongrat::onTouchEnded(Node* in_node, void* in_arg) {
-    // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
         listener->onTouchEnded(in_node, NULL);
     }

@@ -50,7 +50,7 @@ DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchBegan(p);
+            listener->onTouchBegan(event->getCurrentTarget(), p);
         }
 
         return true;
@@ -61,13 +61,13 @@ DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchMoved(p);
+            listener->onTouchMoved(event->getCurrentTarget(), p);
         }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchEnded();
+            listener->onTouchEnded(event->getCurrentTarget());
         }
     };
 
@@ -83,25 +83,25 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
 }
 
 void
-DrawableCongrat::onTouchBegan(Position in_position) {
+DrawableCongrat::onTouchBegan(Node *in_node, Position in_position) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchBegan(in_position);
+        listener->onTouchBegan(in_node, in_position);
     }
 }
 
 void
-DrawableCongrat::onTouchMoved(Position in_position) {
+DrawableCongrat::onTouchMoved(Node* in_node, Position in_position) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchMoved(in_position);
+        listener->onTouchMoved(in_node, in_position);
     }
 }
 
 void
-DrawableCongrat::onTouchEnded() {
+DrawableCongrat::onTouchEnded(Node* in_node) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchEnded();
+        listener->onTouchEnded(in_node);
     }
 }

@@ -79,17 +79,17 @@ ViewManager::setBarPosition(Position p) {
 }
 
 void
-ViewManager::onTouchBegan(Position in_position) {
+ViewManager::onTouchBegan(Node *in_node, Position in_position) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
 }
 
 void
-ViewManager::onTouchMoved(Position in_position) {
+ViewManager::onTouchMoved(Node* in_node, Position in_position) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_MOVED, &in_position);
 }
 
 void
-ViewManager::onTouchEnded() {
+ViewManager::onTouchEnded(Node* in_node) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_ENDED, NULL);
 }
 

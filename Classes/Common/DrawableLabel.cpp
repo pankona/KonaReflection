@@ -30,32 +30,33 @@ DrawableLabel::addViewEventListener(ViewEventListener* in_listener) {
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
         auto target = (Sprite*)event->getCurrentTarget();
         Rect targetBox = target->getBoundingBox();
-        Point touchedPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
+        Point touchedPoint;
+        touchedPoint = Vec2(touch->getLocation().x, touch->getLocation().y);
         if (!targetBox.containsPoint(touchedPoint)) {
             return false;
         }
 
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchBegan(p);
+            listener->onTouchBegan(event->getCurrentTarget(), p);
         }
         return true;
     };
 
     onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchMoved(p);
+            listener->onTouchMoved(event->getCurrentTarget(), p);
         }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchEnded();
+            listener->onTouchEnded(event->getCurrentTarget());
         }
     };
 

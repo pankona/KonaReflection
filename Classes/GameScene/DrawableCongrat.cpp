@@ -50,7 +50,7 @@ DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchBegan(event->getCurrentTarget(), p);
+            listener->onTouchBegan(event->getCurrentTarget(), p, NULL);
         }
 
         return true;
@@ -61,13 +61,13 @@ DrawableCongrat::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchMoved(event->getCurrentTarget(), p);
+            listener->onTouchMoved(event->getCurrentTarget(), p, NULL);
         }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchEnded(event->getCurrentTarget());
+            listener->onTouchEnded(event->getCurrentTarget(), NULL);
         }
     };
 
@@ -83,25 +83,25 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
 }
 
 void
-DrawableCongrat::onTouchBegan(Node *in_node, Position in_position) {
+DrawableCongrat::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchBegan(in_node, in_position);
+        listener->onTouchBegan(in_node, in_position, NULL);
     }
 }
 
 void
-DrawableCongrat::onTouchMoved(Node* in_node, Position in_position) {
+DrawableCongrat::onTouchMoved(Node* in_node, Position in_position, void* in_arg) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchMoved(in_node, in_position);
+        listener->onTouchMoved(in_node, in_position, NULL);
     }
 }
 
 void
-DrawableCongrat::onTouchEnded(Node* in_node) {
+DrawableCongrat::onTouchEnded(Node* in_node, void* in_arg) {
     // ToDo: need to distinguish from which label this event come.
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchEnded(in_node);
+        listener->onTouchEnded(in_node, NULL);
     }
 }

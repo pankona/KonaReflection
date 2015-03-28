@@ -24,9 +24,9 @@ public:
     void addViewEventListener(ViewEventListener*);
     void removeViewEventListener(ViewEventListener*);
 
-    void onTouchBegan(Node*, Position);
-    void onTouchMoved(Node*, Position);
-    void onTouchEnded(Node*);
+    void onTouchBegan(Node*, Position, void*);
+    void onTouchMoved(Node*, Position, void*);
+    void onTouchEnded(Node*, void*);
 };
 
 #endif // __DRAWABLECONGRAT_H__

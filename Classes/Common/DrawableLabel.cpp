@@ -40,7 +40,7 @@ DrawableLabel::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchBegan(event->getCurrentTarget(), p);
+            listener->onTouchBegan(event->getCurrentTarget(), p, NULL);
         }
         return true;
     };
@@ -50,13 +50,13 @@ DrawableLabel::addViewEventListener(ViewEventListener* in_listener) {
         p.x = (int) touch->getLocation().x;
         p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchMoved(event->getCurrentTarget(), p);
+            listener->onTouchMoved(event->getCurrentTarget(), p, NULL);
         }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchEnded(event->getCurrentTarget());
+            listener->onTouchEnded(event->getCurrentTarget(), NULL);
         }
     };
 

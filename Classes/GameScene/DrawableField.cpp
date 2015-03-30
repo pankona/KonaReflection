@@ -30,26 +30,26 @@ DrawableField::addViewEventListener(ViewEventListener* in_listener) {
     auto onTouchListener = EventListenerTouchOneByOne::create();
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchBegan(p);
+            listener->onTouchBegan(event->getCurrentTarget(), p, NULL);
         }
         return true;
     };
 
     onTouchListener->onTouchMoved = [this](Touch* touch, Event* event) {
         Position p;
-        p.x = touch->getLocation().x;
-        p.y = touch->getLocation().y;
+        p.x = (int) touch->getLocation().x;
+        p.y = (int) touch->getLocation().y;
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchMoved(p);
+            listener->onTouchMoved(event->getCurrentTarget(), p, NULL);
         }
     };
 
     onTouchListener->onTouchEnded = [this](Touch* touch, Event* event) {
         for (ViewEventListener* listener : listeners) {
-            listener->onTouchEnded();
+            listener->onTouchEnded(event->getCurrentTarget(), NULL);
         }
     };
 

@@ -79,17 +79,17 @@ ViewManager::setBarPosition(Position p) {
 }
 
 void
-ViewManager::onTouchBegan(Position in_position) {
+ViewManager::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
 }
 
 void
-ViewManager::onTouchMoved(Position in_position) {
+ViewManager::onTouchMoved(Node* in_node, Position in_position, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_MOVED, &in_position);
 }
 
 void
-ViewManager::onTouchEnded() {
+ViewManager::onTouchEnded(Node* in_node, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_ENDED, NULL);
 }
 
@@ -149,8 +149,8 @@ ViewManager::onTimerExpired(int in_eventDescriptor) {
 }
 
 void
-ViewManager::showConguratulation(Position in_p) {
-    dCongurat = new DrawableCongurat(in_p.x, in_p.y);
-    baseScene->addChild(dCongurat->getLayer());
-    // ToDo: free dCongurat
+ViewManager::showCongratulation(int in_width, int in_height) {
+    dCongrat = new DrawableCongrat(in_width, in_height);
+    baseScene->addChild(dCongrat->getLayer());
+    // ToDo: free dCongrat
 }

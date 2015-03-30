@@ -7,7 +7,7 @@
 #include "DrawableField.h"
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
-#include "DrawableCongurat.h"
+#include "DrawableCongrat.h"
 #include "SelfTimer.h"
 #include "SelfTimerListener.h"
 #include "ViewEventListener.h"
@@ -23,7 +23,7 @@ private:
     DrawableBall* dBall;
     DrawableField* dField;
     DrawableBar* dBar;
-    DrawableCongurat* dCongurat;
+    DrawableCongrat* dCongrat;
     std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
@@ -42,15 +42,15 @@ public:
     void addViewManagerEventListener(ViewManagerEventListener*);
     void removeViewManagerEventListener(ViewManagerEventListener*);
 
-    void onTouchBegan(Position);
-    void onTouchMoved(Position);
-    void onTouchEnded();
+    void onTouchBegan(Node*, Position, void*);
+    void onTouchMoved(Node*, Position, void*);
+    void onTouchEnded(Node*, void*);
 
     void addBlock(int, int, Position);
     void setBlockColor(int, Color3B);
     void markBlockAsKilled(int);
 
-    void showConguratulation(Position);
+    void showCongratulation(int, int);
 };
 
 #endif // __VIEWMANAGER_H__

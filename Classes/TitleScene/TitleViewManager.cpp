@@ -32,17 +32,17 @@ TitleViewManager::initializeTitle(int in_width, int in_height) {
 }
 
 void
-TitleViewManager::onTouchBegan(Position in_position) {
+TitleViewManager::onTouchBegan(Node* in_node, Position in_position, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
 }
 
 void
-TitleViewManager::onTouchMoved(Position in_position) {
+TitleViewManager::onTouchMoved(Node* in_node, Position in_position, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_MOVED, &in_position);
 }
 
 void
-TitleViewManager::onTouchEnded() {
+TitleViewManager::onTouchEnded(Node* in_node, void* in_arg) {
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_ENDED, NULL);
 }
 

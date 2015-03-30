@@ -26,7 +26,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameScene/DrawableBall.cpp \
                    ../../Classes/GameScene/DrawableBar.cpp \
                    ../../Classes/GameScene/DrawableBlock.cpp \
-                   ../../Classes/GameScene/DrawableCongurat.cpp \
+                   ../../Classes/GameScene/DrawableCongrat.cpp \
                    ../../Classes/GameScene/DrawableField.cpp \
                    ../../Classes/GameScene/Field.cpp \
                    ../../Classes/GameScene/GameControl.cpp \

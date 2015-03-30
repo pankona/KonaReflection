@@ -133,7 +133,7 @@ set(GAME_SRC
   Classes/GameScene/DrawableBall.cpp
   Classes/GameScene/DrawableBar.cpp
   Classes/GameScene/DrawableBlock.cpp
-  Classes/GameScene/DrawableCongurat.cpp
+  Classes/GameScene/DrawableCongrat.cpp
   Classes/GameScene/DrawableField.cpp
   Classes/GameScene/Field.cpp
   Classes/GameScene/GameControl.cpp
@@ -164,7 +164,7 @@ set(GAME_HEADERS
   Classes/GameScene/DrawableBall.h
   Classes/GameScene/DrawableBar.h
   Classes/GameScene/DrawableBlock.h
-  Classes/GameScene/DrawableCongurat.h
+  Classes/GameScene/DrawableCongrat.h
   Classes/GameScene/DrawableField.h
   Classes/GameScene/Field.h
   Classes/GameScene/GameControl.h

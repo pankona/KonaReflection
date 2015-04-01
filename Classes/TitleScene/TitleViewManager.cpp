@@ -28,7 +28,7 @@ TitleViewManager::initializeTitle(int in_width, int in_height) {
     label_position.y = in_height / 2;
     dLabel = new DrawableLabel(label_position, "Tap here to start.");
     dLabel->addViewEventListener(this);
-    baseScene->addChild(dLabel->getLabel(), 100);
+    baseScene->addChild(dLabel->getNode(), 100);
 }
 
 void

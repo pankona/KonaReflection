@@ -18,20 +18,20 @@ DrawableCongrat::DrawableCongrat(int in_width, int in_height) {
     position.x = in_width / 2;
     position.y = in_height * 7 / 10;
     dCongLabel = new DrawableLabel(position, "Congratulation!");
-    baseLayer->addChild(dCongLabel->getLabel());
+    baseLayer->addChild(dCongLabel->getNode());
 
     // Label for next stage
     position.x = in_width / 2;
     position.y = in_height * 5 / 10;
     dNextStageLabel = new DrawableLabel(position, "Continue");
-    baseLayer->addChild(dNextStageLabel->getLabel());
+    baseLayer->addChild(dNextStageLabel->getNode());
 
     // Label for back to title
     position.x = in_width / 2;
     position.y = in_height * 4 / 10;
     dBackToTitleLabel = new DrawableLabel(position, "End Game");
     dBackToTitleLabel->addViewEventListener(this);
-    baseLayer->addChild(dBackToTitleLabel->getLabel());
+    baseLayer->addChild(dBackToTitleLabel->getNode());
 }
 
 Layer*
@@ -85,9 +85,9 @@ DrawableCongrat::removeViewEventListener(ViewEventListener* in_listener) {
 void
 DrawableCongrat::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
 
-    if (in_node == dBackToTitleLabel->getLabel()) {
+    if (in_node == dBackToTitleLabel->getNode()) {
         log ("[%s] event from BackToTitleLabel", __FILE__);
-    } else if (in_node == dNextStageLabel->getLabel()) {
+    } else if (in_node == dNextStageLabel->getNode()) {
         log ("[%s] event from dNextStageLabel", __FILE__);
     } else {
         log ("[%s] unknown event", __FILE__);

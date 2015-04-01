@@ -2,23 +2,21 @@
 #define __DRAWABLELABEL_H__
 
 #include "cocos2d.h"
+#include "Drawable.h"
 #include "ViewEventListener.h"
 #include <string>
 
 USING_NS_CC;
 
-class DrawableLabel /* listenable */ {
+class DrawableLabel : public Drawable {
 
 private:
     Label* label;
-    std::vector<ViewEventListener*> listeners;
     void createLabel(Position, std::string);
 
 public:
     DrawableLabel(Position, std::string);
-    Label* getLabel();
-    void addViewEventListener(ViewEventListener*);
-    void removeViewEventListener(ViewEventListener*);
+    Node* getNode();
 };
 
 #endif // __DRAWABLELABEL_H__

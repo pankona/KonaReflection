@@ -30,7 +30,7 @@ ViewManager::initializeField(int in_width, int in_height) {
     // field configuration
     dField = new DrawableField(in_width, in_height);
     dField->addViewEventListener(this);
-    baseScene->addChild(dField->getSprite());
+    baseScene->addChild(dField->getNode());
 }
 
 void
@@ -151,6 +151,6 @@ ViewManager::onTimerExpired(int in_eventDescriptor) {
 void
 ViewManager::showCongratulation(int in_width, int in_height) {
     dCongrat = new DrawableCongrat(in_width, in_height);
-    baseScene->addChild(dCongrat->getLayer());
+    baseScene->addChild(dCongrat->getNode());
     // ToDo: free dCongrat
 }

@@ -13,4 +13,4 @@ public:
     virtual void onTouchEnded(Node*, void*) = 0;
 };
 
-#endif /* __EVENTLISTENER_H__ */
+#endif /* __VIEWEVENTLISTENER_H__ */

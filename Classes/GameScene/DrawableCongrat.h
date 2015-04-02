@@ -3,26 +3,24 @@
 
 #include "cocos2d.h"
 #include "Position.h"
+#include "Drawable.h"
 #include "DrawableLabel.h"
 #include "ViewEventListener.h"
 
 USING_NS_CC;
 
-class DrawableCongrat : public ViewEventListener /* listenable */ {
+class DrawableCongrat : public Drawable, public ViewEventListener {
 
 private:
     Layer* baseLayer;
     DrawableLabel* dCongLabel;
     DrawableLabel* dBackToTitleLabel;
     DrawableLabel* dNextStageLabel;
-    std::vector<ViewEventListener*> listeners;
     void createBaseLayer(int, int);
 
 public:
     DrawableCongrat(int, int);
-    Layer* getLayer();
-    void addViewEventListener(ViewEventListener*);
-    void removeViewEventListener(ViewEventListener*);
+    Node* getNode();
 
     void onTouchBegan(Node*, Position, void*);
     void onTouchMoved(Node*, Position, void*);

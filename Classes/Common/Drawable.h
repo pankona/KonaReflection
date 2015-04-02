@@ -6,7 +6,7 @@
 
 class Drawable {
 
-private:
+protected:
     std::vector<ViewEventListener*> listeners;
 
 public:

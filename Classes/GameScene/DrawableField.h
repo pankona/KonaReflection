@@ -3,22 +3,20 @@
 
 #include "cocos2d.h"
 #include "Position.h"
+#include "Drawable.h"
 #include "ViewEventListener.h"
 
 USING_NS_CC;
 
-class DrawableField /* listenable */ {
+class DrawableField : public Drawable {
 
 private:
     Sprite* sprite;
-    std::vector<ViewEventListener*> listeners;
     void createSprite(int, int);
 
 public:
     DrawableField(int, int);
-    Sprite* getSprite();
-    void addViewEventListener(ViewEventListener*);
-    void removeViewEventListener(ViewEventListener*);
+    Node* getNode();
 };
 
 #endif // __DRAWABLEFIELD_H__

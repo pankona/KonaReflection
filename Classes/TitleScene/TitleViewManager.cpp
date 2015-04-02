@@ -21,7 +21,7 @@ TitleViewManager::initialize(Scene* in_baseScene) {
 void
 TitleViewManager::initializeTitle(int in_width, int in_height) {
     dTitle = new DrawableTitle(in_width, in_height);
-    baseScene->addChild(dTitle->getSprite());
+    baseScene->addChild(dTitle->getNode());
 
     Position label_position;
     label_position.x = in_width / 2;

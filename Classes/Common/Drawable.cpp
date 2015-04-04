@@ -6,8 +6,9 @@ Drawable::addViewEventListener(ViewEventListener* in_listener) {
     listeners.push_back(in_listener);
 
     auto onTouchListener = EventListenerTouchOneByOne::create();
+
     onTouchListener->onTouchBegan = [this](Touch* touch, Event* event) {
-        auto target = (Sprite*)event->getCurrentTarget();
+        auto target = event->getCurrentTarget();
         Rect targetBox = target->getBoundingBox();
         Point touchedPoint;
         touchedPoint = Vec2(touch->getLocation().x, touch->getLocation().y);

@@ -6,6 +6,9 @@ void
 DrawableCongrat::createBaseLayer(int in_width, int in_height) {
     baseLayer = Layer::create();
     baseLayer->setPosition(0, 0);
+
+    Size size(0,0);
+    baseLayer->setContentSize(size);
 }
 
 // public methods
@@ -42,30 +45,31 @@ DrawableCongrat::getNode() {
 void
 DrawableCongrat::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
 
+    int eventShouldReturn;
     if (in_node == dBackToTitleLabel->getNode()) {
-        log ("[%s] event from BackToTitleLabel", __FILE__);
+        eventShouldReturn = CongratEvent::BACK_TO_TITLE;
     } else if (in_node == dNextStageLabel->getNode()) {
-        log ("[%s] event from dNextStageLabel", __FILE__);
+        eventShouldReturn = CongratEvent::GO_TO_NEXT_STAGE;
     } else {
-        log ("[%s] unknown event", __FILE__);
+        log ("[%s] from = unknown.", __FILE__);
         return;
     }
 
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchBegan(in_node, in_position, NULL);
+        listener->onTouchBegan(getNode(), in_position, &eventShouldReturn);
     }
 }
 
 void
 DrawableCongrat::onTouchMoved(Node* in_node, Position in_position, void* in_arg) {
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchMoved(in_node, in_position, NULL);
+        listener->onTouchMoved(getNode(), in_position, NULL);
     }
 }
 
 void
 DrawableCongrat::onTouchEnded(Node* in_node, void* in_arg) {
     for (ViewEventListener* listener : listeners) {
-        listener->onTouchEnded(in_node, NULL);
+        listener->onTouchEnded(getNode(), NULL);
     }
 }

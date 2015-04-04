@@ -19,6 +19,10 @@ private:
     void createBaseLayer(int, int);
 
 public:
+    enum CongratEvent {
+        BACK_TO_TITLE,
+        GO_TO_NEXT_STAGE
+    };
     DrawableCongrat(int, int);
     Node* getNode();
 

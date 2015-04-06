@@ -179,6 +179,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             gameState = GameState::GAMEOVER;
             break;
+        case ModelManagerEvent::BALL_FALL:
+            // TODO: implement
+            break;
         default:
             break;
     }

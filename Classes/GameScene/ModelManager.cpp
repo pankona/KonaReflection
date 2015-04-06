@@ -66,12 +66,17 @@ ModelManager::moveBall(float delta) {
         ball->setDirection(new_direction);
     }
 
-    // height edge check
-    if (height <= current_position.y + ball->getRadius() / 2 || 0 >= current_position.y - ball->getRadius() / 2) {
+    // height edge (top) check
+    if (height <= current_position.y + ball->getRadius() / 2) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;
         ball->setDirection(new_direction);
+    }
+
+    // height edge (bottom) check
+    if (0 >= current_position.y - ball->getRadius() / 2) {
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
     }
 
     int speed = ball->getSpeed();

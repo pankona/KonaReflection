@@ -180,7 +180,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             gameState = GameState::GAMEOVER;
             break;
         case ModelManagerEvent::BALL_FALL:
-            // TODO: implement
+            gameState = GameState::READY;
+            mm.resetBall();
+            mm.setBallSpeed(0);
             break;
         default:
             break;

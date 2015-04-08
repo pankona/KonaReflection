@@ -66,12 +66,18 @@ ModelManager::moveBall(float delta) {
         ball->setDirection(new_direction);
     }
 
-    // height edge check
-    if (height <= current_position.y + ball->getRadius() / 2 || 0 >= current_position.y - ball->getRadius() / 2) {
+    // height edge (top) check
+    if (height <= current_position.y + ball->getRadius() / 2) {
         // turn over
         int direction = ball->getDirection();
         int new_direction = (360 - direction) % 360;
         ball->setDirection(new_direction);
+    }
+
+    // height edge (bottom) check
+    if (0 >= current_position.y - ball->getRadius() / 2) {
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
+        return;
     }
 
     int speed = ball->getSpeed();
@@ -215,6 +221,15 @@ ModelManager::getBallRadius() {
 }
 
 void
+ModelManager::resetBall() {
+    // reset ball position onto bar
+    ball->setPosition(bar->getPosition().x, bar->getPosition().y + bar->getHeight() + ball->getRadius());
+
+    // reset ball direction
+    ball->setDirection(60);
+}
+
+void
 ModelManager::setFieldSize(int in_width, int in_height) {
     field->setFieldSize(in_width, in_height);
 }
@@ -222,8 +237,8 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 1;
-    int lineNumOfBlocks = 1;
+    int numOfBlocksPerLine = 8;
+    int lineNumOfBlocks = 4;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();

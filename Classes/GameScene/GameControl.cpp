@@ -145,7 +145,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     } else if (gameState == GameState::GAMEOVER) {
 
         switch (in_event) {
-            case ViewManagerEvent::TOUCH_BEGAN: // FIXME: this is temporary hack
             case ViewManagerEvent::BACK_TO_TITLE:
                 log ("[%s] notifySceneEnd call.", __FILE__);
                 notifySceneEnd();
@@ -179,6 +178,11 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             // then game control needs to be notified model manager event from view manager.
             vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             gameState = GameState::GAMEOVER;
+            break;
+        case ModelManagerEvent::BALL_FALL:
+            gameState = GameState::READY;
+            mm.resetBall();
+            mm.setBallSpeed(0);
             break;
         default:
             break;

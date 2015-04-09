@@ -21,14 +21,14 @@ TitleViewManager::initialize(Scene* in_baseScene) {
 void
 TitleViewManager::initializeTitle(int in_width, int in_height) {
     dTitle = new DrawableTitle(in_width, in_height);
-    baseScene->addChild(dTitle->getSprite());
+    baseScene->addChild(dTitle->getNode());
 
     Position label_position;
     label_position.x = in_width / 2;
     label_position.y = in_height / 2;
     dLabel = new DrawableLabel(label_position, "Tap here to start.");
     dLabel->addViewEventListener(this);
-    baseScene->addChild(dLabel->getLabel(), 100);
+    baseScene->addChild(dLabel->getNode(), 100);
 }
 
 void

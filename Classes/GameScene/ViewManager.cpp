@@ -1,6 +1,5 @@
 #include "ViewManager.h"
 #include "ViewManagerEventListener.h"
-#include <stdio.h>
 
 // private methods
 
@@ -30,7 +29,7 @@ ViewManager::initializeField(int in_width, int in_height) {
     // field configuration
     dField = new DrawableField(in_width, in_height);
     dField->addViewEventListener(this);
-    baseScene->addChild(dField->getSprite());
+    baseScene->addChild(dField->getNode());
 }
 
 void
@@ -80,6 +79,23 @@ ViewManager::setBarPosition(Position p) {
 
 void
 ViewManager::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
+    if (dCongrat && in_node == dCongrat->getNode()) {
+        int* event = (int*) in_arg;
+        switch (*event) {
+            case DrawableCongrat::CongratEvent::BACK_TO_TITLE:
+                eventNotify(ViewManagerEventListener::ViewManagerEvent::BACK_TO_TITLE, NULL);
+                break;
+            case DrawableCongrat::CongratEvent::GO_TO_NEXT_STAGE:
+                eventNotify(ViewManagerEventListener::ViewManagerEvent::GO_TO_NEXT_STAGE, NULL);
+                break;
+            default:
+                log ("[%s] event = unknonw.\n", __FILE__);
+                break;
+
+        }
+        return;
+    }
+
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
 }
 
@@ -151,6 +167,7 @@ ViewManager::onTimerExpired(int in_eventDescriptor) {
 void
 ViewManager::showCongratulation(int in_width, int in_height) {
     dCongrat = new DrawableCongrat(in_width, in_height);
-    baseScene->addChild(dCongrat->getLayer());
+    dCongrat->addViewEventListener(this);
+    baseScene->addChild(dCongrat->getNode());
     // ToDo: free dCongrat
 }

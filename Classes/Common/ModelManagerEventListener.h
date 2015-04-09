@@ -5,7 +5,8 @@ class ModelManagerEventListener {
 public:
     enum ModelManagerEvent {
         BLOCK_DIED,
-        ALL_BLOCK_DESTROYED
+        ALL_BLOCK_DESTROYED,
+        BALL_FALL
     };
 
    virtual void onModelManagerEvent(ModelManagerEvent, void*) = 0;

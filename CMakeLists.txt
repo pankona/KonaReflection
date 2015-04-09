@@ -121,6 +121,7 @@ set(GAME_SRC
   Classes/AppDelegate.cpp
   Classes/Common/SelfTimer.cpp
   Classes/Common/DrawableLabel.cpp
+  Classes/Common/Drawable.cpp
   Classes/SceneManager/SceneManager.cpp
   Classes/TitleScene/DrawableTitle.cpp
   Classes/TitleScene/TitleControl.cpp
@@ -151,6 +152,7 @@ set(GAME_HEADERS
   Classes/Common/ViewEventListener.h
   Classes/Common/ViewManagerEventListener.h
   Classes/Common/DrawableLabel.h
+  Classes/Common/Drawable.h
   Classes/SceneManager/SceneManager.h
   Classes/TitleScene/DrawableTitle.h
   Classes/TitleScene/TitleControl.h

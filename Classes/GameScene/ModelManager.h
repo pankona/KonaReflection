@@ -43,6 +43,7 @@ public:
     Position getBallPosition();
     int getBallRadius();
     void setBallSpeed(int);
+    void resetBall();
 
     void setBallAndBarPositionX(int);
 

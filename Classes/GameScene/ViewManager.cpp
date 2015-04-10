@@ -35,7 +35,7 @@ ViewManager::initializeField(int in_width, int in_height) {
 void
 ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
     // ball configuration
-    dBall = new DrawableBall(in_radius, in_initialPosition);
+    dBall = new DrawableBall(in_radius, in_initialPosition, "ball.png");
     baseScene->addChild(dBall->getSprite(), 100);
 }
 

@@ -31,7 +31,7 @@ Player::DecreaseLife() {
 
 bool
 Player::isStillAlive() {
-    if (life <= 0) {
+    if (life > 0) {
         return true;
     }
     return false;

@@ -60,7 +60,7 @@ public:
 
     void addModelManagerEventListener(ModelManagerEventListener*);
 
-    void DecreasePlayerLife();
+    void decreasePlayerLife();
     bool isPlayerStillAlive();
 };
 

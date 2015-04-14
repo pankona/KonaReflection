@@ -25,7 +25,7 @@ Player::setLife(int in_life) {
 }
 
 void
-Player::DecreaseLife() {
+Player::decreaseLife() {
     life--;
 }
 

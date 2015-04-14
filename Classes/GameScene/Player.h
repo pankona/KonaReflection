@@ -12,7 +12,7 @@ public:
 
     int getLife();
     void setLife(int);
-    void DecreaseLife();
+    void decreaseLife();
     bool isStillAlive();
 };
 

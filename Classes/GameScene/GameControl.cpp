@@ -29,6 +29,10 @@ GameControl::dispatchTimerEvent(int* in_desc) {
             log ("all blocks are destroyed! congratulation!");
             vm.showCongratulation((int)screenSize.width, (int)screenSize.height);
             break;
+        case ModelManagerEvent::PLAYER_DEAD:
+            log ("Player dead. gameover.");
+            // ToDo: show gameover;
+            break;
         default:
             break;
     }
@@ -165,6 +169,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
 
 void
 GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
+
+    int delay_time_sec;
+
     switch (in_event) {
         case ModelManagerEvent::BLOCK_DIED:
             int* blockIndex;
@@ -176,13 +183,23 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.removeBall();
             // FIXME: should not set model manager event to view manager.
             // then game control needs to be notified model manager event from view manager.
-            vm.setTimer(1, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
+            delay_time_sec = 1;
+            vm.setTimer(delay_time_sec, (int) ModelManagerEvent::ALL_BLOCK_DESTROYED);
             gameState = GameState::GAMEOVER;
             break;
         case ModelManagerEvent::BALL_FALL:
-            gameState = GameState::READY;
-            mm.resetBall();
+            mm.decreasePlayerLife();
             mm.setBallSpeed(0);
+
+            if (mm.isPlayerStillAlive()) {
+                gameState = GameState::READY;
+                mm.resetBall();
+            } else {
+                gameState = GameState::GAMEOVER;
+                vm.removeBall();
+                delay_time_sec = 1;
+                vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
+            }
             break;
         default:
             break;

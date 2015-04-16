@@ -32,6 +32,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/GameScene/Field.cpp \
                    ../../Classes/GameScene/GameControl.cpp \
                    ../../Classes/GameScene/ModelManager.cpp \
+                   ../../Classes/GameScene/Player.cpp \
                    ../../Classes/GameScene/ViewManager.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \

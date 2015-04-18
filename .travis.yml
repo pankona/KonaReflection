@@ -1,3 +1,5 @@
+sudo: required
+
 # Handle git submodules yourself
 git:
     submodules: false
@@ -11,10 +13,23 @@ before_install:
     - python download-deps.py --remove-download=yes
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
+# NDK configuration
     - wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin
     - chmod a+x android-ndk-r10d-linux-x86_64.bin
     - ./android-ndk-r10d-linux-x86_64.bin &> /dev/null # because log will be too long!
     - export NDK_ROOT=`pwd`/android-ndk-r10d
     - echo $NDK_ROOT
+    - export PATH=$PATH:$NDK_ROOT
+# Android SDK configuration
+    - wget http://dl.google.com/android/android-sdk_r24.0.2-linux.tgz
+    - tar zxf android-sdk_r24.0.2-linux.tgz
+    - export ANDROID_SDK_ROOT=`pwd`/android-sdk-linux
+    - echo $ANDROID_SDK_ROOT
+    - export PATH=$PATH:$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools
+# Update Android SDK
+    - sudo apt-get install yes
+    - yes | android update sdk --no-ui
+    - pkill yes
+# cocos setup
     - python ./setup.py
     - cocos

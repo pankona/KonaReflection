@@ -13,7 +13,7 @@ before_install:
     - git submodule update --init --recursive
     - wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin
     - chmod a+x android-ndk-r10d-linux-x86_64.bin
-    - ./android-ndk-r10d-linux-x86_64.bin
+    - ./android-ndk-r10d-linux-x86_64.bin &> /dev/null # because log will be too long!
     - export NDK_ROOT=`pwd`/android-ndk-r10d
     - echo $NDK_ROOT
     - python ./setup.py

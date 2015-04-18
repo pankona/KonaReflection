@@ -11,5 +11,10 @@ before_install:
     - python download-deps.py --remove-download=yes
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
+    - wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin
+    - chmod a+x android-ndk-r10d-linux-x86_64.bin
+    - ./android-ndk-r10d-linux-x86_64.bin
+    - export NDK_ROOT=`pwd`/android-ndk-r10d
+    - echo $NDK_ROOT
     - python ./setup.py
     - cocos

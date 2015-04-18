@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pankona/KonaReflection.svg?branch=master)](https://travis-ci.org/pankona/KonaReflection)
+
 # このリポジトリは
 
 cocos2d-xを勉強がてら、ブロック崩しを作ってみるという試みのためのリポジトリです。

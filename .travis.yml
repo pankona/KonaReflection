@@ -36,4 +36,7 @@ install:
     - export ANT_ROOT=/usr/share/ant/bin
     - export PATH=$PATH:$ANT_ROOT
     - printenv
-    - cocos
+
+script:
+    - cd ..
+    - cocos compile -p android -j 8

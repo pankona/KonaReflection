@@ -4,6 +4,10 @@ language: android
 git:
     submodules: false
 
+env:
+  global:
+    secure: f1QYGx+wrbGgNf/DB2oiYbclcUoyUp4LI3LA/B6ZQaJE6+9R3je7hzhTGK/jdisPoDyz7GabzTyNDPhn6yXrsz8zl8FlpjLU8Ef67ZVC1YQOOzv5LN9qgdhqh/ye8w2ElPI+l/t5BaQ+Gzwxyf1j4zOrJWrb9/GSXJfZOrkrPXQ=
+
 install:
 # NDK configuration
     - printenv

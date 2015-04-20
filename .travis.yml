@@ -6,7 +6,7 @@ git:
 
 env:
   global:
-    secure: f1QYGx+wrbGgNf/DB2oiYbclcUoyUp4LI3LA/B6ZQaJE6+9R3je7hzhTGK/jdisPoDyz7GabzTyNDPhn6yXrsz8zl8FlpjLU8Ef67ZVC1YQOOzv5LN9qgdhqh/ye8w2ElPI+l/t5BaQ+Gzwxyf1j4zOrJWrb9/GSXJfZOrkrPXQ=
+    secure: "TeSR8JLJd2Z0erCxcgLinC+me5SfwpgcCNwiTsqXn09erOgos2+mUbVQaSyo7Bw4OF4TmNpejX+jETd/lL4fTiWRDw6NW/cqEelk57fXJ5mmf5ey+tB1EkMFwd8x7Fw2vBe4xtO8KeohI6D1Gtu1qTYU9t9x4bhAd4qL15Y5osE="
 
 install:
 # NDK configuration
@@ -46,4 +46,4 @@ script:
     - cocos compile -p android -j 8
 
 after_success:
-    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=DeployGate test" https://deploygate.com/api/users/pankona/apps
+    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy APK from Travis CI" https://deploygate.com/api/users/pankona/apps

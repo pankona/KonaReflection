@@ -40,10 +40,10 @@ install:
     - export ANT_ROOT=/usr/share/ant/bin
     - export PATH=$PATH:$ANT_ROOT
     - printenv
+    - cd ..
 
 script:
-    - cd ..
     - cocos compile -p android -j 8
 
 after_success:
-    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy APK from Travis CI" https://deploygate.com/api/users/pankona/apps
+    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI" https://deploygate.com/api/users/pankona/apps

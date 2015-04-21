@@ -46,4 +46,4 @@ script:
     - cocos compile -p android -j 8
 
 after_success:
-    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI" https://deploygate.com/api/users/pankona/apps
+    - '[ "$TRAVIS_BRANCH" == "master" ] && curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI" https://deploygate.com/api/users/pankona/apps'

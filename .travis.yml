@@ -4,6 +4,10 @@ language: android
 git:
     submodules: false
 
+env:
+  global:
+    secure: "TeSR8JLJd2Z0erCxcgLinC+me5SfwpgcCNwiTsqXn09erOgos2+mUbVQaSyo7Bw4OF4TmNpejX+jETd/lL4fTiWRDw6NW/cqEelk57fXJ5mmf5ey+tB1EkMFwd8x7Fw2vBe4xtO8KeohI6D1Gtu1qTYU9t9x4bhAd4qL15Y5osE="
+
 install:
 # NDK configuration
     - printenv
@@ -36,7 +40,10 @@ install:
     - export ANT_ROOT=/usr/share/ant/bin
     - export PATH=$PATH:$ANT_ROOT
     - printenv
+    - cd ..
 
 script:
-    - cd ..
     - cocos compile -p android -j 8
+
+after_success:
+    - curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI" https://deploygate.com/api/users/pankona/apps

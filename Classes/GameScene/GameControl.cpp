@@ -31,7 +31,7 @@ GameControl::dispatchTimerEvent(int* in_desc) {
             break;
         case ModelManagerEvent::PLAYER_DEAD:
             log ("Player dead. gameover.");
-            // ToDo: show gameover;
+            vm.showGameOver((int)screenSize.width, (int)screenSize.height);
             break;
         default:
             break;

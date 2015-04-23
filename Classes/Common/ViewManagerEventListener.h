@@ -11,6 +11,7 @@ public:
         BALL_AND_BLOCK_COLLISION,
         BACK_TO_TITLE,
         GO_TO_NEXT_STAGE,
+        RETRY,
         TIMER_EXPIRED
     };
 

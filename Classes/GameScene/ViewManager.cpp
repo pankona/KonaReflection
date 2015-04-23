@@ -79,8 +79,10 @@ ViewManager::setBarPosition(Position p) {
 
 void
 ViewManager::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
+    int* event = (int*) in_arg;
+
     if (dCongrat && in_node == dCongrat->getNode()) {
-        int* event = (int*) in_arg;
+
         switch (*event) {
             case DrawableCongrat::CongratEvent::BACK_TO_TITLE:
                 eventNotify(ViewManagerEventListener::ViewManagerEvent::BACK_TO_TITLE, NULL);
@@ -91,9 +93,26 @@ ViewManager::onTouchBegan(Node *in_node, Position in_position, void* in_arg) {
             default:
                 log ("[%s] event = unknonw.\n", __FILE__);
                 break;
-
         }
+
         return;
+
+    } else if (dGameOver && in_node == dGameOver->getNode()) {
+
+        switch (*event) {
+            case DrawableGameOver::GameOverEvent::BACK_TO_TITLE:
+                eventNotify(ViewManagerEventListener::ViewManagerEvent::BACK_TO_TITLE, NULL);
+                break;
+            case DrawableGameOver::GameOverEvent::RETRY:
+                eventNotify(ViewManagerEventListener::ViewManagerEvent::RETRY, NULL);
+                break;
+            default:
+                log ("[%s] event = unknonw.\n", __FILE__);
+                break;
+        }
+
+        return;
+
     }
 
     eventNotify(ViewManagerEventListener::ViewManagerEvent::TOUCH_BEGAN, &in_position);
@@ -170,4 +189,12 @@ ViewManager::showCongratulation(int in_width, int in_height) {
     dCongrat->addViewEventListener(this);
     baseScene->addChild(dCongrat->getNode());
     // ToDo: free dCongrat
+}
+
+void
+ViewManager::showGameOver(int in_width, int in_height) {
+    dGameOver = new DrawableGameOver(in_width, in_height);
+    dGameOver->addViewEventListener(this);
+    baseScene->addChild(dGameOver->getNode());
+    // ToDo: free dGameOver
 }

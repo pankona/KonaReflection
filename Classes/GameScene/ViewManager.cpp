@@ -165,6 +165,9 @@ ViewManager::markBlockAsKilled(int in_index) {
 
 void
 ViewManager::removeBall() {
+    if (dBall == NULL) {
+        return;
+    }
     baseScene->removeChild(dBall->getSprite());
     dBall = NULL;
 }

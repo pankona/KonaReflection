@@ -181,6 +181,7 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
         case ModelManagerEvent::ALL_BLOCK_DESTROYED:
             mm.setBallSpeed(0);
             vm.removeBall();
+            mm.resetBall();
             // FIXME: should not set model manager event to view manager.
             // then game control needs to be notified model manager event from view manager.
             delay_time_sec = 1;
@@ -197,6 +198,7 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             } else {
                 gameState = GameState::GAMEOVER;
                 vm.removeBall();
+                mm.resetBall();
                 delay_time_sec = 1;
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }

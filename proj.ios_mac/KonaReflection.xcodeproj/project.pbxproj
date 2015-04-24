@@ -12,8 +12,14 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
-		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
+		41285AC91AE9F8F100F282C1 /* DrawableGameOver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41285AC71AE9F8F100F282C1 /* DrawableGameOver.cpp */; };
+		41285ACA1AE9F8F100F282C1 /* DrawableGameOver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41285AC71AE9F8F100F282C1 /* DrawableGameOver.cpp */; };
+		41285ACD1AE9F90000F282C1 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41285ACB1AE9F90000F282C1 /* Player.cpp */; };
+		41285ACE1AE9F90000F282C1 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41285ACB1AE9F90000F282C1 /* Player.cpp */; };
+		41285AD01AE9F9EF00F282C1 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 41285ACF1AE9F9EF00F282C1 /* ball.png */; };
+		41285AD11AE9F9EF00F282C1 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 41285ACF1AE9F9EF00F282C1 /* ball.png */; };
+		414BE0681AD6655C001CA359 /* Drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 414BE0661AD6655C001CA359 /* Drawable.cpp */; };
+		414BE0691AD6655C001CA359 /* Drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 414BE0661AD6655C001CA359 /* Drawable.cpp */; };
 		41CE78C61AC8D29800049262 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78911AC8D29800049262 /* AppDelegate.cpp */; };
 		41CE78C71AC8D29800049262 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78911AC8D29800049262 /* AppDelegate.cpp */; };
 		41CE78C81AC8D29800049262 /* DrawableLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78941AC8D29800049262 /* DrawableLabel.cpp */; };
@@ -56,12 +62,6 @@
 		41CE78ED1AC8D29800049262 /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78C21AC8D29800049262 /* TitleScene.cpp */; };
 		41CE78EE1AC8D29800049262 /* TitleViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78C41AC8D29800049262 /* TitleViewManager.cpp */; };
 		41CE78EF1AC8D29800049262 /* TitleViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78C41AC8D29800049262 /* TitleViewManager.cpp */; };
-		46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
-		46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7619C43A67006E1F66 /* CloseNormal.png */; };
-		46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
-		46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7719C43A67006E1F66 /* CloseSelected.png */; };
-		46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
-		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
 		503AE10017EB989F00D1A890 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FB17EB989F00D1A890 /* AppController.mm */; };
 		503AE10117EB989F00D1A890 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 503AE0FC17EB989F00D1A890 /* main.m */; };
@@ -144,7 +144,13 @@
 		1D6058910D05DD3D006BFB54 /* KonaReflection iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "KonaReflection iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		41285AC71AE9F8F100F282C1 /* DrawableGameOver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawableGameOver.cpp; sourceTree = "<group>"; };
+		41285AC81AE9F8F100F282C1 /* DrawableGameOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawableGameOver.h; sourceTree = "<group>"; };
+		41285ACB1AE9F90000F282C1 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		41285ACC1AE9F90000F282C1 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		41285ACF1AE9F9EF00F282C1 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
+		414BE0661AD6655C001CA359 /* Drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawable.cpp; sourceTree = "<group>"; };
+		414BE0671AD6655C001CA359 /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawable.h; sourceTree = "<group>"; };
 		41CE78911AC8D29800049262 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		41CE78921AC8D29800049262 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		41CE78941AC8D29800049262 /* DrawableLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawableLabel.cpp; sourceTree = "<group>"; };
@@ -194,9 +200,6 @@
 		41CE78C31AC8D29800049262 /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScene.h; sourceTree = "<group>"; };
 		41CE78C41AC8D29800049262 /* TitleViewManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleViewManager.cpp; sourceTree = "<group>"; };
 		41CE78C51AC8D29800049262 /* TitleViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleViewManager.h; sourceTree = "<group>"; };
-		46880B7619C43A67006E1F66 /* CloseNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseNormal.png; sourceTree = "<group>"; };
-		46880B7719C43A67006E1F66 /* CloseSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CloseSelected.png; sourceTree = "<group>"; };
-		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		503AE0F717EB97AB00D1A890 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		503AE0FA17EB989F00D1A890 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ios/AppController.h; sourceTree = SOURCE_ROOT; };
@@ -355,6 +358,8 @@
 		41CE78931AC8D29800049262 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				414BE0661AD6655C001CA359 /* Drawable.cpp */,
+				414BE0671AD6655C001CA359 /* Drawable.h */,
 				41CE78941AC8D29800049262 /* DrawableLabel.cpp */,
 				41CE78951AC8D29800049262 /* DrawableLabel.h */,
 				41CE78961AC8D29800049262 /* ModelManagerEventListener.h */,
@@ -389,6 +394,8 @@
 				41CE78AD1AC8D29800049262 /* DrawableBlock.h */,
 				41CE78AE1AC8D29800049262 /* DrawableCongrat.cpp */,
 				41CE78AF1AC8D29800049262 /* DrawableCongrat.h */,
+				41285AC71AE9F8F100F282C1 /* DrawableGameOver.cpp */,
+				41285AC81AE9F8F100F282C1 /* DrawableGameOver.h */,
 				41CE78B01AC8D29800049262 /* DrawableField.cpp */,
 				41CE78B11AC8D29800049262 /* DrawableField.h */,
 				41CE78B21AC8D29800049262 /* Field.cpp */,
@@ -397,6 +404,8 @@
 				41CE78B51AC8D29800049262 /* GameControl.h */,
 				41CE78B61AC8D29800049262 /* ModelManager.cpp */,
 				41CE78B71AC8D29800049262 /* ModelManager.h */,
+				41285ACB1AE9F90000F282C1 /* Player.cpp */,
+				41285ACC1AE9F90000F282C1 /* Player.h */,
 				41CE78B81AC8D29800049262 /* ViewManager.cpp */,
 				41CE78B91AC8D29800049262 /* ViewManager.h */,
 			);
@@ -430,11 +439,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				41285ACF1AE9F9EF00F282C1 /* ball.png */,
 				521A8EA819F11F5000D177D7 /* fonts */,
-				3EACC98E19EE6D4300EB3C5E /* res */,
-				46880B7619C43A67006E1F66 /* CloseNormal.png */,
-				46880B7719C43A67006E1F66 /* CloseSelected.png */,
-				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -606,9 +612,8 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
-				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
-				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
+				41285AD01AE9F9EF00F282C1 /* ball.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -617,12 +622,10 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
-				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
-				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -631,12 +634,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
-				3EACC99019EE6D4300EB3C5E /* res in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,
-				46880B7C19C43A67006E1F66 /* CloseNormal.png in Resources */,
-				46880B7E19C43A67006E1F66 /* CloseSelected.png in Resources */,
+				41285AD11AE9F9EF00F282C1 /* ball.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -649,11 +649,14 @@
 			files = (
 				41CE78E41AC8D29800049262 /* ViewManager.cpp in Sources */,
 				41CE78E81AC8D29800049262 /* DrawableTitle.cpp in Sources */,
+				41285ACD1AE9F90000F282C1 /* Player.cpp in Sources */,
 				41CE78C61AC8D29800049262 /* AppDelegate.cpp in Sources */,
+				41285AC91AE9F8F100F282C1 /* DrawableGameOver.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				41CE78EA1AC8D29800049262 /* TitleControl.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				41CE78DC1AC8D29800049262 /* DrawableField.cpp in Sources */,
+				414BE0681AD6655C001CA359 /* Drawable.cpp in Sources */,
 				41CE78D41AC8D29800049262 /* DrawableBall.cpp in Sources */,
 				41CE78CA1AC8D29800049262 /* SelfTimer.cpp in Sources */,
 				41CE78E01AC8D29800049262 /* GameControl.cpp in Sources */,
@@ -679,6 +682,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41CE78DB1AC8D29800049262 /* DrawableCongrat.cpp in Sources */,
+				414BE0691AD6655C001CA359 /* Drawable.cpp in Sources */,
 				41CE78DD1AC8D29800049262 /* DrawableField.cpp in Sources */,
 				41CE78C91AC8D29800049262 /* DrawableLabel.cpp in Sources */,
 				41CE78EF1AC8D29800049262 /* TitleViewManager.cpp in Sources */,
@@ -686,10 +690,12 @@
 				41CE78E11AC8D29800049262 /* GameControl.cpp in Sources */,
 				41CE78D71AC8D29800049262 /* DrawableBar.cpp in Sources */,
 				41CE78CB1AC8D29800049262 /* SelfTimer.cpp in Sources */,
+				41285ACE1AE9F90000F282C1 /* Player.cpp in Sources */,
 				41CE78DF1AC8D29800049262 /* Field.cpp in Sources */,
 				41CE78D11AC8D29800049262 /* BaseScene.cpp in Sources */,
 				41CE78E51AC8D29800049262 /* ViewManager.cpp in Sources */,
 				41CE78C71AC8D29800049262 /* AppDelegate.cpp in Sources */,
+				41285ACA1AE9F8F100F282C1 /* DrawableGameOver.cpp in Sources */,
 				41CE78CF1AC8D29800049262 /* Bar.cpp in Sources */,
 				41CE78D31AC8D29800049262 /* Block.cpp in Sources */,
 				41CE78D51AC8D29800049262 /* DrawableBall.cpp in Sources */,

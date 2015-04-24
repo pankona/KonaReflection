@@ -136,9 +136,11 @@ set(GAME_SRC
   Classes/GameScene/DrawableBlock.cpp
   Classes/GameScene/DrawableCongrat.cpp
   Classes/GameScene/DrawableField.cpp
+  Classes/GameScene/DrawableGameOver.cpp
   Classes/GameScene/Field.cpp
   Classes/GameScene/GameControl.cpp
   Classes/GameScene/ModelManager.cpp
+  Classes/GameScene/Player.cpp
   Classes/GameScene/ViewManager.cpp
   ${PLATFORM_SPECIFIC_SRC}
 )
@@ -168,9 +170,11 @@ set(GAME_HEADERS
   Classes/GameScene/DrawableBlock.h
   Classes/GameScene/DrawableCongrat.h
   Classes/GameScene/DrawableField.h
+  Classes/GameScene/DrawableGameOver.h
   Classes/GameScene/Field.h
   Classes/GameScene/GameControl.h
   Classes/GameScene/ModelManager.h
+  Classes/GameScene/Player.h
   Classes/GameScene/ViewManager.h
   ${PLATFORM_SPECIFIC_HEADERS}
 )

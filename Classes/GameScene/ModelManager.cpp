@@ -108,6 +108,9 @@ ModelManager::initialize() {
     field = new Field();
     bar = new Bar();
     ball = new Ball();
+
+    int initialLife = 3;
+    player = new Player(initialLife);
 }
 
 void
@@ -343,5 +346,15 @@ ModelManager::setBallAndBarPositionX(int in_x) {
 void
 ModelManager::setBallSpeed(int in_speed) {
     ball->setSpeed(in_speed);
+}
+
+void
+ModelManager::decreasePlayerLife() {
+    player->decreaseLife();
+}
+
+bool
+ModelManager::isPlayerStillAlive() {
+    return player->isStillAlive();
 }
 

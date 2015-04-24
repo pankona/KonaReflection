@@ -8,6 +8,7 @@
 #include "DrawableBar.h"
 #include "DrawableBlock.h"
 #include "DrawableCongrat.h"
+#include "DrawableGameOver.h"
 #include "SelfTimer.h"
 #include "SelfTimerListener.h"
 #include "ViewEventListener.h"
@@ -24,6 +25,7 @@ private:
     DrawableField* dField;
     DrawableBar* dBar;
     DrawableCongrat* dCongrat;
+    DrawableGameOver* dGameOver;
     std::vector<DrawableBlock*> dBlocks;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
 
@@ -51,6 +53,7 @@ public:
     void markBlockAsKilled(int);
 
     void showCongratulation(int, int);
+    void showGameOver(int, int);
 };
 
 #endif // __VIEWMANAGER_H__

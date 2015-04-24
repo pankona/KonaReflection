@@ -5,11 +5,13 @@
 #include "Bar.h"
 #include "Ball.h"
 #include "Block.h"
+#include "Player.h"
 #include "ModelManagerEventListener.h"
 #include <vector>
 
 class ModelManager {
 private:
+    Player* player;
     Field* field;
     Bar* bar;
     Ball* ball;
@@ -57,6 +59,9 @@ public:
     void killBlock(int);
 
     void addModelManagerEventListener(ModelManagerEventListener*);
+
+    void decreasePlayerLife();
+    bool isPlayerStillAlive();
 };
 
 #endif // __MODELMANAGER_H__

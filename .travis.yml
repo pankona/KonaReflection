@@ -30,7 +30,7 @@ install:
     - git submodule update --init --recursive
 
 # cocos setup 
-    - cd ./cocos2d
+    - cd ./src/cocos2d
     - python download-deps.py --remove-download=yes
     - python ./setup.py
     - export COCOS_CONSOLE_ROOT=`pwd`/tools/cocos2d-console/bin

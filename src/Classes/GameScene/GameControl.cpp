@@ -95,12 +95,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
         switch (in_event) {
             case ViewManagerEvent::TOUCH_BEGAN:
             case ViewManagerEvent::TOUCH_MOVED:
+            case ViewManagerEvent::TOUCH_ENDED:
                 p = (Position*) arg;
                 mm.setBallAndBarPositionX(p->x);
-                break;
-            case ViewManagerEvent::TOUCH_ENDED:
-                gameState = GameState::STARTED;
-                mm.setBallSpeed(10); // Fix me: should refer configuration
                 break;
             default:
                 break;

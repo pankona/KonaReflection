@@ -370,9 +370,12 @@ ModelManager::updateVerticalDraw(int in_y) {
 }
 
 void
-ModelManager::endVerticalDraw(int in_y) {
-   verticalDrawEnd.y = in_y;
-
+ModelManager::endVerticalDraw() {
    // calculate delta between end and start.
    // according to the result, fire swing event.
+   printf ("[%s][%d] start. start.y = %d, end.y = %d, delta y = %d\n",
+            __func__, __LINE__,
+            verticalDrawStart.y,
+            verticalDrawEnd.y,
+            verticalDrawStart.y - verticalDrawEnd.y);
 }

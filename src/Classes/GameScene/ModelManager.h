@@ -67,7 +67,7 @@ public:
 
     void startVerticalDraw(int);
     void updateVerticalDraw(int);
-    void endVerticalDraw(int);
+    void endVerticalDraw();
 };
 
 #endif // __MODELMANAGER_H__

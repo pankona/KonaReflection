@@ -68,6 +68,7 @@ public:
     void startVerticalDraw(int);
     void updateVerticalDraw(int);
     void endVerticalDraw();
+    int getVerticalDrawDelta();
 };
 
 #endif // __MODELMANAGER_H__

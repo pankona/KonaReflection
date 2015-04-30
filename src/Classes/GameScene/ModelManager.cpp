@@ -379,3 +379,9 @@ ModelManager::endVerticalDraw() {
             verticalDrawEnd.y,
             verticalDrawStart.y - verticalDrawEnd.y);
 }
+
+int
+ModelManager::getVerticalDrawDelta() {
+    return verticalDrawStart.y - verticalDrawEnd.y;
+}
+

@@ -94,10 +94,23 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     if (gameState == GameState::READY) {
         switch (in_event) {
             case ViewManagerEvent::TOUCH_BEGAN:
-            case ViewManagerEvent::TOUCH_MOVED:
-            case ViewManagerEvent::TOUCH_ENDED:
                 p = (Position*) arg;
+
+                // let mm remember y position
+
                 mm.setBallAndBarPositionX(p->x);
+                break;
+            case ViewManagerEvent::TOUCH_MOVED:
+                p = (Position*) arg;
+
+                // let mm update y position
+
+                mm.setBallAndBarPositionX(p->x);
+                break;
+            case ViewManagerEvent::TOUCH_ENDED:
+                // let mm decide y position
+                // accoding to delta of y, mm fires "swing" event, then start game.
+
                 break;
             default:
                 break;

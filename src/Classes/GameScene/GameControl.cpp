@@ -16,6 +16,7 @@ GameControl::update(float delta) {
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
+    vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
 
     collidedBlockNum = 0;
     vm.updateView();

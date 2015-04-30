@@ -201,3 +201,8 @@ ViewManager::showGameOver(int in_width, int in_height) {
     baseScene->addChild(dGameOver->getNode());
     // ToDo: free dGameOver
 }
+
+void
+ViewManager::setVerticalDrawDelta(int in_delta) {
+    // TODO implement
+}

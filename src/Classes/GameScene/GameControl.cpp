@@ -97,6 +97,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 p = (Position*) arg;
 
                 // let mm remember y position
+                mm.startVerticalDraw(p->y);
 
                 mm.setBallAndBarPositionX(p->x);
                 break;

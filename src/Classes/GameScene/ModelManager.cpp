@@ -358,3 +358,8 @@ ModelManager::isPlayerStillAlive() {
     return player->isStillAlive();
 }
 
+void
+ModelManager::startVerticalDraw(int in_y) {
+   verticalDrawStart.y = in_y;
+}
+

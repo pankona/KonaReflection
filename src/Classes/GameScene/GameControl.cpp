@@ -112,6 +112,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             case ViewManagerEvent::TOUCH_ENDED:
                 // let mm decide y position
                 // accoding to delta of y, mm fires "swing" event, then start game.
+                mm.endVerticalDraw(p->y);
                 break;
             default:
                 break;

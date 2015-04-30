@@ -369,3 +369,10 @@ ModelManager::updateVerticalDraw(int in_y) {
    verticalDrawEnd.y = in_y;
 }
 
+void
+ModelManager::endVerticalDraw(int in_y) {
+   verticalDrawEnd.y = in_y;
+
+   // calculate delta between end and start.
+   // according to the result, fire swing event.
+}

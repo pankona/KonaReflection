@@ -66,6 +66,7 @@ public:
     bool isPlayerStillAlive();
 
     void startVerticalDraw(int);
+    void updateVerticalDraw(int);
 };
 
 #endif // __MODELMANAGER_H__

@@ -105,13 +105,13 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 p = (Position*) arg;
 
                 // let mm update y position
+                mm.updateVerticalDraw(p->y);
 
                 mm.setBallAndBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
                 // let mm decide y position
                 // accoding to delta of y, mm fires "swing" event, then start game.
-
                 break;
             default:
                 break;

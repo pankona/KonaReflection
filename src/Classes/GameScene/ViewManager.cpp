@@ -203,6 +203,8 @@ ViewManager::showGameOver(int in_width, int in_height) {
 }
 
 void
-ViewManager::setVerticalDrawDelta(int in_delta) {
-    // TODO implement
+ViewManager::setVerticalDrawDelta(int in_angle) {
+    // TODO: Change pivot according to touched position
+    dBar->setPivotLeft();
+    dBar->setRotation(in_angle);
 }

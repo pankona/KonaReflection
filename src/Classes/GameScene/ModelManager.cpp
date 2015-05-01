@@ -98,6 +98,14 @@ ModelManager::eventNotify(ModelManagerEventListener::ModelManagerEvent in_event,
     }
 }
 
+bool
+ModelManager::shouldSwingBar(int in_angle) {
+    if (in_angle > 90) {
+        return true;
+    }
+    return false;
+}
+
 // public method
 
 ModelManager::ModelManager() {
@@ -371,17 +379,25 @@ ModelManager::updateVerticalDraw(int in_y) {
 
 void
 ModelManager::endVerticalDraw() {
-   // calculate delta between end and start.
-   // according to the result, fire swing event.
-   printf ("[%s][%d] start. start.y = %d, end.y = %d, delta y = %d\n",
-            __func__, __LINE__,
-            verticalDrawStart.y,
-            verticalDrawEnd.y,
-            verticalDrawStart.y - verticalDrawEnd.y);
+    int delta = (verticalDrawStart.y - verticalDrawEnd.y) / 2;
+    if (shouldSwingBar(delta)) {
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING, NULL);
+    }
+
+    verticalDrawStart.y = 0;
+    verticalDrawEnd.y = 0;
 }
 
 int
 ModelManager::getVerticalDrawDelta() {
-    return verticalDrawStart.y - verticalDrawEnd.y;
+    int delta = verticalDrawStart.y - verticalDrawEnd.y;
+
+    if (delta < 0) {
+        return 0;
+    } else if (delta > 135) {
+        return 135;
+    }
+
+    return delta;
 }
 

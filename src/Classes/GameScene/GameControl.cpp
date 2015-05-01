@@ -216,6 +216,10 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }
             break;
+        case ModelManagerEvent::BAR_SWING:
+            // TODO: implement
+            printf ("[%s][%d] BAR_SWING event notified.\n", __func__, __LINE__);
+            break;
         default:
             break;
     }

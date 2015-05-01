@@ -27,6 +27,7 @@ private:
     void moveBall(float);
     void moveBar(float);
     void eventNotify(ModelManagerEventListener::ModelManagerEvent, void*);
+    bool shouldSwingBar(int);
 
 public:
     ModelManager();

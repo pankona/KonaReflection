@@ -7,7 +7,8 @@ public:
         BLOCK_DIED,
         ALL_BLOCK_DESTROYED,
         BALL_FALL,
-        PLAYER_DEAD
+        PLAYER_DEAD,
+        BAR_SWING
     };
 
    virtual void onModelManagerEvent(ModelManagerEvent, void*) = 0;

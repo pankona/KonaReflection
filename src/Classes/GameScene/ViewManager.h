@@ -54,6 +54,8 @@ public:
 
     void showCongratulation(int, int);
     void showGameOver(int, int);
+
+    void setVerticalDrawDelta(int);
 };
 
 #endif // __VIEWMANAGER_H__

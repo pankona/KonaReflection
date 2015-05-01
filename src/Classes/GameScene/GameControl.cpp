@@ -16,6 +16,7 @@ GameControl::update(float delta) {
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
+    vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
 
     collidedBlockNum = 0;
     vm.updateView();
@@ -94,13 +95,25 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     if (gameState == GameState::READY) {
         switch (in_event) {
             case ViewManagerEvent::TOUCH_BEGAN:
+                p = (Position*) arg;
+
+                // let mm remember y position
+                mm.startVerticalDraw(p->y);
+
+                mm.setBallAndBarPositionX(p->x);
+                break;
             case ViewManagerEvent::TOUCH_MOVED:
                 p = (Position*) arg;
+
+                // let mm update y position
+                mm.updateVerticalDraw(p->y);
+
                 mm.setBallAndBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
-                gameState = GameState::STARTED;
-                mm.setBallSpeed(10); // Fix me: should refer configuration
+                // let mm decide y position
+                // accoding to delta of y, mm fires "swing" event, then start game.
+                mm.endVerticalDraw();
                 break;
             default:
                 break;
@@ -202,6 +215,10 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
                 delay_time_sec = 1;
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }
+            break;
+        case ModelManagerEvent::BAR_SWING:
+            // TODO: implement
+            printf ("[%s][%d] BAR_SWING event notified.\n", __func__, __LINE__);
             break;
         default:
             break;

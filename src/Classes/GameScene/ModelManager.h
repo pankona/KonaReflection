@@ -19,12 +19,15 @@ private:
     int blockNum;
     Position lastTouchedPosition;
     std::vector<ModelManagerEventListener*> listeners;
+    Position verticalDrawStart;
+    Position verticalDrawEnd;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
     void moveBall(float);
     void moveBar(float);
     void eventNotify(ModelManagerEventListener::ModelManagerEvent, void*);
+    bool shouldSwingBar(int);
 
 public:
     ModelManager();
@@ -62,6 +65,11 @@ public:
 
     void decreasePlayerLife();
     bool isPlayerStillAlive();
+
+    void startVerticalDraw(int);
+    void updateVerticalDraw(int);
+    void endVerticalDraw();
+    int getVerticalDrawDelta();
 };
 
 #endif // __MODELMANAGER_H__

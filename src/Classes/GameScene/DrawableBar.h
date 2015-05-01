@@ -11,11 +11,23 @@ class DrawableBar {
 private:    
     Sprite* sprite;
     void createSprite(int, int, Position);
+    enum Pivot {
+        LEFT,
+        RIGHT,
+        CENTER
+    };
+    Pivot currentPivot;
+    int width;
+    int height;
 
 public:
     DrawableBar(int, int, Position);
     Sprite* getSprite();
     void setPosition(Position);
+
+    void setPivotLeft();
+    void setPivotRight();
+    void setRotation(int);
 };
 
 #endif // __DRAWABLEBar_H__

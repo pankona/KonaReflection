@@ -98,6 +98,14 @@ ModelManager::eventNotify(ModelManagerEventListener::ModelManagerEvent in_event,
     }
 }
 
+bool
+ModelManager::shouldSwingBar(int in_angle) {
+    if (in_angle > 90) {
+        return true;
+    }
+    return false;
+}
+
 // public method
 
 ModelManager::ModelManager() {
@@ -356,5 +364,40 @@ ModelManager::decreasePlayerLife() {
 bool
 ModelManager::isPlayerStillAlive() {
     return player->isStillAlive();
+}
+
+void
+ModelManager::startVerticalDraw(int in_y) {
+   verticalDrawStart.y = in_y;
+   verticalDrawEnd.y = in_y;
+}
+
+void
+ModelManager::updateVerticalDraw(int in_y) {
+   verticalDrawEnd.y = in_y;
+}
+
+void
+ModelManager::endVerticalDraw() {
+    int delta = (verticalDrawStart.y - verticalDrawEnd.y) / 2;
+    if (shouldSwingBar(delta)) {
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING, NULL);
+    }
+
+    verticalDrawStart.y = 0;
+    verticalDrawEnd.y = 0;
+}
+
+int
+ModelManager::getVerticalDrawDelta() {
+    int delta = verticalDrawStart.y - verticalDrawEnd.y;
+
+    if (delta < 0) {
+        return 0;
+    } else if (delta > 135) {
+        return 135;
+    }
+
+    return delta;
 }
 

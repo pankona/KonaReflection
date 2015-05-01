@@ -201,3 +201,10 @@ ViewManager::showGameOver(int in_width, int in_height) {
     baseScene->addChild(dGameOver->getNode());
     // ToDo: free dGameOver
 }
+
+void
+ViewManager::setVerticalDrawDelta(int in_angle) {
+    // TODO: Change pivot according to touched position
+    dBar->setPivotLeft();
+    dBar->setRotation(in_angle);
+}

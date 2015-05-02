@@ -375,6 +375,12 @@ ModelManager::startVerticalDraw(int in_y) {
 void
 ModelManager::updateVerticalDraw(int in_y) {
    verticalDrawEnd.y = in_y;
+
+   // if draw towards upper, update start position
+   // not to stack debt to vetical draw.
+   if (verticalDrawEnd.y > verticalDrawStart.y) {
+       verticalDrawStart.y = verticalDrawEnd.y;
+   }
 }
 
 void

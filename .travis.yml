@@ -48,4 +48,4 @@ script:
 after_success:
     - echo $TRAVIS_BRANCH
     - echo $TRAVIS_PULL_REQUEST
-    - '[ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ] && curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI" https://deploygate.com/api/users/pankona/apps'
+    - '[ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ] && curl -F "file=@./bin/debug/android/KonaReflection-debug.apk" -F "token=${DEPLOYGATE_TOKEN}" -F "message=Deploy from Travis CI. $TRAVIS_COMMIT_MESSAGE" https://deploygate.com/api/users/pankona/apps'

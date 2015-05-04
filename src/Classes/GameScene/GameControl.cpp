@@ -16,7 +16,9 @@ GameControl::update(float delta) {
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
-    vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
+    if (!mm.barSwinging()) {
+        vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
+    }
 
     collidedBlockNum = 0;
     vm.updateView();
@@ -217,8 +219,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             }
             break;
         case ModelManagerEvent::BAR_SWING:
-            // TODO: implement
-            printf ("[%s][%d] BAR_SWING event notified.\n", __func__, __LINE__);
+            int* barAngle;
+            barAngle = (int *)arg;
+            vm.setVerticalDrawDelta(*barAngle);
             break;
         default:
             break;

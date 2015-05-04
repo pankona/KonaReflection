@@ -5,6 +5,14 @@
 
 // private methods
 
+const int 
+ModelManager::swingBarAngleTable[] = {
+      45,
+     -45,
+     -135,
+     0 
+};
+
 bool
 ModelManager::allBlocksDestroyed() {
     if (blockNum == 0) {
@@ -24,6 +32,11 @@ ModelManager::isTouchOnRightSideOfBar(int in_x) {
 
 void
 ModelManager::moveBar(float delta) {
+
+    if (isBarSwinging) {
+        progressBarSwinging();
+    }
+
     if (bar->getDirection() == BarDirection::NONE) {
         return;
     }
@@ -106,6 +119,60 @@ ModelManager::shouldSwingBar(int in_angle) {
     return false;
 }
 
+void
+ModelManager::startSwinging() {
+    isBarSwinging = true;
+    barSwingElapsedFrame = 0;
+    currentSwingState = 0;
+    barFollowthroughElapsedFrame = 0;
+}
+
+void
+ModelManager::endSwinging() {
+    isBarSwinging = false;
+    barSwingElapsedFrame = 0;
+    currentSwingState = 0;
+    barFollowthroughElapsedFrame = 0;
+}
+
+template<class T, size_t N>
+size_t array_size(T (&)[N]) { return N; }
+
+bool
+ModelManager::isTimeToFollowThrough(int in_currentSwingState) {
+    bool isTimeToFollowThrough = in_currentSwingState == (array_size(swingBarAngleTable) - 1);
+    return isTimeToFollowThrough;
+}
+
+void
+ModelManager::progressBarSwinging() {
+    // control bar rotation according to elapsed time 
+    // until start of swinging.
+
+    int transitionThreshold = 1; // increase if swing should be more slow
+    barSwingElapsedFrame++;
+
+    if (barSwingElapsedFrame > transitionThreshold) {
+        barSwingElapsedFrame = 0;
+        int barAngle;
+        if (isTimeToFollowThrough(currentSwingState)) {
+            // stop until elpase time for follow through
+            int followThroughFrame = 10;
+            barFollowthroughElapsedFrame++;
+            if (barFollowthroughElapsedFrame > followThroughFrame) {
+                currentSwingState++; // End of swing
+            }
+        } else {
+            barAngle = swingBarAngleTable[currentSwingState++];
+            eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING, &barAngle);
+        }
+
+        if (currentSwingState == array_size(swingBarAngleTable)) {
+            endSwinging();
+        }
+    }
+}
+
 // public method
 
 ModelManager::ModelManager() {
@@ -119,6 +186,9 @@ ModelManager::initialize() {
 
     int initialLife = 3;
     player = new Player(initialLife);
+
+    isBarSwinging = false;
+    currentSwingState = 0;
 }
 
 void
@@ -368,26 +438,43 @@ ModelManager::isPlayerStillAlive() {
 
 void
 ModelManager::startVerticalDraw(int in_y) {
-   verticalDrawStart.y = in_y;
-   verticalDrawEnd.y = in_y;
+    if (isBarSwinging) {
+        return;
+    }
+
+    verticalDrawStart.y = in_y;
+    verticalDrawEnd.y = in_y;
 }
 
 void
 ModelManager::updateVerticalDraw(int in_y) {
-   verticalDrawEnd.y = in_y;
+    if (isBarSwinging) {
+        return;
+    }
 
-   // if draw towards upper, update start position
-   // not to stack debt to vetical draw.
-   if (verticalDrawEnd.y > verticalDrawStart.y) {
-       verticalDrawStart.y = verticalDrawEnd.y;
-   }
+    verticalDrawEnd.y = in_y;
+
+    // if draw towards upper, update start position
+    // not to stack debt to vetical draw.
+    if (verticalDrawEnd.y > verticalDrawStart.y) {
+        verticalDrawStart.y = verticalDrawEnd.y;
+    }
+}
+
+static int
+calculateVerticalDrawDelta(int start, int end) {
+    return start - end;
 }
 
 void
 ModelManager::endVerticalDraw() {
-    int delta = (verticalDrawStart.y - verticalDrawEnd.y) / 2;
+    if (isBarSwinging) {
+        return;
+    }
+
+    int delta = calculateVerticalDrawDelta(verticalDrawStart.y, verticalDrawEnd.y);
     if (shouldSwingBar(delta)) {
-        eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING, NULL);
+        startSwinging();
     }
 
     verticalDrawStart.y = 0;
@@ -396,7 +483,7 @@ ModelManager::endVerticalDraw() {
 
 int
 ModelManager::getVerticalDrawDelta() {
-    int delta = verticalDrawStart.y - verticalDrawEnd.y;
+    int delta = calculateVerticalDrawDelta(verticalDrawStart.y, verticalDrawEnd.y);
 
     if (delta < 0) {
         return 0;
@@ -407,3 +494,7 @@ ModelManager::getVerticalDrawDelta() {
     return delta;
 }
 
+bool
+ModelManager::barSwinging() {
+    return isBarSwinging;
+}

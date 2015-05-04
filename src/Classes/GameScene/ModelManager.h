@@ -21,6 +21,10 @@ private:
     std::vector<ModelManagerEventListener*> listeners;
     Position verticalDrawStart;
     Position verticalDrawEnd;
+    bool isBarSwinging;
+    int barSwingElapsedFrame;
+    int barFollowthroughElapsedFrame;
+    int currentSwingState;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
@@ -28,6 +32,11 @@ private:
     void moveBar(float);
     void eventNotify(ModelManagerEventListener::ModelManagerEvent, void*);
     bool shouldSwingBar(int);
+    void startSwinging();
+    void endSwinging();
+    void progressBarSwinging();
+    bool isTimeToFollowThrough(int);
+    static const int swingBarAngleTable[];
 
 public:
     ModelManager();
@@ -70,6 +79,8 @@ public:
     void updateVerticalDraw(int);
     void endVerticalDraw();
     int getVerticalDrawDelta();
+
+    bool barSwinging();
 };
 
 #endif // __MODELMANAGER_H__

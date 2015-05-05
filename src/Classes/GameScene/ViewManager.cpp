@@ -208,3 +208,8 @@ ViewManager::setVerticalDrawDelta(int in_angle) {
     dBar->setPivotLeft();
     dBar->setRotation(in_angle);
 }
+
+void
+ViewManager::setIsSwinging(bool in_isBarSwinging) {
+    isBarSwinging = in_isBarSwinging;
+}

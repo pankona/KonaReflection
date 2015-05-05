@@ -28,6 +28,8 @@ public:
     void setPivotLeft();
     void setPivotRight();
     void setRotation(int);
+
+    int getWidth();
 };
 
 #endif // __DRAWABLEBar_H__

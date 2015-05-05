@@ -29,6 +29,7 @@ private:
     std::vector<DrawableBlock*> dBlocks;
     bool isBarSwinging;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
+    bool hasCollisionWhileBarSwinging(DrawableBar*, DrawableBall*);
 
 public:
     void initialize(Scene* baseScene);

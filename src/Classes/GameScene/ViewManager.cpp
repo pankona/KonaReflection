@@ -39,6 +39,36 @@ ViewManager::initializeBall(int in_radius, Position in_initialPosition) {
     baseScene->addChild(dBall->getSprite(), 100);
 }
 
+bool
+ViewManager::hasCollisionWhileBarSwinging(DrawableBar* in_dBar, DrawableBall* in_dBall) {
+    if (!isBarSwinging) {
+        return false;
+    }
+
+    // FIXME: make function to calculate distance
+    Position barPosition;
+    barPosition.x = (int) in_dBar->getSprite()->getPosition().x;
+    barPosition.y = (int) in_dBar->getSprite()->getPosition().y;
+
+    Position ballPosition;
+    ballPosition.x = (int) in_dBall->getSprite()->getPosition().x;
+    ballPosition.y = (int) in_dBall->getSprite()->getPosition().y;
+
+    int delta_x = std::abs(barPosition.x - ballPosition.x);
+    int delta_y = std::abs(barPosition.y - ballPosition.y);
+
+    int distance = std::sqrt(delta_x * delta_x + delta_y * delta_y);
+
+    printf ("[%s][%d] distance = %d\n", __func__, __LINE__, distance);
+    if (distance < in_dBar->getWidth() + in_dBall->getRadius()) {
+        printf ("[%s][%d] collision detect!\n", __func__, __LINE__);
+        return true;
+    }
+
+    return false;
+
+}
+
 void
 ViewManager::updateView() {
     if (dBall == NULL) {
@@ -47,7 +77,8 @@ ViewManager::updateView() {
 
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
-    if (ballRect.intersectsRect(barRect)) {
+    if (hasCollisionWhileBarSwinging(dBar, dBall) ||
+        ballRect.intersectsRect(barRect)) {
         eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BAR_COLLISION, NULL);
     }
 
@@ -210,6 +241,6 @@ ViewManager::setVerticalDrawDelta(int in_angle) {
 }
 
 void
-ViewManager::setIsSwinging(bool in_isBarSwinging) {
+ViewManager::setIsBarSwinging(bool in_isBarSwinging) {
     isBarSwinging = in_isBarSwinging;
 }

@@ -4,6 +4,7 @@
 
 void
 DrawableBall::createSprite(int in_radius, Position in_initPosition, std::string in_imageResourcePath) {
+    radius = in_radius;
     if (in_imageResourcePath == "") {
         sprite = Sprite::create();
         Rect rect = Rect(0, 0, in_radius * 2, in_radius * 2);
@@ -37,3 +38,7 @@ DrawableBall::setPosition(Position p) {
     sprite->setPosition(p.x, p.y);
 }
 
+int
+DrawableBall::getRadius() {
+    return radius;
+}

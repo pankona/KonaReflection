@@ -218,10 +218,16 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }
             break;
-        case ModelManagerEvent::BAR_SWING:
+        case ModelManagerEvent::BAR_SWING_START:
+            vm.setIsBarSwinging(true);
+            break;
+        case ModelManagerEvent::BAR_SWINGING:
             int* barAngle;
             barAngle = (int *)arg;
             vm.setVerticalDrawDelta(*barAngle);
+            break;
+        case ModelManagerEvent::BAR_SWING_END:
+            vm.setIsBarSwinging(false);
             break;
         default:
             break;

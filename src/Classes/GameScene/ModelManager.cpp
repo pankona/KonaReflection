@@ -125,6 +125,7 @@ ModelManager::startSwinging() {
     barSwingElapsedFrame = 0;
     currentSwingState = 0;
     barFollowthroughElapsedFrame = 0;
+    eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_START, NULL);
 }
 
 void
@@ -133,6 +134,7 @@ ModelManager::endSwinging() {
     barSwingElapsedFrame = 0;
     currentSwingState = 0;
     barFollowthroughElapsedFrame = 0;
+    eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_END, NULL);
 }
 
 template<class T, size_t N>
@@ -164,7 +166,7 @@ ModelManager::progressBarSwinging() {
             }
         } else {
             barAngle = swingBarAngleTable[currentSwingState++];
-            eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING, &barAngle);
+            eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWINGING, &barAngle);
         }
 
         if (currentSwingState == array_size(swingBarAngleTable)) {

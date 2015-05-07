@@ -10,6 +10,7 @@ public:
         PLAYER_DEAD,
         BAR_SWING_START,
         BAR_SWINGING,
+        BAR_SWING_AT_HIT,
         BAR_SWING_END,
     };
 

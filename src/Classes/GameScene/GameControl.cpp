@@ -36,6 +36,9 @@ GameControl::dispatchTimerEvent(int* in_desc) {
             log ("Player dead. gameover.");
             vm.showGameOver((int)screenSize.width, (int)screenSize.height);
             break;
+        case ModelManagerEvent::BAR_SWING_AT_HIT:
+            mm.resumeBallAndBar();
+            break;
         default:
             break;
     }
@@ -189,6 +192,7 @@ void
 GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
 
     int delay_time_sec;
+    int* barAngle;
 
     switch (in_event) {
         case ModelManagerEvent::BLOCK_DIED:
@@ -225,9 +229,15 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.setIsBarSwinging(true);
             break;
         case ModelManagerEvent::BAR_SWINGING:
-            int* barAngle;
             barAngle = (int *)arg;
             vm.setVerticalDrawDelta(*barAngle);
+            break;
+        case ModelManagerEvent::BAR_SWING_AT_HIT:
+            barAngle = (int *)arg;
+            vm.setVerticalDrawDelta(*barAngle);
+            delay_time_sec = 1;
+            vm.setTimer(delay_time_sec, (int) ModelManagerEvent::BAR_SWING_AT_HIT);
+            mm.stopBallAndBar(); // hit stop
             break;
         case ModelManagerEvent::BAR_SWING_END:
             vm.setIsBarSwinging(false);

@@ -25,6 +25,7 @@ private:
     int barSwingElapsedFrame;
     int barFollowthroughElapsedFrame;
     int currentSwingState;
+    int ballSpeedToResume;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
@@ -37,7 +38,7 @@ private:
     void progressBarSwinging();
     bool isTimeToFollowThrough(int);
     static const int swingBarAngleTable[];
-    void calculateCollisionWhileBarSwinging(Position, Position);
+    bool doCollisionWhileBarSwinging(Position, Position, int*);
 
 public:
     ModelManager();
@@ -82,6 +83,8 @@ public:
     int getVerticalDrawDelta();
 
     bool barSwinging();
+    void stopBallAndBar();
+    void resumeBallAndBar();
 };
 
 #endif // __MODELMANAGER_H__

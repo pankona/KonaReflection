@@ -172,8 +172,8 @@ ModelManager::progressBarSwinging() {
     }
 }
 
-void
-ModelManager::calculateCollisionWhileBarSwinging(Position in_ballPosition, Position in_barPosition) {
+bool
+ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_barPosition, int* out_angleAtHit) {
 
     double radian = std::atan2(in_ballPosition.y - in_barPosition.y,
                                in_ballPosition.x - (in_barPosition.x - (bar->getWidth() / 2)));
@@ -184,9 +184,21 @@ ModelManager::calculateCollisionWhileBarSwinging(Position in_ballPosition, Posit
 
     // FIXME: should treat as a method to get current bar angle
     int currentBarAngle = swingBarAngleTable[currentSwingState];
+    if (currentSwingState == 0 || currentSwingState == 3) { // FIXME: don't hard code
+        // not hit
+        return false;
+    }
+
+    int degreeBallAndBar = (int) (radian * 180 / M_PI);
 
     //  45, -45, -135, 0
+    if (degreeBallAndBar > swingBarAngleTable[currentSwingState - 1] &&
+        degreeBallAndBar <= swingBarAngleTable[currentSwingState]) {
+        *out_angleAtHit = degreeBallAndBar;
+        return true;
+    }
 
+    return false;
 }
 
 // public method
@@ -251,7 +263,10 @@ ModelManager::onCollisionBallAndBar() {
     int barWidth = bar->getWidth();
 
     if (isBarSwinging) {
-        calculateCollisionWhileBarSwinging(ballPosition, barPosition);
+        int hitAngle;
+        if (doCollisionWhileBarSwinging(ballPosition, barPosition, &hitAngle)) {
+            eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_AT_HIT, &hitAngle);
+        }
         return;
     }
 
@@ -518,4 +533,15 @@ ModelManager::getVerticalDrawDelta() {
 bool
 ModelManager::barSwinging() {
     return isBarSwinging;
+}
+
+void
+ModelManager::stopBallAndBar() {
+    ballSpeedToResume = ball->getSpeed();
+    ball->setSpeed(0);
+}
+
+void
+ModelManager::resumeBallAndBar() {
+    ball->setSpeed(ballSpeedToResume);
 }

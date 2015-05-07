@@ -20,6 +20,8 @@ private:
     ModelManager mm;
     ViewManager  vm;
     int collidedBlockNum;
+    int stopCount;
+    bool needStop;
     void dispatchTimerEvent(int*);
     std::vector<SceneEndListener*> listeners;
     void notifySceneEnd();

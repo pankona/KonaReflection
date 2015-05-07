@@ -27,7 +27,9 @@ private:
     DrawableCongrat* dCongrat;
     DrawableGameOver* dGameOver;
     std::vector<DrawableBlock*> dBlocks;
+    bool isBarSwinging;
     void eventNotify(ViewManagerEventListener::ViewManagerEvent, void*);
+    bool hasCollisionWhileBarSwinging(DrawableBar*, DrawableBall*);
 
 public:
     void initialize(Scene* baseScene);
@@ -56,6 +58,8 @@ public:
     void showGameOver(int, int);
 
     void setVerticalDrawDelta(int);
+
+    void setIsBarSwinging(bool);
 };
 
 #endif // __VIEWMANAGER_H__

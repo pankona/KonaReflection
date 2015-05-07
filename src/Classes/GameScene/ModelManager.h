@@ -37,6 +37,7 @@ private:
     void progressBarSwinging();
     bool isTimeToFollowThrough(int);
     static const int swingBarAngleTable[];
+    bool doCollisionWhileBarSwinging(Position, Position, int*);
 
 public:
     ModelManager();

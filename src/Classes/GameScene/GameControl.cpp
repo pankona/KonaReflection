@@ -11,6 +11,15 @@ GameControl::notifySceneEnd() {
 
 void
 GameControl::update(float delta) {
+
+    if (needStop) {
+        stopCount--;
+        if (stopCount <= 0) {
+            needStop = false;
+        }
+        return;
+    }
+
     mm.progress(delta);
 
     // these should be treated on callback from model manager.
@@ -87,6 +96,9 @@ GameControl::initialize(Scene* baseScene) {
                 break;
         }
     }
+
+    needStop = false;
+    stopCount = 0;
 }
 
 void
@@ -116,6 +128,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 // let mm decide y position
                 // accoding to delta of y, mm fires "swing" event, then start game.
                 mm.endVerticalDraw();
+                break;
+            case ViewManagerEvent::BALL_AND_BAR_COLLISION:
+                mm.onCollisionBallAndBar();
                 break;
             default:
                 break;
@@ -186,6 +201,7 @@ void
 GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
 
     int delay_time_sec;
+    int* barAngle;
 
     switch (in_event) {
         case ModelManagerEvent::BLOCK_DIED:
@@ -218,10 +234,21 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }
             break;
-        case ModelManagerEvent::BAR_SWING:
-            int* barAngle;
+        case ModelManagerEvent::BAR_SWING_START:
+            vm.setIsBarSwinging(true);
+            break;
+        case ModelManagerEvent::BAR_SWINGING:
             barAngle = (int *)arg;
             vm.setVerticalDrawDelta(*barAngle);
+            break;
+        case ModelManagerEvent::BAR_SWING_AT_HIT:
+            barAngle = (int *)arg;
+            vm.setVerticalDrawDelta(*barAngle);
+            stopCount = 10;
+            needStop = true;
+            break;
+        case ModelManagerEvent::BAR_SWING_END:
+            vm.setIsBarSwinging(false);
             break;
         default:
             break;

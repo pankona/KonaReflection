@@ -11,6 +11,7 @@ class DrawableBall {
 
 private:    
     Sprite* sprite;
+    int radius;
     void createSprite(int, Position, std::string);
 
 public:
@@ -18,6 +19,7 @@ public:
     DrawableBall(int, Position, std::string);
     Sprite* getSprite();
     void setPosition(Position);
+    int getRadius();
 };
 
 #endif // __DRAWABLEBALL_H__

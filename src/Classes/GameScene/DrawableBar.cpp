@@ -58,3 +58,8 @@ void
 DrawableBar::setRotation(int in_angle) {
     sprite->setRotation(in_angle);
 }
+
+int
+DrawableBar::getWidth() {
+    return width;
+}

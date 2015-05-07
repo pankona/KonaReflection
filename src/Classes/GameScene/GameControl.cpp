@@ -11,6 +11,15 @@ GameControl::notifySceneEnd() {
 
 void
 GameControl::update(float delta) {
+
+    if (needStop) {
+        stopCount--;
+        if (stopCount <= 0) {
+            needStop = false;
+        }
+        return;
+    }
+
     mm.progress(delta);
 
     // these should be treated on callback from model manager.
@@ -35,9 +44,6 @@ GameControl::dispatchTimerEvent(int* in_desc) {
         case ModelManagerEvent::PLAYER_DEAD:
             log ("Player dead. gameover.");
             vm.showGameOver((int)screenSize.width, (int)screenSize.height);
-            break;
-        case ModelManagerEvent::BAR_SWING_AT_HIT:
-            mm.resumeBallAndBar();
             break;
         default:
             break;
@@ -90,6 +96,9 @@ GameControl::initialize(Scene* baseScene) {
                 break;
         }
     }
+
+    needStop = false;
+    stopCount = 0;
 }
 
 void
@@ -235,9 +244,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
         case ModelManagerEvent::BAR_SWING_AT_HIT:
             barAngle = (int *)arg;
             vm.setVerticalDrawDelta(*barAngle);
-            delay_time_sec = 1;
-            vm.setTimer(delay_time_sec, (int) ModelManagerEvent::BAR_SWING_AT_HIT);
-            mm.stopBallAndBar(); // hit stop
+            stopCount = 10;
+            needStop = true;
+            //mm.stopBallAndBar(); // hit stop
             break;
         case ModelManagerEvent::BAR_SWING_END:
             vm.setIsBarSwinging(false);

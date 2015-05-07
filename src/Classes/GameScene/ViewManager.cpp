@@ -59,9 +59,7 @@ ViewManager::hasCollisionWhileBarSwinging(DrawableBar* in_dBar, DrawableBall* in
 
     int distance = std::sqrt(delta_x * delta_x + delta_y * delta_y);
 
-    printf ("[%s][%d] distance = %d\n", __func__, __LINE__, distance);
     if (distance < in_dBar->getWidth() + in_dBall->getRadius()) {
-        printf ("[%s][%d] collision detect!\n", __func__, __LINE__);
         return true;
     }
 

@@ -7,10 +7,7 @@
 
 const int 
 ModelManager::swingBarAngleTable[] = {
-      45,
-     -45,
-     -135,
-     0 
+      45, -45, -135, 0
 };
 
 bool
@@ -148,7 +145,7 @@ ModelManager::isTimeToFollowThrough(int in_currentSwingState) {
 
 void
 ModelManager::progressBarSwinging() {
-    // control bar rotation according to elapsed time 
+    // control bar rotation according to elapsed time
     // until start of swinging.
 
     int transitionThreshold = 1; // increase if swing should be more slow
@@ -173,6 +170,23 @@ ModelManager::progressBarSwinging() {
             endSwinging();
         }
     }
+}
+
+void
+ModelManager::calculateCollisionWhileBarSwinging(Position in_ballPosition, Position in_barPosition) {
+
+    double radian = std::atan2(in_ballPosition.y - in_barPosition.y,
+                               in_ballPosition.x - (in_barPosition.x - (bar->getWidth() / 2)));
+    printf ("[%s][%d] y, x = %d, %d\n", __func__, __LINE__,
+                                        in_ballPosition.y - in_barPosition.y,
+                                        in_ballPosition.x - (in_barPosition.x - (bar->getWidth() / 2)));
+    printf ("[%s][%d] radian = %f, (%f degree)\n", __func__, __LINE__, radian, radian * 180 / M_PI);
+
+    // FIXME: should treat as a method to get current bar angle
+    int currentBarAngle = swingBarAngleTable[currentSwingState];
+
+    //  45, -45, -135, 0
+
 }
 
 // public method
@@ -235,6 +249,11 @@ ModelManager::onCollisionBallAndBar() {
     Position barPosition = bar->getPosition();
     int ballRadius = ball->getRadius();
     int barWidth = bar->getWidth();
+
+    if (isBarSwinging) {
+        calculateCollisionWhileBarSwinging(ballPosition, barPosition);
+        return;
+    }
 
     if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {

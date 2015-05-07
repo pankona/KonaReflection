@@ -117,6 +117,9 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 // accoding to delta of y, mm fires "swing" event, then start game.
                 mm.endVerticalDraw();
                 break;
+            case ViewManagerEvent::BALL_AND_BAR_COLLISION:
+                mm.onCollisionBallAndBar();
+                break;
             default:
                 break;
         }

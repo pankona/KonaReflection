@@ -25,7 +25,6 @@ private:
     int barSwingElapsedFrame;
     int barFollowthroughElapsedFrame;
     int currentSwingState;
-    int ballSpeedToResume;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
@@ -83,8 +82,6 @@ public:
     int getVerticalDrawDelta();
 
     bool barSwinging();
-    void stopBallAndBar();
-    void resumeBallAndBar();
 };
 
 #endif // __MODELMANAGER_H__

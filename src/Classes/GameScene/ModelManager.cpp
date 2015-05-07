@@ -523,14 +523,3 @@ bool
 ModelManager::barSwinging() {
     return isBarSwinging;
 }
-
-void
-ModelManager::stopBallAndBar() {
-    ballSpeedToResume = ball->getSpeed();
-    ball->setSpeed(0);
-}
-
-void
-ModelManager::resumeBallAndBar() {
-    ball->setSpeed(ballSpeedToResume);
-}

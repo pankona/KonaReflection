@@ -177,32 +177,16 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
 
     double radian = std::atan2(in_ballPosition.y - in_barPosition.y,
                                in_ballPosition.x - (in_barPosition.x - (bar->getWidth() / 2)));
-    printf ("[%s][%d] y, x = %d, %d\n", __func__, __LINE__,
-                                        in_ballPosition.y - in_barPosition.y,
-                                        in_ballPosition.x - (in_barPosition.x - (bar->getWidth() / 2)));
-    printf ("[%s][%d] radian = %f, (%f degree)\n", __func__, __LINE__, radian, radian * 180 / M_PI);
-
     // FIXME: should treat as a method to get current bar angle
     int currentBarAngle = swingBarAngleTable[currentSwingState];
-#if 0
-    if (currentSwingState == 0 || currentSwingState == 3) { // FIXME: don't hard code
-        // not hit
-        printf ("[%s][%d] return false.\n", __func__, __LINE__);
-        return false;
-    }
-#endif
-
     int degreeBallAndBar = (int) (radian * 180 / M_PI);
 
-    //  45, -45, -135, 0
     if (degreeBallAndBar > swingBarAngleTable[currentSwingState - 1] &&
         degreeBallAndBar <= swingBarAngleTable[currentSwingState]) {
         *out_angleAtHit = degreeBallAndBar;
-        printf ("[%s][%d] return true. currentSwingState = %d\n", __func__, __LINE__, currentSwingState);
         return true;
     }
 
-    printf ("[%s][%d] return false.\n", __func__, __LINE__);
     return false;
 }
 

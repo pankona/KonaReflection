@@ -246,7 +246,6 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.setVerticalDrawDelta(*barAngle);
             stopCount = 10;
             needStop = true;
-            //mm.stopBallAndBar(); // hit stop
             break;
         case ModelManagerEvent::BAR_SWING_END:
             vm.setIsBarSwinging(false);

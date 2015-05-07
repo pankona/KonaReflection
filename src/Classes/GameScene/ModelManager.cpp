@@ -7,7 +7,7 @@
 
 const int 
 ModelManager::swingBarAngleTable[] = {
-      45, -45, -135, 0
+      -45, 45, 135, 0
 };
 
 bool
@@ -110,7 +110,7 @@ ModelManager::eventNotify(ModelManagerEventListener::ModelManagerEvent in_event,
 
 bool
 ModelManager::shouldSwingBar(int in_angle) {
-    if (in_angle > 90) {
+    if (in_angle < -90) {
         return true;
     }
     return false;
@@ -184,10 +184,13 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
 
     // FIXME: should treat as a method to get current bar angle
     int currentBarAngle = swingBarAngleTable[currentSwingState];
+#if 0
     if (currentSwingState == 0 || currentSwingState == 3) { // FIXME: don't hard code
         // not hit
+        printf ("[%s][%d] return false.\n", __func__, __LINE__);
         return false;
     }
+#endif
 
     int degreeBallAndBar = (int) (radian * 180 / M_PI);
 
@@ -195,9 +198,11 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
     if (degreeBallAndBar > swingBarAngleTable[currentSwingState - 1] &&
         degreeBallAndBar <= swingBarAngleTable[currentSwingState]) {
         *out_angleAtHit = degreeBallAndBar;
+        printf ("[%s][%d] return true. currentSwingState = %d\n", __func__, __LINE__, currentSwingState);
         return true;
     }
 
+    printf ("[%s][%d] return false.\n", __func__, __LINE__);
     return false;
 }
 
@@ -491,7 +496,7 @@ ModelManager::updateVerticalDraw(int in_y) {
     verticalDrawEnd.y = in_y;
 
     // if draw towards upper, update start position
-    // not to stack debt to vetical draw.
+    // not to stack "debt" of vetical draw.
     if (verticalDrawEnd.y > verticalDrawStart.y) {
         verticalDrawStart.y = verticalDrawEnd.y;
     }
@@ -499,7 +504,7 @@ ModelManager::updateVerticalDraw(int in_y) {
 
 static int
 calculateVerticalDrawDelta(int start, int end) {
-    return start - end;
+    return end - start;
 }
 
 void
@@ -521,10 +526,10 @@ int
 ModelManager::getVerticalDrawDelta() {
     int delta = calculateVerticalDrawDelta(verticalDrawStart.y, verticalDrawEnd.y);
 
-    if (delta < 0) {
+    if (delta > 0) {
         return 0;
-    } else if (delta > 135) {
-        return 135;
+    } else if (delta < -135) {
+        return -135;
     }
 
     return delta;

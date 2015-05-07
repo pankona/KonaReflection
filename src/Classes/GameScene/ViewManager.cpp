@@ -235,7 +235,7 @@ void
 ViewManager::setVerticalDrawDelta(int in_angle) {
     // TODO: Change pivot according to touched position
     dBar->setPivotLeft();
-    dBar->setRotation(in_angle);
+    dBar->setRotation(-1 * in_angle);
 }
 
 void

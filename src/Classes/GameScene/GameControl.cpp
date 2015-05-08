@@ -113,7 +113,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
 
                 // let mm remember y position
                 mm.startVerticalDraw(p->y);
-
                 mm.setBallAndBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_MOVED:
@@ -121,7 +120,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
 
                 // let mm update y position
                 mm.updateVerticalDraw(p->y);
-
                 mm.setBallAndBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
@@ -131,6 +129,7 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 break;
             case ViewManagerEvent::BALL_AND_BAR_COLLISION:
                 mm.onCollisionBallAndBar();
+                gameState = GameState::STARTED;
                 break;
             default:
                 break;
@@ -147,13 +146,16 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             case ViewManagerEvent::TOUCH_BEGAN:
                 p = (Position*) arg;
                 mm.onTouchBegan(p->x, p->y);
+                mm.startVerticalDraw(p->y);
                 break;
             case ViewManagerEvent::TOUCH_MOVED:
                 p = (Position*) arg;
                 mm.onTouchMoved(p->x, p->y);
+                mm.updateVerticalDraw(p->y);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
                 mm.onTouchEnded();
+                mm.endVerticalDraw();
                 break;
             case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
                 int* blockIndex;

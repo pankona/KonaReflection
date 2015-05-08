@@ -25,6 +25,7 @@ private:
     int barSwingElapsedFrame;
     int barFollowthroughElapsedFrame;
     int currentSwingState;
+    bool isAlreadyHitBySwing;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
@@ -38,6 +39,7 @@ private:
     bool isTimeToFollowThrough(int);
     static const int swingBarAngleTable[];
     bool doCollisionWhileBarSwinging(Position, Position, int*);
+    void calculateBallReflection(int);
 
 public:
     ModelManager();

@@ -128,6 +128,7 @@ ModelManager::startSwinging() {
 void
 ModelManager::endSwinging() {
     isBarSwinging = false;
+    isAlreadyHitBySwing = false;
     barSwingElapsedFrame = 0;
     currentSwingState = 0;
     barFollowthroughElapsedFrame = 0;
@@ -190,6 +191,52 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
     return false;
 }
 
+void
+ModelManager::calculateBallReflection(int in_currentBarAngle) {
+
+    Position ballPosition = ball->getPosition();
+    Position barPosition = bar->getPosition();
+    int ballRadius = ball->getRadius();
+    int barWidth = bar->getWidth();
+
+    int currentBarAngle = getVerticalDrawDelta();
+
+    // temporary configuration for testing
+    if (ball->getSpeed() == 0) {
+        ball->setDirection(in_currentBarAngle + 90);
+        return;
+    }
+
+    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
+        ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
+        int direction = ball->getDirection();
+        int new_direction = (360 - direction + in_currentBarAngle * 2) % 360;
+        ball->setDirection(new_direction);
+    } else {
+        // if bar and ball has same direction, increase ball speed
+        if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
+            (ball->getDirection() > 270 && ball->getDirection() < 360)) {
+            if (bar->getDirection() == BarDirection::RIGHT) {
+                // fix me
+            } else {
+                // turn over
+                int direction = ball->getDirection();
+                int new_direction = (180 - direction) % 360;
+                ball->setDirection(new_direction);
+            }
+        } else {
+            if (bar->getDirection() == BarDirection::LEFT) {
+                // fix me
+            } else {
+                // turn over
+                int direction = ball->getDirection();
+                int new_direction = (180 - direction) % 360;
+                ball->setDirection(new_direction);
+            }
+        }
+    }
+}
+
 // public method
 
 ModelManager::ModelManager() {
@@ -206,6 +253,7 @@ ModelManager::initialize() {
 
     isBarSwinging = false;
     currentSwingState = 0;
+    isAlreadyHitBySwing = false;
 }
 
 void
@@ -252,17 +300,27 @@ ModelManager::onCollisionBallAndBar() {
     int barWidth = bar->getWidth();
 
     if (isBarSwinging) {
+        if (isAlreadyHitBySwing) {
+            return;
+        }
+
         int hitAngle;
         if (doCollisionWhileBarSwinging(ballPosition, barPosition, &hitAngle)) {
+            isAlreadyHitBySwing = true;
+            calculateBallReflection(hitAngle);
+            setBallSpeed(10); // temporary configuration for testing
             eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_AT_HIT, &hitAngle);
         }
         return;
     }
 
+#if 0
+    int currentBarAngle = getVerticalDrawDelta();
+
     if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
         int direction = ball->getDirection();
-        int new_direction = (360 - direction) % 360;
+        int new_direction = (360 - direction + currentBarAngle * 2) % 360;
         ball->setDirection(new_direction);
     } else {
         // if bar and ball has same direction, increase ball speed
@@ -287,6 +345,10 @@ ModelManager::onCollisionBallAndBar() {
             }
         }
     }
+#else
+    int currentBarAngle = getVerticalDrawDelta();
+    calculateBallReflection(currentBarAngle);
+#endif
 }
 
 void

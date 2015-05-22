@@ -1,0 +1,14 @@
+-DLINUX
+-Wno-inconsistent-missing-override
+-I./Classes
+-I./Classes/Common
+-I./Classes/GameScene
+-I./Classes/SceneManager
+-I./Classes/TitleScene
+-I./cocos2d/cocos
+-I/usr/local/include/GLFW
+-I/usr/include/c++/4.9.2
+-I/usr/include/c++/4.9.2/x86_64-unknown-linux-gnu
+-std=c++11
+-stdlib=libc++
+

@@ -2,13 +2,13 @@
 #define __BALL_H__
 
 #include "Position.h"
+#include <KonaVector.h>
 
 class Ball {
 private:    
-    int direction;
-    int speed;
     Position position;
     int radius;
+    Kona::Vector vector;
 
 public:
     Ball();

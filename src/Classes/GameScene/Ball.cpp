@@ -4,8 +4,8 @@ Ball::Ball() {
     position.x = 100;
     position.y = 100;
     radius = 12;
-    direction = 60;
-    speed = 0;
+    vector.setAngle(60);
+    vector.setLength(0);
 }
 
 void
@@ -27,22 +27,22 @@ Ball::getPosition() {
 
 void
 Ball::setDirection(int in_direction) {
-    direction = in_direction;
+    vector.setAngle(in_direction);
 }
 
 int
 Ball::getDirection() {
-    return direction;
+    return vector.getAngle();
 }
 
 void
 Ball::setSpeed(int in_speed) {
-    speed = in_speed;
+    vector.setLength(in_speed);
 }
 
 int
 Ball::getSpeed() {
-    return speed;
+    return vector.getLength();
 }
 
 void

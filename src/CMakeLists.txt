@@ -115,6 +115,7 @@ include_directories(
   Classes/SceneManager
   Classes/TitleScene
   Classes/GameScene
+  Classes/KonaVector/src
 )
 
 set(GAME_SRC
@@ -185,7 +186,10 @@ else()
 add_executable(${APP_NAME} ${GAME_SRC})
 endif()
 
-target_link_libraries(${APP_NAME} cocos2d)
+set(KONAVECTOR_ROOT ${CMAKE_SOURCE_DIR}/Classes/KonaVector/src)
+add_subdirectory(${KONAVECTOR_ROOT})
+
+target_link_libraries(${APP_NAME} cocos2d konavector)
 
 set(APP_BIN_DIR "${CMAKE_BINARY_DIR}/bin")
 

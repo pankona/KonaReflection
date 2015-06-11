@@ -5,6 +5,7 @@ include $(CLEAR_VARS)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d/external)
 $(call import-add-path,$(LOCAL_PATH)/../../cocos2d/cocos)
+$(call import-add-path,$(LOCAL_PATH)/../../Classes)
 
 LOCAL_MODULE := cocos2dcpp_shared
 
@@ -42,8 +43,12 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
                     $(LOCAL_PATH)/../../Classes/TitleScene \
                     $(LOCAL_PATH)/../../Classes/GameScene
 
+#                    $(LOCAL_PATH)/../../Classes/KonaVector/src
+
 LOCAL_STATIC_LIBRARIES := cocos2dx_static
+LOCAL_STATIC_LIBRARIES += konavector_static
 
 include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,.)
+$(call import-module,KonaVector/src)

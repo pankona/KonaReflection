@@ -71,17 +71,13 @@ ModelManager::moveBall(float delta) {
     // width edge check
     if (width <= current_position.x + ball->getRadius() / 2 || 0 >= current_position.x - ball->getRadius() / 2) {
         // turn over
-        int direction = ball->getDirection();
-        int new_direction = (180 - direction) % 360;
-        ball->setDirection(new_direction);
+        ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
     }
 
     // height edge (top) check
     if (height <= current_position.y + ball->getRadius() / 2) {
         // turn over
-        int direction = ball->getDirection();
-        int new_direction = (360 - direction) % 360;
-        ball->setDirection(new_direction);
+        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
     }
 
     // height edge (bottom) check
@@ -199,19 +195,16 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
     int ballRadius = ball->getRadius();
     int barWidth = bar->getWidth();
 
-    int currentBarAngle = getVerticalDrawDelta();
-
     // temporary configuration for testing
     if (ball->getSpeed() == 0) {
-        ball->setDirection(in_currentBarAngle + 90);
+        int hitSpeed = 10;
+        ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
         return;
     }
 
     if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
-        int direction = ball->getDirection();
-        int new_direction = (360 - direction + in_currentBarAngle * 2) % 360;
-        ball->setDirection(new_direction);
+        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
     } else {
         // if bar and ball has same direction, increase ball speed
         if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
@@ -220,18 +213,14 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
                 // fix me
             } else {
                 // turn over
-                int direction = ball->getDirection();
-                int new_direction = (180 - direction) % 360;
-                ball->setDirection(new_direction);
+                ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
             }
         } else {
             if (bar->getDirection() == BarDirection::LEFT) {
                 // fix me
             } else {
                 // turn over
-                int direction = ball->getDirection();
-                int new_direction = (180 - direction) % 360;
-                ball->setDirection(new_direction);
+                ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
             }
         }
     }
@@ -314,41 +303,8 @@ ModelManager::onCollisionBallAndBar() {
         return;
     }
 
-#if 0
-    int currentBarAngle = getVerticalDrawDelta();
-
-    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
-        ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
-        int direction = ball->getDirection();
-        int new_direction = (360 - direction + currentBarAngle * 2) % 360;
-        ball->setDirection(new_direction);
-    } else {
-        // if bar and ball has same direction, increase ball speed
-        if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
-            (ball->getDirection() > 270 && ball->getDirection() < 360)) {
-            if (bar->getDirection() == BarDirection::RIGHT) {
-                // fix me
-            } else {
-                // turn over
-                int direction = ball->getDirection();
-                int new_direction = (180 - direction) % 360;
-                ball->setDirection(new_direction);
-            }
-        } else {
-            if (bar->getDirection() == BarDirection::LEFT) {
-                // fix me
-            } else {
-                // turn over
-                int direction = ball->getDirection();
-                int new_direction = (180 - direction) % 360;
-                ball->setDirection(new_direction);
-            }
-        }
-    }
-#else
     int currentBarAngle = getVerticalDrawDelta();
     calculateBallReflection(currentBarAngle);
-#endif
 }
 
 void
@@ -392,9 +348,6 @@ void
 ModelManager::resetBall() {
     // reset ball position onto bar
     ball->setPosition(bar->getPosition().x, bar->getPosition().y + bar->getHeight() + ball->getRadius());
-
-    // reset ball direction
-    ball->setDirection(60);
 }
 
 void
@@ -475,15 +428,11 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
     if (ballPosition.x + ballRadius > blockPosition.x - blockWidth / 2 &&
         ballPosition.x - ballRadius < blockPosition.x + blockWidth / 2) {
         // turn over (y)
-        int direction = ball->getDirection();
-        int new_direction = (360 - direction) % 360;
-        ball->setDirection(new_direction);
+        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
     } else if (ballPosition.y + ballRadius > blockPosition.y - blockHeight / 2 &&
                ballPosition.y - ballRadius < blockPosition.y + blockHeight) {
         // turn over (x)
-        int direction = ball->getDirection();
-        int new_direction = (180 - direction) % 360;
-        ball->setDirection(new_direction);
+        ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
     }
 }
 

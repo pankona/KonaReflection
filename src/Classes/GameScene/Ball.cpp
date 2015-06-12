@@ -55,3 +55,17 @@ Ball::getRadius() {
     return radius;
 }
 
+void
+Ball::addVector(Kona::Vector in_vector) {
+    vector += in_vector;
+}
+
+int
+Ball::getSpeedX() {
+    return vector.getTerminal().x;
+}
+
+int
+Ball::getSpeedY() {
+    return vector.getTerminal().y;
+}

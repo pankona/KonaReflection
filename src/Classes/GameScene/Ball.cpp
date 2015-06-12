@@ -55,3 +55,8 @@ Ball::getRadius() {
     return radius;
 }
 
+void
+Ball::addVector(Kona::Vector in_vector) {
+    vector += in_vector;
+}
+

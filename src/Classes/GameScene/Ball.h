@@ -21,6 +21,7 @@ public:
     int getSpeed();
     void setRadius(int);
     int getRadius();
+    void addVector(Kona::Vector);
 };
 
 #endif // __BALL_H__

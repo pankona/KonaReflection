@@ -20,6 +20,7 @@
 		41285AD11AE9F9EF00F282C1 /* ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 41285ACF1AE9F9EF00F282C1 /* ball.png */; };
 		414BE0681AD6655C001CA359 /* Drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 414BE0661AD6655C001CA359 /* Drawable.cpp */; };
 		414BE0691AD6655C001CA359 /* Drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 414BE0661AD6655C001CA359 /* Drawable.cpp */; };
+		416E5B321B2AB3C6008227A9 /* libkonavector.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 416E5B2A1B2AA02A008227A9 /* libkonavector.dylib */; };
 		41CE78C61AC8D29800049262 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78911AC8D29800049262 /* AppDelegate.cpp */; };
 		41CE78C71AC8D29800049262 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78911AC8D29800049262 /* AppDelegate.cpp */; };
 		41CE78C81AC8D29800049262 /* DrawableLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CE78941AC8D29800049262 /* DrawableLabel.cpp */; };
@@ -135,6 +136,20 @@
 			remoteGlobalIDString = A07A4C241783777C0073F6A7;
 			remoteInfo = "cocos2dx iOS";
 		};
+		416E5B271B2AA02A008227A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 416E5B201B2AA02A008227A9 /* KonaVector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 604033AEDF77483FAFF51E45;
+			remoteInfo = KonaVectorTest;
+		};
+		416E5B291B2AA02A008227A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 416E5B201B2AA02A008227A9 /* KonaVector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 995070ED28BB49A2A607155A;
+			remoteInfo = konavector;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -151,6 +166,7 @@
 		41285ACF1AE9F9EF00F282C1 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		414BE0661AD6655C001CA359 /* Drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Drawable.cpp; sourceTree = "<group>"; };
 		414BE0671AD6655C001CA359 /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Drawable.h; sourceTree = "<group>"; };
+		416E5B201B2AA02A008227A9 /* KonaVector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KonaVector.xcodeproj; path = ../Classes/KonaVector/src/KonaVector.xcodeproj; sourceTree = "<group>"; };
 		41CE78911AC8D29800049262 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		41CE78921AC8D29800049262 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		41CE78941AC8D29800049262 /* DrawableLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DrawableLabel.cpp; sourceTree = "<group>"; };
@@ -269,6 +285,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				416E5B321B2AB3C6008227A9 /* libkonavector.dylib in Frameworks */,
 				1AC6FB21180E996B004C840B /* libcocos2d Mac.a in Frameworks */,
 				5087E76717EB910900C73F5D /* libz.dylib in Frameworks */,
 				503AE11B17EB9C5A00D1A890 /* IOKit.framework in Frameworks */,
@@ -322,12 +339,13 @@
 			isa = PBXGroup;
 			children = (
 				46880B8319C43A87006E1F66 /* Classes */,
-				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				080E96DDFE201D6D7F000001 /* ios */,
+				416E5B201B2AA02A008227A9 /* KonaVector.xcodeproj */,
 				503AE10617EB990700D1A890 /* mac */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				46880B7519C43A67006E1F66 /* Resources */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -353,6 +371,15 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		416E5B211B2AA02A008227A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				416E5B281B2AA02A008227A9 /* KonaVectorTest */,
+				416E5B2A1B2AA02A008227A9 /* libkonavector.dylib */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		41CE78931AC8D29800049262 /* Common */ = {
@@ -576,6 +603,10 @@
 					ProductGroup = 1AC6FAE6180E9839004C840B /* Products */;
 					ProjectRef = 1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */;
 				},
+				{
+					ProductGroup = 416E5B211B2AA02A008227A9 /* Products */;
+					ProjectRef = 416E5B201B2AA02A008227A9 /* KonaVector.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -598,6 +629,21 @@
 			fileType = archive.ar;
 			path = "libcocos2d iOS.a";
 			remoteRef = 1AC6FB06180E9839004C840B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		416E5B281B2AA02A008227A9 /* KonaVectorTest */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = KonaVectorTest;
+			remoteRef = 416E5B271B2AA02A008227A9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		416E5B2A1B2AA02A008227A9 /* libkonavector.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			name = libkonavector.dylib;
+			path = libkonavector.1.0.0.dylib;
+			remoteRef = 416E5B291B2AA02A008227A9 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -811,6 +857,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes/KonaVector/src",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
@@ -839,6 +886,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../cocos2d/cocos/platform/mac",
 					"$(SRCROOT)/../cocos2d/external/glfw3/include/mac",
+					"$(SRCROOT)/../Classes/KonaVector/src",
 				);
 				INFOPLIST_FILE = mac/Info.plist;
 				LIBRARY_SEARCH_PATHS = "";

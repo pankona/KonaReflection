@@ -5,6 +5,12 @@
 
 // private methods
 
+#define BALL_REFLECT_X() \
+            ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)))
+
+#define BALL_REFLECT_Y() \
+            ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)))
+
 const int 
 ModelManager::swingBarAngleTable[] = {
       -45, 45, 135, 0
@@ -71,13 +77,13 @@ ModelManager::moveBall(float delta) {
     // width edge check
     if (width <= current_position.x + ball->getRadius() / 2 || 0 >= current_position.x - ball->getRadius() / 2) {
         // turn over
-        ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
+        BALL_REFLECT_X();
     }
 
     // height edge (top) check
     if (height <= current_position.y + ball->getRadius() / 2) {
         // turn over
-        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
+        BALL_REFLECT_Y();
     }
 
     // height edge (bottom) check
@@ -204,7 +210,7 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
 
     if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
-        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
+        BALL_REFLECT_Y();
     } else {
         // if bar and ball has same direction, increase ball speed
         if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
@@ -213,14 +219,14 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
                 // fix me
             } else {
                 // turn over
-                ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
+                BALL_REFLECT_X();
             }
         } else {
             if (bar->getDirection() == BarDirection::LEFT) {
                 // fix me
             } else {
                 // turn over
-                ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
+                BALL_REFLECT_X();
             }
         }
     }
@@ -428,11 +434,11 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
     if (ballPosition.x + ballRadius > blockPosition.x - blockWidth / 2 &&
         ballPosition.x - ballRadius < blockPosition.x + blockWidth / 2) {
         // turn over (y)
-        ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)));
+        BALL_REFLECT_Y();
     } else if (ballPosition.y + ballRadius > blockPosition.y - blockHeight / 2 &&
                ballPosition.y - ballRadius < blockPosition.y + blockHeight) {
         // turn over (x)
-        ball->addVector(Kona::Vector(Kona::Point(-1 * ball->getSpeedX() * 2, 0)));
+        BALL_REFLECT_X();
     }
 }
 

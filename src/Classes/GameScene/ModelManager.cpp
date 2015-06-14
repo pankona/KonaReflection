@@ -210,7 +210,7 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
 
     if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
         ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
-        BALL_REFLECT_Y();
+        ball->addVector(Kona::Vector(-1 * ball->getSpeedY() * 2, in_currentBarAngle + 90));
     } else {
         // if bar and ball has same direction, increase ball speed
         if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||

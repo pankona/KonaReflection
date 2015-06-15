@@ -11,7 +11,7 @@
 #define BALL_REFLECT_Y() \
             ball->addVector(Kona::Vector(Kona::Point(0, -1 * ball->getSpeedY() * 2)))
 
-const int 
+const int
 ModelManager::swingBarAngleTable[] = {
       -45, 45, 135, 0
 };
@@ -193,6 +193,16 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
     return false;
 }
 
+static int
+distanceOfBallFromBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
+
+    Kona::Point ball_p (in_ball.getPosition().x - in_bar.getPosition().x - in_bar.getWidth() / 2,
+                         in_ball.getPosition().y - in_bar.getPosition().y);
+    Kona::Vector bar_v (Kona::Point (in_bar.getWidth(), in_currentBarAngle));
+
+    return bar_v.distance (ball_p);
+}
+
 void
 ModelManager::calculateBallReflection(int in_currentBarAngle) {
 
@@ -208,8 +218,8 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         return;
     }
 
-    if (ballPosition.x + ballRadius / 2 > barPosition.x - barWidth / 2 &&
-        ballPosition.x - ballRadius / 2 < barPosition.x + barWidth / 2) {
+    if (distanceOfBallFromBar (*ball, *bar, in_currentBarAngle) <= ball->getRadius() + bar->getHeight() / 2) {
+        // todo: need to fix. need to use cross for vector length.
         ball->addVector(Kona::Vector(-1 * ball->getSpeedY() * 2, in_currentBarAngle + 90));
     } else {
         // if bar and ball has same direction, increase ball speed

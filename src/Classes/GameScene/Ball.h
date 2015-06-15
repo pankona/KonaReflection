@@ -24,6 +24,7 @@ public:
     void addVector(Kona::Vector);
     int getSpeedX();
     int getSpeedY();
+    Kona::Vector& getVector();
 };
 
 #endif // __BALL_H__

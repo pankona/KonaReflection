@@ -69,3 +69,8 @@ int
 Ball::getSpeedY() {
     return vector.getTerminal().y;
 }
+
+Kona::Vector&
+Ball::getVector() {
+    return vector;
+}

@@ -196,11 +196,30 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
 static int
 distanceOfBallFromBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 
-    Kona::Point ball_p (in_ball.getPosition().x - in_bar.getPosition().x - in_bar.getWidth() / 2,
+    Kona::Point ball_p (in_ball.getPosition().x - in_bar.getPosition().x - in_bar.getWidth() / 2 + in_ball.getRadius(),
                          in_ball.getPosition().y - in_bar.getPosition().y);
     Kona::Vector bar_v (Kona::Point (in_bar.getWidth(), in_currentBarAngle));
 
     return bar_v.distance (ball_p);
+}
+
+static int
+calculateCrossOfBallAndBar(Ball& in_bar, int in_currentBarAngle) {
+    Kona::Vector ball_v = in_bar.getVector();
+    Kona::Vector bar_v(1, in_currentBarAngle);
+    return ball_v.cross (bar_v);
+}
+
+static bool
+doCollideOnSideOfBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
+
+    Kona::Vector ball_v = in_ball.getVector();
+    Kona::Vector bar_v(1, in_currentBarAngle);
+    if (ball_v.dot (bar_v) < 0 ||
+        ball_v.dot (bar_v) > bar_v.getLength()) {
+        return true;
+    }
+    return false;
 }
 
 void
@@ -219,25 +238,11 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
     }
 
     if (distanceOfBallFromBar (*ball, *bar, in_currentBarAngle) <= ball->getRadius() + bar->getHeight() / 2) {
-        // todo: need to fix. need to use cross for vector length.
-        ball->addVector(Kona::Vector(-1 * ball->getSpeedY() * 2, in_currentBarAngle + 90));
-    } else {
-        // if bar and ball has same direction, increase ball speed
-        if ((ball->getDirection() >= 0 && ball->getDirection() < 90) ||
-            (ball->getDirection() > 270 && ball->getDirection() < 360)) {
-            if (bar->getDirection() == BarDirection::RIGHT) {
-                // fix me
-            } else {
-                // turn over
-                BALL_REFLECT_X();
-            }
+        if (doCollideOnSideOfBar(*ball, *bar, in_currentBarAngle)) {
+            BALL_REFLECT_X();
         } else {
-            if (bar->getDirection() == BarDirection::LEFT) {
-                // fix me
-            } else {
-                // turn over
-                BALL_REFLECT_X();
-            }
+            int ballCross = calculateCrossOfBallAndBar (*ball, in_currentBarAngle);
+            ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
         }
     }
 }

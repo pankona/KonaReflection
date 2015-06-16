@@ -219,7 +219,7 @@ static int
 calculateCrossOfBallAndBar(Ball& in_ball, Bar &in_bar, int in_currentBarAngle) {
     Kona::Vector ball_v = in_ball.getVector();
     Kona::Vector bar_v(in_bar.getWidth(), in_currentBarAngle);
-    return -1 * ball_v.cross (bar_v) / bar_v.getLength();
+    return bar_v.cross (ball_v) / bar_v.getLength();
 }
 
 static bool
@@ -242,9 +242,12 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
         //ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
-        ball->addVector(Kona::Vector(hitSpeed, 90));
+        ball->addVector(Kona::Vector(hitSpeed, 60));
         return;
     }
+
+    printf ("bar angle = %d\n", in_currentBarAngle);
+    printf ("current ball angle = %d\n", ball->getVector().getAngle());
 
     if (doBallCollideOnSideOfBar(*ball, *bar, in_currentBarAngle)) {
         BALL_REFLECT_X();
@@ -257,6 +260,8 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         //printf ("new ball speed = %d\n", ball->getSpeed());
         ball->setSpeed(originalBallSpeed);
     }
+
+    printf ("new ball angle = %d\n\n", ball->getVector().getAngle());
 }
 
 // public method
@@ -332,7 +337,7 @@ ModelManager::onCollisionBallAndBar() {
         if (doCollisionWhileBarSwinging(ballPosition, barPosition, &hitAngle)) {
             isAlreadyHitBySwing = true;
             calculateBallReflection(hitAngle);
-            setBallSpeed(10); // temporary configuration for testing
+            //setBallSpeed(10); // temporary configuration for testing
             eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_AT_HIT, &hitAngle);
         }
         return;
@@ -441,7 +446,8 @@ ModelManager::doCollideBallAndBar() {
 
     int currentBarAngle = getVerticalDrawDelta();
     int ballCross = calculateCrossOfBallAndBar (*ball, *bar, currentBarAngle);
-    if (ballCross < 0) {
+    printf ("ball cross = %d\n", ballCross);
+    if (ballCross > 0) {
         return false;
     }
 
@@ -571,6 +577,8 @@ int
 ModelManager::getVerticalDrawDelta() {
     int delta = calculateVerticalDrawDelta(verticalDrawStart.y, verticalDrawEnd.y);
 
+    return -45;
+#if 0
     if (delta > 0) {
         return 0;
     } else if (delta < -135) {
@@ -578,6 +586,7 @@ ModelManager::getVerticalDrawDelta() {
     }
 
     return delta;
+#endif
 }
 
 bool

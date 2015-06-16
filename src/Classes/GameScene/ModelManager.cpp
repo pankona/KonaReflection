@@ -79,19 +79,30 @@ ModelManager::moveBall(float delta) {
 
     // check collision to window edge
     // width edge check
-    if (width <= current_position.x + ball->getRadius() / 2 || 0 >= current_position.x - ball->getRadius() / 2) {
-        // turn over
-        BALL_REFLECT_X();
+    if (width <= current_position.x + ball->getSpeedX() + ball->getRadius() / 2) {
+        if (ball->getSpeedX() > 0) {
+            // turn over
+            BALL_REFLECT_X();
+        }
+    } 
+
+    if (0 >= current_position.x - ball->getSpeedX() - ball->getRadius() / 2) {
+        if (ball->getSpeedX() < 0) {
+            // turn over
+            BALL_REFLECT_X();
+        }
     }
 
     // height edge (top) check
-    if (height <= current_position.y + ball->getRadius() / 2) {
-        // turn over
-        BALL_REFLECT_Y();
+    if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
+        if (ball->getSpeedY() > 0) {
+            // turn over
+            BALL_REFLECT_Y();
+        }
     }
 
     // height edge (bottom) check
-    if (0 >= current_position.y - ball->getRadius() / 2) {
+    if (0 >= current_position.y - ball->getSpeedY() - ball->getRadius() / 2) {
         eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
         return;
     }

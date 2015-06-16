@@ -241,7 +241,8 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
     // temporary configuration for testing
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
-        ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
+        //ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
+        ball->addVector(Kona::Vector(hitSpeed, 90));
         return;
     }
 

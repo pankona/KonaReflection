@@ -50,6 +50,7 @@ public:
     void onTouchEnded();
     void onCollisionBallAndBar();
     void onCollisionBallAndBlock(int, bool);
+    bool doCollideBallAndBar();
 
     void initializeBar();
     Position getBarPosition();

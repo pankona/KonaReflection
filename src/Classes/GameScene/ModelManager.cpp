@@ -196,10 +196,19 @@ ModelManager::doCollisionWhileBarSwinging(Position in_ballPosition, Position in_
 static int
 distanceOfBallFromBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 
-    Kona::Point ball_p (in_ball.getPosition().x - in_bar.getPosition().x - in_bar.getWidth() / 2 + in_ball.getRadius(),
+    Kona::Point ball_p (in_ball.getPosition().x - (in_bar.getPosition().x - in_bar.getWidth() / 2) + in_ball.getRadius(),
                          in_ball.getPosition().y - in_bar.getPosition().y);
     Kona::Vector bar_v (Kona::Point (in_bar.getWidth(), in_currentBarAngle));
 
+#if 1
+    printf ("%d, %d\n", in_ball.getPosition().x - (in_bar.getPosition().x - in_bar.getWidth() / 2) + in_ball.getRadius(),
+                        in_ball.getPosition().y - in_bar.getPosition().y);
+    Kona::Vector ball_p_v(ball_p);
+    ball_p_v.show();
+    bar_v.show();
+#endif
+
+    printf ("distance from bar to ball: %d\n", bar_v.distance (ball_p));
     return bar_v.distance (ball_p);
 }
 
@@ -211,7 +220,7 @@ calculateCrossOfBallAndBar(Ball& in_bar, int in_currentBarAngle) {
 }
 
 static bool
-doCollideOnSideOfBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
+doBallCollideOnSideOfBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 
     Kona::Vector ball_v = in_ball.getVector();
     Kona::Vector bar_v(1, in_currentBarAngle);
@@ -237,13 +246,11 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         return;
     }
 
-    if (distanceOfBallFromBar (*ball, *bar, in_currentBarAngle) <= ball->getRadius() + bar->getHeight() / 2) {
-        if (doCollideOnSideOfBar(*ball, *bar, in_currentBarAngle)) {
-            BALL_REFLECT_X();
-        } else {
-            int ballCross = calculateCrossOfBallAndBar (*ball, in_currentBarAngle);
-            ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
-        }
+    if (doBallCollideOnSideOfBar(*ball, *bar, in_currentBarAngle)) {
+        BALL_REFLECT_X();
+    } else {
+        int ballCross = calculateCrossOfBallAndBar (*ball, in_currentBarAngle);
+        ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
     }
 }
 
@@ -270,6 +277,10 @@ void
 ModelManager::progress(float delta) {
     moveBar(delta);
     moveBall(delta);
+
+    if (doCollideBallAndBar()) {
+        onCollisionBallAndBar();
+    }
 }
 
 
@@ -420,6 +431,16 @@ Position
 ModelManager::getBlockPosition(int index) {
     Block* block = blocks.at(index);
     return block->getPosition();
+}
+
+bool
+ModelManager::doCollideBallAndBar() {
+
+    int currentBarAngle = getVerticalDrawDelta();
+    if (distanceOfBallFromBar (*ball, *bar, currentBarAngle) <= ball->getRadius() + bar->getHeight() / 2) {
+        return true;
+    }
+    return false;
 }
 
 void

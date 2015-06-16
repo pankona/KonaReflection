@@ -215,8 +215,8 @@ doCollideOnSideOfBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 
     Kona::Vector ball_v = in_ball.getVector();
     Kona::Vector bar_v(1, in_currentBarAngle);
-    if (ball_v.dot (bar_v) < 0 ||
-        ball_v.dot (bar_v) > bar_v.getLength()) {
+    int cosx = ball_v.dot (bar_v) / bar_v.getLength();
+    if (cosx < 0 || cosx > bar_v.getLength()) {
         return true;
     }
     return false;

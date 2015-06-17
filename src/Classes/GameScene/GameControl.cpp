@@ -67,11 +67,13 @@ GameControl::initialize(Scene* baseScene) {
 
     mm.initializeBar();
     vm.initializeBar(mm.getBarWidth(), mm.getBarHeight(), mm.getBarPosition());
-    log ("bar initialized with parameter: w = %d, h = %d, p = (%d, %d)", mm.getBarWidth(), mm.getBarHeight(), mm.getBarPosition().x, mm.getBarPosition().y);
+    log ("bar initialized with parameter: w = %d, h = %d, p = (%d, %d)",
+         mm.getBarWidth(), mm.getBarHeight(), (int) mm.getBarPosition().x, (int) mm.getBarPosition().y);
 
     mm.initializeBall();
     vm.initializeBall(mm.getBallRadius(), mm.getBallPosition());
-    log ("ball initialized with parameter: r = %d, p = (%d, %d)", mm.getBallRadius(), mm.getBallPosition().x, mm.getBallPosition().y);
+    log ("ball initialized with parameter: r = %d, p = (%d, %d)",
+         mm.getBallRadius(), (int) mm.getBallPosition().x, (int) mm.getBallPosition().y);
 
     mm.initializeBlocks();
     for (int i = 0; i < mm.getBlockNum(); i++) {

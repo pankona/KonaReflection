@@ -75,8 +75,7 @@ ViewManager::updateView() {
 
     Rect ballRect = dBall->getSprite()->getBoundingBox();
     Rect barRect = dBar->getSprite()->getBoundingBox();
-    if (hasCollisionWhileBarSwinging(dBar, dBall) ||
-        ballRect.intersectsRect(barRect)) {
+    if (hasCollisionWhileBarSwinging(dBar, dBall)) {
         eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BAR_COLLISION, NULL);
     }
 

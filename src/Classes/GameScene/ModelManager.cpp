@@ -73,11 +73,15 @@ ModelManager::moveBall(float delta) {
     int width = field->getWidth();
     int height = field->getHeight();
 
+    float deltaX = 0;
+    float deltaY = 0;
+
     // check collision to window edge
     // width edge check
     if (width <= current_position.x + ball->getSpeedX() + ball->getRadius() / 2) {
         if (ball->getSpeedX() > 0) {
             // turn over
+            deltaX = width - (current_position.x + ball->getSpeedX() + ball->getRadius() / 2);
             BALL_REFLECT_X();
         }
     } 
@@ -85,6 +89,7 @@ ModelManager::moveBall(float delta) {
     if (0 >= current_position.x - ball->getSpeedX() - ball->getRadius() / 2) {
         if (ball->getSpeedX() < 0) {
             // turn over
+            deltaX = current_position.x - ball->getSpeedX() - ball->getRadius() / 2;
             BALL_REFLECT_X();
         }
     }
@@ -93,6 +98,7 @@ ModelManager::moveBall(float delta) {
     if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
         if (ball->getSpeedY() > 0) {
             // turn over
+            deltaY = height - current_position.y + ball->getSpeedY() + ball->getRadius() / 2;
             BALL_REFLECT_Y();
         }
     }
@@ -107,8 +113,8 @@ ModelManager::moveBall(float delta) {
     float new_x = cos(rad2deg((float)ball->getDirection())) * (float)speed;
     float new_y = sin(rad2deg((float)ball->getDirection())) * (float)speed;
     Position new_position;
-    new_position.x = current_position.x + new_x;
-    new_position.y = current_position.y + new_y;
+    new_position.x = current_position.x + new_x - deltaX;
+    new_position.y = current_position.y + new_y - deltaY;
 
     ball->setPosition(new_position);
 }

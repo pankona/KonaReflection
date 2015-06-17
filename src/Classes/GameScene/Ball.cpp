@@ -60,12 +60,12 @@ Ball::addVector(Kona::Vector in_vector) {
     vector += in_vector;
 }
 
-int
+float
 Ball::getSpeedX() {
     return vector.getTerminal().x;
 }
 
-int
+float
 Ball::getSpeedY() {
     return vector.getTerminal().y;
 }

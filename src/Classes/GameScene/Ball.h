@@ -22,8 +22,8 @@ public:
     void setRadius(int);
     int getRadius();
     void addVector(Kona::Vector);
-    int getSpeedX();
-    int getSpeedY();
+    float getSpeedX();
+    float getSpeedY();
     Kona::Vector& getVector();
 };
 

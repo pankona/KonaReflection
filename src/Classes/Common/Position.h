@@ -4,8 +4,8 @@
 class Position {
 
 public:    
-    int x;
-    int y;
+    float x;
+    float y;
 };
 
 #endif // __POSITION_H__

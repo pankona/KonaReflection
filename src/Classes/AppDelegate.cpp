@@ -15,7 +15,7 @@ void AppDelegate::initGLContextAttrs() {
 }
 
 bool AppDelegate::applicationDidFinishLaunching() {
-	int screen_width = 600;
+	int screen_width = 480;
 	int screen_height = 900;
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();

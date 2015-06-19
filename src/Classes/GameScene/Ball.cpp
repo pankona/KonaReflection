@@ -74,3 +74,8 @@ Kona::Vector&
 Ball::getVector() {
     return vector;
 }
+
+void
+Ball::setVector(Kona::Vector in_vector) {
+    vector = in_vector;
+}

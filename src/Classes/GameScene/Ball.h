@@ -25,6 +25,7 @@ public:
     float getSpeedX();
     float getSpeedY();
     Kona::Vector& getVector();
+    void setVector(Kona::Vector);
 };
 
 #endif // __BALL_H__

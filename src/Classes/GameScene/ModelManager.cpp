@@ -69,54 +69,79 @@ ModelManager::moveBar(float delta) {
 // calculate ball's position at next frame
 void
 ModelManager::moveBall(float delta) {
-    Position current_position = ball->getPosition();
     int width = field->getWidth();
     int height = field->getHeight();
 
     float deltaX = 0;
     float deltaY = 0;
 
-    // check collision to window edge
-    // width edge check
-    if (width <= current_position.x + ball->getSpeedX() + ball->getRadius() / 2) {
-        if (ball->getSpeedX() > 0) {
-            // turn over
-            deltaX = width - (current_position.x + ball->getSpeedX() + ball->getRadius() / 2);
-            BALL_REFLECT_X();
+    // temp ball initialization
+    Ball tempBall;
+    tempBall.setPosition(ball->getPosition().x, ball->getPosition().y);
+    tempBall.setVector(ball->getVector());
+
+
+    while (true) {
+        Position current_position = tempBall.getPosition();
+        // check collision to window edge
+        // width edge check
+        if (width <= current_position.x + ball->getSpeedX() + ball->getRadius() / 2) {
+            if (ball->getSpeedX() > 0) {
+                // turn over
+                deltaX = width - (current_position.x + ball->getSpeedX() + ball->getRadius() / 2);
+                float newSpeedX = deltaX;
+                float newSpeedY = ball->getSpeedY() * (deltaX / ball->getSpeedX());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                continue;
+            }
+        } 
+
+        if (0 >= current_position.x - ball->getSpeedX() - ball->getRadius() / 2) {
+            if (ball->getSpeedX() < 0) {
+                // turn over
+                deltaX = current_position.x - ball->getSpeedX() - ball->getRadius() / 2;
+                float newSpeedX = deltaX;
+                float newSpeedY = ball->getSpeedY() * (deltaX / ball->getSpeedX());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                continue;
+            }
         }
-    } 
 
-    if (0 >= current_position.x - ball->getSpeedX() - ball->getRadius() / 2) {
-        if (ball->getSpeedX() < 0) {
-            // turn over
-            deltaX = current_position.x - ball->getSpeedX() - ball->getRadius() / 2;
-            BALL_REFLECT_X();
+        // height edge (top) check
+        if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
+            if (ball->getSpeedY() > 0) {
+                // turn over
+                deltaY = height - (current_position.y + ball->getSpeedY() + ball->getRadius() / 2);
+                float newSpeedX = ball->getSpeedX() * (deltaY / ball->getSpeedY());
+                float newSpeedY = deltaY;
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_Y();
+                continue;
+            }
         }
-    }
 
-    // height edge (top) check
-    if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
-        if (ball->getSpeedY() > 0) {
-            // turn over
-            deltaY = height - (current_position.y + ball->getSpeedY() + ball->getRadius() / 2);
-            BALL_REFLECT_Y();
+        // height edge (bottom) check
+        if (0 >= current_position.y - ball->getSpeedY() - ball->getRadius() / 2) {
+            eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
+            return;
         }
+
+        Position new_position;
+        new_position.x = current_position.x + tempBall.getSpeedX();
+        new_position.y = current_position.y + tempBall.getSpeedY();
+
+        ball->setPosition(new_position);
+        break;
     }
-
-    // height edge (bottom) check
-    if (0 >= current_position.y - ball->getSpeedY() - ball->getRadius() / 2) {
-        eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
-        return;
-    }
-
-    int speed = ball->getSpeed();
-    float new_x = cos(rad2deg((float)ball->getDirection())) * (float)speed;
-    float new_y = sin(rad2deg((float)ball->getDirection())) * (float)speed;
-    Position new_position;
-    new_position.x = current_position.x + new_x - deltaX;
-    new_position.y = current_position.y + new_y - deltaY;
-
-    ball->setPosition(new_position);
+    
 }
 
 

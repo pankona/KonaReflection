@@ -98,7 +98,7 @@ ModelManager::moveBall(float delta) {
     if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
         if (ball->getSpeedY() > 0) {
             // turn over
-            deltaY = height - current_position.y + ball->getSpeedY() + ball->getRadius() / 2;
+            deltaY = height - (current_position.y + ball->getSpeedY() + ball->getRadius() / 2);
             BALL_REFLECT_Y();
         }
     }

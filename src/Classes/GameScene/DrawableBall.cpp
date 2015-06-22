@@ -13,7 +13,7 @@ DrawableBall::createSprite(int in_radius, Position in_initPosition, std::string 
     } else {
         sprite = Sprite::create(in_imageResourcePath);
         Size img_size = sprite->getContentSize();
-        sprite->setScale(in_radius * 2 / img_size.width, in_radius * 2 / img_size.height);
+        sprite->setScale((in_radius * 2) / img_size.width, (in_radius * 2) / img_size.height);
     }
     sprite->setPosition(in_initPosition.x, in_initPosition.y);
 }

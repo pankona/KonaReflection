@@ -1,17 +1,12 @@
 #include "Ball.h"
 
-Ball::Ball() {
-    position.x = 100;
-    position.y = 100;
-    radius = 12;
-    vector.setAngle(60);
-    vector.setLength(0);
+Ball::Ball() : vector(Kona::Vector(0, 0), Kona::Point(0, 0)), radius(12) {
 }
 
 void
 Ball::setPosition(Position in_position) {
-    position.x = in_position.x;
-    position.y = in_position.y;
+    vector.setStartPosition(Kona::Point(in_position.x,
+                                        in_position.y));
 }
 
 void
@@ -57,25 +52,47 @@ Ball::getRadius() {
 
 void
 Ball::addVector(Kona::Vector in_vector) {
-    vector += in_vector;
+    vector.setVector(vector.getVector() + in_vector);
 }
 
 float
 Ball::getSpeedX() {
-    return vector.getTerminal().x;
+    return vector.getVector().getTerminal().x;
 }
 
 float
 Ball::getSpeedY() {
-    return vector.getTerminal().y;
+    return vector.getVector().getTerminal().y;
 }
 
-Kona::Vector&
+Kona::Vector
 Ball::getVector() {
-    return vector;
+    return vector.getVector();
 }
 
 void
 Ball::setVector(Kona::Vector in_vector) {
-    vector = in_vector;
+    vector.setVector(in_vector);
 }
+
+bool
+Ball::isTowardRight() {
+    return vector.isTowardRight();
+}
+
+bool
+Ball::isTowardLeft() {
+    return vector.isTowardLeft();
+}
+
+bool
+Ball::isTowardUp() {
+    return vector.isTowardUp();
+}
+
+bool
+Ball::isTowardDown() {
+    return vector.isTowardDown();
+}
+
+

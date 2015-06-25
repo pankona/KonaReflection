@@ -2,13 +2,13 @@
 #define __BALL_H__
 
 #include "Position.h"
-#include <KonaVector.h>
+#include <KonaVector2D.h>
 
 class Ball {
 private:    
     Position position;
     int radius;
-    Kona::Vector vector;
+    Kona::Vector2D vector;
 
 public:
     Ball();
@@ -24,8 +24,12 @@ public:
     void addVector(Kona::Vector);
     float getSpeedX();
     float getSpeedY();
-    Kona::Vector& getVector();
+    Kona::Vector getVector();
     void setVector(Kona::Vector);
+    bool isTowardRight();
+    bool isTowardLeft();
+    bool isTowardUp();
+    bool isTowardDown();
 };
 
 #endif // __BALL_H__

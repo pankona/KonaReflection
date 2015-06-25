@@ -30,6 +30,13 @@ public:
     bool isTowardLeft();
     bool isTowardUp();
     bool isTowardDown();
+    enum DIRECTION {
+        BALL_UP,
+        BALL_DOWN,
+        BALL_RIGHT,
+        BALL_LEFT
+    };
+    Kona::Vector2D getVector2DFromCircumference(DIRECTION);
 };
 
 #endif // __BALL_H__

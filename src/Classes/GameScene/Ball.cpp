@@ -95,4 +95,31 @@ Ball::isTowardDown() {
     return vector.isTowardDown();
 }
 
+Kona::Vector2D
+Ball::getVector2DFromCircumference(DIRECTION in_direction) {
+    Kona::Point startPosition;
+
+    switch (in_direction) {
+        case BALL_UP:
+            startPosition.x = vector.getStartPosition().x;
+            startPosition.y = vector.getStartPosition().y + radius;
+            break;
+        case BALL_DOWN:
+            startPosition.x = vector.getStartPosition().x;
+            startPosition.y = vector.getStartPosition().y - radius;
+            break;
+        case BALL_RIGHT:
+            startPosition.x = vector.getStartPosition().x + radius;
+            startPosition.y = vector.getStartPosition().y;
+            break;
+        case BALL_LEFT:
+            startPosition.x = vector.getStartPosition().x - radius;
+            startPosition.y = vector.getStartPosition().y;
+            break;
+        default:
+            break;
+    }
+
+    return Kona::Vector2D(vector.getVector(), startPosition);
+}
 

@@ -10,14 +10,16 @@ Ball::setPosition(Position in_position) {
 }
 
 void
-Ball::setPosition(int in_x, int in_y) {
-    position.x = in_x;
-    position.y = in_y;
+Ball::setPosition(float in_x, float in_y) {
+    vector.setStartPosition(Kona::Point(in_x, in_y));
 }
 
 Position
 Ball::getPosition() {
-    return position;
+    Position p;
+    p.x = vector.getStartPosition().x;
+    p.y = vector.getStartPosition().y;
+    return p;
 }
 
 void

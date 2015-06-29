@@ -6,14 +6,13 @@
 
 class Ball {
 private:    
-    Position position;
     int radius;
     Kona::Vector2D vector;
 
 public:
     Ball();
     void setPosition(Position);
-    void setPosition(int, int);
+    void setPosition(float, float);
     Position getPosition();
     void setDirection(int);
     int getDirection();

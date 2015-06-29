@@ -250,6 +250,10 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.setVerticalDrawDelta(*barAngle);
             stopCount = 10;
             needStop = true;
+            printf ("GameState = %d\n", gameState);
+            if (gameState == GameState::READY) {
+                gameState = GameState::STARTED;
+            }
             break;
         case ModelManagerEvent::BAR_SWING_END:
             vm.setIsBarSwinging(false);

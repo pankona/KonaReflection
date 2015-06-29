@@ -4,6 +4,7 @@
 #include <cmath>
 #include <stdio.h>
 #include <float.h>
+#include <unistd.h>
 
 // private methods
 
@@ -100,9 +101,6 @@ ModelManager::moveBall(float delta) {
     int height = field->getHeight();
     int radius = ball->getRadius();
 
-    float deltaX = 0;
-    float deltaY = 0;
-
     // temp ball initialization
     Ball tempBall;
     tempBall.setPosition(ball->getPosition().x, ball->getPosition().y);
@@ -112,9 +110,6 @@ ModelManager::moveBall(float delta) {
         Position current_position = tempBall.getPosition();
 
         EIGHT_DIRECTION ballDir = E_UNKNOWN;
-        // ボールが向かっている方向から、
-        // 当たり判定に用いるブロックの辺と、
-        // 当たり判定に用いるボールの円周上の点を求める
         if (ball->isTowardRight()) {
             ballDir = E_RIGHT;
         } else if (ball->isTowardLeft()) {
@@ -217,12 +212,12 @@ ModelManager::moveBall(float delta) {
 
         // check collision to window edge
         // width edge check
-        if (width <= current_position.x + tempBall.getSpeedX() + radius) {
-            if (tempBall.getSpeedX() > 0) {
+        if (tempBall.getSpeedX() > 0) {
+            if (width <= current_position.x + tempBall.getSpeedX() + radius) {
                 // turn over
                 float newSpeedX = width - (current_position.x + tempBall.getSpeedX() + radius);
-                float newSpeedY = tempBall.getSpeedY() * (newSpeedX / tempBall.getSpeedX());
-                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                float newSpeedY = tempBall.getSpeedY() * (-1 * newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
                 tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
                                      current_position.y + tempBall.getSpeedY() - newSpeedY);
                 tempBall.setVector(newVector);
@@ -231,8 +226,8 @@ ModelManager::moveBall(float delta) {
             }
         } 
 
-        if (0 >= current_position.x - (-1 * tempBall.getSpeedX()) - radius) {
-            if (tempBall.getSpeedX() < 0) {
+        if (tempBall.getSpeedX() < 0) {
+            if (0 >= current_position.x - (-1 * tempBall.getSpeedX()) - radius) {
                 // turn over
                 float newSpeedX = current_position.x - (-1 * tempBall.getSpeedX()) - radius;
                 float newSpeedY = tempBall.getSpeedY() * (-1 * newSpeedX / tempBall.getSpeedX());
@@ -246,14 +241,14 @@ ModelManager::moveBall(float delta) {
         }
 
         // height edge (top) check
-        if (height <= current_position.y + tempBall.getSpeedY() + radius) {
-            if (tempBall.getSpeedY() > 0) {
+        if (tempBall.getSpeedY() > 0) {
+            if (height <= current_position.y + tempBall.getSpeedY() + radius) {
                 // turn over
-                float newSpeedX = tempBall.getSpeedX() * (deltaY / tempBall.getSpeedY());
                 float newSpeedY = height - (current_position.y + tempBall.getSpeedY() + radius);
-                Kona::Vector newVector(Kona::Point(newSpeedX, -1 * newSpeedY));
+                float newSpeedX = tempBall.getSpeedX() * (newSpeedY / tempBall.getSpeedY());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
                 tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
-                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
+                                     current_position.y + tempBall.getSpeedY() + newSpeedY);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_Y();
                 continue;
@@ -432,12 +427,37 @@ ModelManager::initialize() {
     isAlreadyHitBySwing = false;
 }
 
+static bool
+hasCollisionWhileBarSwinging(Bar& in_bar, Ball& in_ball, bool in_isBarSwinging) {
+    if (!in_isBarSwinging) {
+        return false;
+    }
+
+    Position barPosition = in_bar.getPosition();
+    Position ballPosition = in_ball.getPosition();
+
+    float delta_x = std::abs(barPosition.x - ballPosition.x);
+    float delta_y = std::abs(barPosition.y - ballPosition.y);
+
+    float distance = std::sqrt(delta_x * delta_x + delta_y * delta_y);
+
+    if (distance < in_bar.getWidth() + in_ball.getRadius()) {
+        return true;
+    }
+
+    return false;
+}
+
 void
 ModelManager::progress(float delta) {
     moveBar(delta);
     moveBall(delta);
 
     if (doCollideBallAndBar()) {
+        onCollisionBallAndBar();
+    }
+
+    if (hasCollisionWhileBarSwinging(*bar, *ball, isBarSwinging)) {
         onCollisionBallAndBar();
     }
 }

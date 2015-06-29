@@ -110,24 +110,19 @@ ModelManager::moveBall(float delta) {
         Position current_position = tempBall.getPosition();
 
         EIGHT_DIRECTION ballDir = E_UNKNOWN;
-        if (ball->isTowardRight()) {
-            ballDir = E_RIGHT;
-        } else if (ball->isTowardLeft()) {
-            ballDir = E_LEFT;
-        }
 
         if (ball->isTowardUp()) {
-            if (ballDir == E_RIGHT) {
+            if (ball->isTowardRight()) {
                 ballDir = E_RIGHT_UP;
-            } else if (ballDir == E_LEFT) {
+            } else if (ball->isTowardLeft()) {
                 ballDir = E_LEFT_UP;
             } else {
                 ballDir = E_UP;
             }
         } else if (ball->isTowardDown()) {
-            if (ballDir == E_RIGHT) {
+            if (ball->isTowardRight()) {
                 ballDir = E_RIGHT_DOWN;
-            } else if (ballDir == E_LEFT) {
+            } else if (ball->isTowardLeft()) {
                 ballDir = E_LEFT_DOWN;
             } else {
                 ballDir = E_DOWN;
@@ -138,8 +133,8 @@ ModelManager::moveBall(float delta) {
         Kona::Vector2D v2d(Kona::Vector(0, 0), Kona::Point(0, 0));
         Kona::Vector2D distance(Kona::Vector(0, 0), Kona::Point(0, 0));
         Kona::Vector2D minDistance(Kona::Vector(0, 0), Kona::Point(0, 0));
-        Block::SIDE blockSideToCheck;
-        Block::SIDE blockSideActuallyUse;
+        Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
+        Block::SIDE blockSideActuallyUse = Block::SIDE::UNKNOWN;;
         float minLength = FLT_MAX;
 
         for (int i = 0; i < blocks.size(); i++) {
@@ -155,38 +150,43 @@ ModelManager::moveBall(float delta) {
                 blockSideToCheck = Block::SIDE::RIGHTER;
             }
 
-            if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
-                if (distance.getLength() < minLength) {
-                    minLength = distance.getLength();
-                    minDistance = distance;
-                    blockSideActuallyUse = blockSideToCheck;
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = blockSideToCheck;
+                    }
                 }
             }
+
+            Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
 
             if (ballDir == E_UP       ||
                 ballDir == E_RIGHT_UP ||
                 ballDir == E_LEFT_UP) {
-                Kona::Vector2D v2d = tempBall.getVector2DFromCircumference(Ball::UP);
+                v2d = tempBall.getVector2DFromCircumference(Ball::UP);
                 blockSideToCheck = Block::SIDE::DOWNER;
             } else if (ballDir == E_DOWN       ||
                        ballDir == E_RIGHT_DOWN ||
                        ballDir == E_LEFT_DOWN) {
-                Kona::Vector2D v2d = tempBall.getVector2DFromCircumference(Ball::DOWN);
+                v2d = tempBall.getVector2DFromCircumference(Ball::DOWN);
                 blockSideToCheck = Block::SIDE::UPPER;
             }
 
-            if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
-                if (distance.getLength() < minLength) {
-                    minLength = distance.getLength();
-                    minDistance = distance;
-                    blockSideActuallyUse = blockSideToCheck;
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = blockSideToCheck;
+                    }
                 }
             }
         }
 
         if (minLength != FLT_MAX) {
             // collision occurred
-
             if (((blockSideActuallyUse == Block::SIDE::RIGHTER) && (tempBall.getSpeedX() < 0)) ||
                 ((blockSideActuallyUse == Block::SIDE::LEFTER)  && (tempBall.getSpeedX() > 0))) {
                 float newSpeedX = tempBall.getSpeedX() - minDistance.getVector().getTerminal().x;
@@ -201,6 +201,7 @@ ModelManager::moveBall(float delta) {
                        ((blockSideActuallyUse == Block::SIDE::DOWNER) && (tempBall.getSpeedY() > 0))) {
                 float newSpeedY = tempBall.getSpeedY() - minDistance.getVector().getTerminal().y;
                 float newSpeedX = tempBall.getSpeedX() * (newSpeedY / tempBall.getSpeedY());
+
                 Kona::Vector newVector(Kona::Point(newSpeedX, -1 * newSpeedY));
                 tempBall.setPosition(current_position.x + minDistance.getVector().getTerminal().x,
                                      current_position.y + minDistance.getVector().getTerminal().y);
@@ -566,7 +567,7 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 8;
+    int numOfBlocksPerLine = 6;
     int lineNumOfBlocks = 4;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
@@ -577,7 +578,7 @@ ModelManager::initializeBlocks() {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
             block->setPosition((i * blockWidth) + (blockWidth / 2),
-                               fieldHeight - (blockHeight / 2) - (blockHeight * j));
+                               fieldHeight - (blockHeight / 2) - (blockHeight * j) - 30);
             block->setLife(1);
             blocks.push_back(block);
         }

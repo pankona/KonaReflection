@@ -30,7 +30,8 @@ public:
         UPPER,
         DOWNER,
         RIGHTER,
-        LEFTER
+        LEFTER,
+        UNKNOWN
     };
 
     Kona::Vector2D getVector2DOfBlockSide(SIDE);

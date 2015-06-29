@@ -100,19 +100,19 @@ Ball::getVector2DFromCircumference(DIRECTION in_direction) {
     Kona::Point startPosition;
 
     switch (in_direction) {
-        case BALL_UP:
+        case UP:
             startPosition.x = vector.getStartPosition().x;
             startPosition.y = vector.getStartPosition().y + radius;
             break;
-        case BALL_DOWN:
+        case DOWN:
             startPosition.x = vector.getStartPosition().x;
             startPosition.y = vector.getStartPosition().y - radius;
             break;
-        case BALL_RIGHT:
+        case RIGHT:
             startPosition.x = vector.getStartPosition().x + radius;
             startPosition.y = vector.getStartPosition().y;
             break;
-        case BALL_LEFT:
+        case LEFT:
             startPosition.x = vector.getStartPosition().x - radius;
             startPosition.y = vector.getStartPosition().y;
             break;

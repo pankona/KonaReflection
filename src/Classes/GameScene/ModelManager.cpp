@@ -1,7 +1,9 @@
 #include "ModelManager.h"
 #include "BarDirection.h"
+#include "KonaVector2D.h"
 #include <cmath>
 #include <stdio.h>
+#include <float.h>
 
 // private methods
 
@@ -64,6 +66,31 @@ ModelManager::moveBar(float delta) {
     bar->setPosition(newPosition);
 }
 
+enum EIGHT_DIRECTION {
+    E_RIGHT,
+    E_LEFT,
+    E_UP,
+    E_DOWN,
+    E_RIGHT_UP,
+    E_RIGHT_DOWN,
+    E_LEFT_UP,
+    E_LEFT_DOWN,
+    E_UNKNOWN
+};
+
+static bool
+doCollideVector2DAndBlock(Kona::Vector2D in_v2d, Block* in_block, Block::SIDE in_blockSideToCheck,
+                          Kona::Vector2D* out_distance) {
+    Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
+
+    Kona::Point crossPoint;
+    if (in_v2d.calcIntersectPoint(blockSide, &crossPoint)) {
+        *out_distance = Kona::Vector2D(in_v2d.getStartPosition(), crossPoint);
+        return true;
+    }
+    return false;
+}
+
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
 // calculate ball's position at next frame
@@ -83,22 +110,123 @@ ModelManager::moveBall(float delta) {
 
     while (true) {
         Position current_position = tempBall.getPosition();
+
+        EIGHT_DIRECTION ballDir = E_UNKNOWN;
+        // ボールが向かっている方向から、
+        // 当たり判定に用いるブロックの辺と、
+        // 当たり判定に用いるボールの円周上の点を求める
+        if (ball->isTowardRight()) {
+            ballDir = E_RIGHT;
+        } else if (ball->isTowardLeft()) {
+            ballDir = E_LEFT;
+        }
+
+        if (ball->isTowardUp()) {
+            if (ballDir == E_RIGHT) {
+                ballDir = E_RIGHT_UP;
+            } else if (ballDir == E_LEFT) {
+                ballDir = E_LEFT_UP;
+            } else {
+                ballDir = E_UP;
+            }
+        } else if (ball->isTowardDown()) {
+            if (ballDir == E_RIGHT) {
+                ballDir = E_RIGHT_DOWN;
+            } else if (ballDir == E_LEFT) {
+                ballDir = E_LEFT_DOWN;
+            } else {
+                ballDir = E_DOWN;
+            }
+        }
+
+        // TODO: implement default constructor
+        Kona::Vector2D v2d(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Kona::Vector2D distance(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Kona::Vector2D minDistance(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Block::SIDE blockSideToCheck;
+        Block::SIDE blockSideActuallyUse;
+        float minLength = FLT_MAX;
+
+        for (int i = 0; i < blocks.size(); i++) {
+            if (ballDir == E_RIGHT    ||
+                ballDir == E_RIGHT_UP ||
+                ballDir == E_RIGHT_DOWN) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::RIGHT);
+                blockSideToCheck = Block::SIDE::LEFTER;
+            } else if (ballDir == E_LEFT    ||
+                       ballDir == E_LEFT_UP ||
+                       ballDir == E_LEFT_DOWN) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::LEFT);
+                blockSideToCheck = Block::SIDE::RIGHTER;
+            }
+
+            if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                if (distance.getLength() < minLength) {
+                    minLength = distance.getLength();
+                    minDistance = distance;
+                    blockSideActuallyUse = blockSideToCheck;
+                }
+            }
+
+            if (ballDir == E_UP       ||
+                ballDir == E_RIGHT_UP ||
+                ballDir == E_LEFT_UP) {
+                Kona::Vector2D v2d = tempBall.getVector2DFromCircumference(Ball::UP);
+                blockSideToCheck = Block::SIDE::DOWNER;
+            } else if (ballDir == E_DOWN       ||
+                       ballDir == E_RIGHT_DOWN ||
+                       ballDir == E_LEFT_DOWN) {
+                Kona::Vector2D v2d = tempBall.getVector2DFromCircumference(Ball::DOWN);
+                blockSideToCheck = Block::SIDE::UPPER;
+            }
+
+            if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                if (distance.getLength() < minLength) {
+                    minLength = distance.getLength();
+                    minDistance = distance;
+                    blockSideActuallyUse = blockSideToCheck;
+                }
+            }
+        }
+
+        if (minLength != FLT_MAX) {
+            // collision occurred
+
+            if (((blockSideActuallyUse == Block::SIDE::RIGHTER) && (tempBall.getSpeedX() < 0)) ||
+                ((blockSideActuallyUse == Block::SIDE::LEFTER)  && (tempBall.getSpeedX() > 0))) {
+                float newSpeedX = tempBall.getSpeedX() - minDistance.getVector().getTerminal().x;
+                float newSpeedY = tempBall.getSpeedY() * (newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + minDistance.getVector().getTerminal().x,
+                                     current_position.y + minDistance.getVector().getTerminal().y);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                continue;
+            } else if (((blockSideActuallyUse == Block::SIDE::UPPER)  && (tempBall.getSpeedY() < 0)) ||
+                       ((blockSideActuallyUse == Block::SIDE::DOWNER) && (tempBall.getSpeedY() > 0))) {
+                float newSpeedY = tempBall.getSpeedY() - minDistance.getVector().getTerminal().y;
+                float newSpeedX = tempBall.getSpeedX() * (newSpeedY / tempBall.getSpeedY());
+                Kona::Vector newVector(Kona::Point(newSpeedX, -1 * newSpeedY));
+                tempBall.setPosition(current_position.x + minDistance.getVector().getTerminal().x,
+                                     current_position.y + minDistance.getVector().getTerminal().y);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_Y();
+                continue;
+            }
+        }
+
         // check collision to window edge
         // width edge check
         if (width <= current_position.x + tempBall.getSpeedX() + radius) {
             if (tempBall.getSpeedX() > 0) {
                 // turn over
-                deltaX = width - (current_position.x + tempBall.getSpeedX() + radius);
-                float newSpeedX = deltaX;
-                float newSpeedY = tempBall.getSpeedY() * (deltaX / tempBall.getSpeedX());
-                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
-                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                float newSpeedX = width - (current_position.x + tempBall.getSpeedX() + radius);
+                float newSpeedY = tempBall.getSpeedY() * (newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_X();
-                printf ("Reflect X (right side)\n");
-                printf ("@@@ currentPosition: %d, %d, newVector = ", (int)current_position.x, (int)current_position.y);
-                newVector.show();
-                printf ("@@@ nextPosition: %d, %d\n", (int)(current_position.x + newSpeedX), (int)(current_position.y + newSpeedY));
                 continue;
             }
         } 
@@ -106,18 +234,13 @@ ModelManager::moveBall(float delta) {
         if (0 >= current_position.x - (-1 * tempBall.getSpeedX()) - radius) {
             if (tempBall.getSpeedX() < 0) {
                 // turn over
-                deltaX = current_position.x - (-1 * tempBall.getSpeedX()) - radius;
-                float newSpeedX = -1 * deltaX;
-                float newSpeedY = tempBall.getSpeedY() * (deltaX / (-1 * tempBall.getSpeedX()));
-                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
-                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                float newSpeedX = current_position.x - (-1 * tempBall.getSpeedX()) - radius;
+                float newSpeedY = tempBall.getSpeedY() * (-1 * newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_X();
-                printf ("Reflect X (left side)\n");
-                printf ("@@@ deltaX = %d\n", (int)deltaX);
-                printf ("@@@ currentPosition: %d, %d, newVector = ", (int)current_position.x, (int)current_position.y);
-                newVector.show();
-                printf ("@@@ nextPosition: %d, %d\n", (int)(current_position.x + newSpeedX), (int)(current_position.y + newSpeedY));
                 continue;
             }
         }
@@ -126,11 +249,11 @@ ModelManager::moveBall(float delta) {
         if (height <= current_position.y + tempBall.getSpeedY() + radius) {
             if (tempBall.getSpeedY() > 0) {
                 // turn over
-                deltaY = height - (current_position.y + tempBall.getSpeedY() + radius);
                 float newSpeedX = tempBall.getSpeedX() * (deltaY / tempBall.getSpeedY());
-                float newSpeedY = deltaY;
-                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
-                tempBall.setPosition(current_position.x + newSpeedX, current_position.y + newSpeedY);
+                float newSpeedY = height - (current_position.y + tempBall.getSpeedY() + radius);
+                Kona::Vector newVector(Kona::Point(newSpeedX, -1 * newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_Y();
                 continue;

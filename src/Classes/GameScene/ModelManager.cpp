@@ -136,8 +136,13 @@ ModelManager::moveBall(float delta) {
         Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
         Block::SIDE blockSideActuallyUse = Block::SIDE::UNKNOWN;;
         float minLength = FLT_MAX;
+        int blockIndex = -1;
 
         for (int i = 0; i < blocks.size(); i++) {
+            if (!blocks.at(i)->stillAlive()) {
+                continue;
+            }
+
             if (ballDir == E_RIGHT    ||
                 ballDir == E_RIGHT_UP ||
                 ballDir == E_RIGHT_DOWN) {
@@ -156,6 +161,7 @@ ModelManager::moveBall(float delta) {
                         minLength = distance.getLength();
                         minDistance = distance;
                         blockSideActuallyUse = blockSideToCheck;
+                        blockIndex = i;
                     }
                 }
             }
@@ -180,6 +186,7 @@ ModelManager::moveBall(float delta) {
                         minLength = distance.getLength();
                         minDistance = distance;
                         blockSideActuallyUse = blockSideToCheck;
+                        blockIndex = i;
                     }
                 }
             }
@@ -196,6 +203,7 @@ ModelManager::moveBall(float delta) {
                                      current_position.y + minDistance.getVector().getTerminal().y);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_X();
+                onCollisionBallAndBlock(blockIndex, true);
                 continue;
             } else if (((blockSideActuallyUse == Block::SIDE::UPPER)  && (tempBall.getSpeedY() < 0)) ||
                        ((blockSideActuallyUse == Block::SIDE::DOWNER) && (tempBall.getSpeedY() > 0))) {
@@ -207,6 +215,7 @@ ModelManager::moveBall(float delta) {
                                      current_position.y + minDistance.getVector().getTerminal().y);
                 tempBall.setVector(newVector);
                 BALL_REFLECT_Y();
+                onCollisionBallAndBlock(blockIndex, true);
                 continue;
             }
         }
@@ -568,7 +577,7 @@ void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
     int numOfBlocksPerLine = 6;
-    int lineNumOfBlocks = 4;
+    int lineNumOfBlocks = 6;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
@@ -577,8 +586,8 @@ ModelManager::initializeBlocks() {
         for (int i = 0; i < numOfBlocksPerLine; i++) {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
-            block->setPosition((i * blockWidth) + (blockWidth / 2),
-                               fieldHeight - (blockHeight / 2) - (blockHeight * j) - 30);
+            block->setPosition((i * blockWidth) + (blockWidth / 2 ),
+                               fieldHeight - (blockHeight / 2) - (blockHeight * j) - 50);
             block->setLife(1);
             blocks.push_back(block);
         }
@@ -640,23 +649,6 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
 
     if (allBlocksDestroyed()) {
         eventNotify(ModelManagerEventListener::ModelManagerEvent::ALL_BLOCK_DESTROYED, NULL);
-    }
-
-    if (!in_needBallTurnOver) {
-        return;
-    }
-
-    Position ballPosition = ball->getPosition();
-    int ballRadius = ball->getRadius();
-
-    if (ballPosition.x + ballRadius > blockPosition.x - blockWidth / 2 &&
-        ballPosition.x - ballRadius < blockPosition.x + blockWidth / 2) {
-        // turn over (y)
-        BALL_REFLECT_Y();
-    } else if (ballPosition.y + ballRadius > blockPosition.y - blockHeight / 2 &&
-               ballPosition.y - ballRadius < blockPosition.y + blockHeight) {
-        // turn over (x)
-        BALL_REFLECT_X();
     }
 }
 

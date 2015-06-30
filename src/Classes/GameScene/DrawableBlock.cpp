@@ -35,6 +35,9 @@ DrawableBlock::setColor(Color3B in_color) {
 
 void
 DrawableBlock::markAsKilled() {
+    if (!stillAlive) {
+        return;
+    }
     stillAlive = false;
     sprite->removeFromParent();
 }

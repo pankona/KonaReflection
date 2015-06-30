@@ -463,15 +463,11 @@ ModelManager::progress(float delta) {
     moveBar(delta);
     moveBall(delta);
 
-    if (doCollideBallAndBar()) {
-        onCollisionBallAndBar();
-    }
-
-    if (hasCollisionWhileBarSwinging(*bar, *ball, isBarSwinging)) {
+    if (doCollideBallAndBar() ||
+        hasCollisionWhileBarSwinging(*bar, *ball, isBarSwinging)) {
         onCollisionBallAndBar();
     }
 }
-
 
 void
 ModelManager::onTouchBegan(int x, int y) {

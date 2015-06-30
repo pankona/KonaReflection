@@ -36,7 +36,6 @@ public:
     void initializeBar(int, int, Position);
     void initializeField(int, int);
     void initializeBall(int, Position);
-    void updateView();
     void setBallPosition(Position);
     void setBarPosition(Position);
     void removeBall();

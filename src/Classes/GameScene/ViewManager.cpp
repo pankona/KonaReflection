@@ -68,31 +68,6 @@ ViewManager::hasCollisionWhileBarSwinging(DrawableBar* in_dBar, DrawableBall* in
 }
 
 void
-ViewManager::updateView() {
-    if (dBall == NULL) {
-        return;
-    }
-
-    Rect ballRect = dBall->getSprite()->getBoundingBox();
-    Rect barRect = dBar->getSprite()->getBoundingBox();
-    if (hasCollisionWhileBarSwinging(dBar, dBall)) {
-        eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BAR_COLLISION, NULL);
-    }
-
-    int blockNum = dBlocks.size();
-    for (int i = 0; i < blockNum; i++) {
-        DrawableBlock* block = dBlocks.at(i);
-        if (!block->isStillAlive()) {
-            continue;
-        }
-        Rect blockRect = block->getSprite()->getBoundingBox();
-        if (ballRect.intersectsRect(blockRect)) {
-            eventNotify(ViewManagerEventListener::ViewManagerEvent::BALL_AND_BLOCK_COLLISION, &i);
-        }
-    }
-}
-
-void
 ViewManager::setBallPosition(Position p) {
     if (dBall == NULL) {
         return;

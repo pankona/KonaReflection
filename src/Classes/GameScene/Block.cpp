@@ -66,3 +66,40 @@ Block::stillAlive() {
     }
     return true;
 }
+
+Kona::Vector2D
+Block::getVector2DOfBlockSide(SIDE in_blockSide) {
+    Kona::Point startPosition;
+    Kona::Point endPosition;
+    switch (in_blockSide) {
+        case UPPER:
+            startPosition.x = position.x - (width / 2);
+            startPosition.y = position.y + (height / 2);
+            endPosition.x   = position.x + (width / 2);
+            endPosition.y   = position.y + (height / 2);
+            break;
+        case DOWNER:
+            startPosition.x = position.x - (width / 2);
+            startPosition.y = position.y - (height / 2);
+            endPosition.x   = position.x + (width / 2);
+            endPosition.y   = position.y - (height / 2);
+            break;
+        case RIGHTER:
+            startPosition.x = position.x + (width / 2);
+            startPosition.y = position.y - (height / 2);
+            endPosition.x   = position.x + (width / 2);
+            endPosition.y   = position.y + (height / 2);
+            break;
+        case LEFTER:
+            startPosition.x = position.x - (width / 2);
+            startPosition.y = position.y - (height / 2);
+            endPosition.x   = position.x - (width / 2);
+            endPosition.y   = position.y + (height / 2);
+            break;
+        default:
+            break;
+    }
+
+    return Kona::Vector2D(startPosition, endPosition);
+}
+

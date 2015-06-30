@@ -1,7 +1,10 @@
 #include "ModelManager.h"
 #include "BarDirection.h"
+#include "KonaVector2D.h"
 #include <cmath>
 #include <stdio.h>
+#include <float.h>
+#include <unistd.h>
 
 // private methods
 
@@ -64,59 +67,218 @@ ModelManager::moveBar(float delta) {
     bar->setPosition(newPosition);
 }
 
+enum EIGHT_DIRECTION {
+    E_RIGHT,
+    E_LEFT,
+    E_UP,
+    E_DOWN,
+    E_RIGHT_UP,
+    E_RIGHT_DOWN,
+    E_LEFT_UP,
+    E_LEFT_DOWN,
+    E_UNKNOWN
+};
+
+static bool
+doCollideVector2DAndBlock(Kona::Vector2D in_v2d, Block* in_block, Block::SIDE in_blockSideToCheck,
+                          Kona::Vector2D* out_distance) {
+    Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
+
+    Kona::Point crossPoint;
+    if (in_v2d.calcIntersectPoint(blockSide, &crossPoint)) {
+        *out_distance = Kona::Vector2D(in_v2d.getStartPosition(), crossPoint);
+        return true;
+    }
+    return false;
+}
+
 #define rad2deg(a) ((a) / 180.0 * M_PI)
 
 // calculate ball's position at next frame
 void
 ModelManager::moveBall(float delta) {
-    Position current_position = ball->getPosition();
     int width = field->getWidth();
     int height = field->getHeight();
+    int radius = ball->getRadius();
 
-    float deltaX = 0;
-    float deltaY = 0;
+    // temp ball initialization
+    Ball tempBall;
+    tempBall.setPosition(ball->getPosition().x, ball->getPosition().y);
+    tempBall.setVector(ball->getVector());
 
-    // check collision to window edge
-    // width edge check
-    if (width <= current_position.x + ball->getSpeedX() + ball->getRadius() / 2) {
-        if (ball->getSpeedX() > 0) {
-            // turn over
-            deltaX = width - (current_position.x + ball->getSpeedX() + ball->getRadius() / 2);
-            BALL_REFLECT_X();
+    while (true) {
+        Position current_position = tempBall.getPosition();
+
+        EIGHT_DIRECTION ballDir = E_UNKNOWN;
+
+        if (ball->isTowardUp()) {
+            if (ball->isTowardRight()) {
+                ballDir = E_RIGHT_UP;
+            } else if (ball->isTowardLeft()) {
+                ballDir = E_LEFT_UP;
+            } else {
+                ballDir = E_UP;
+            }
+        } else if (ball->isTowardDown()) {
+            if (ball->isTowardRight()) {
+                ballDir = E_RIGHT_DOWN;
+            } else if (ball->isTowardLeft()) {
+                ballDir = E_LEFT_DOWN;
+            } else {
+                ballDir = E_DOWN;
+            }
         }
-    } 
 
-    if (0 >= current_position.x - ball->getSpeedX() - ball->getRadius() / 2) {
-        if (ball->getSpeedX() < 0) {
-            // turn over
-            deltaX = current_position.x - ball->getSpeedX() - ball->getRadius() / 2;
-            BALL_REFLECT_X();
+        // TODO: implement default constructor
+        Kona::Vector2D v2d(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Kona::Vector2D distance(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Kona::Vector2D minDistance(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
+        Block::SIDE blockSideActuallyUse = Block::SIDE::UNKNOWN;;
+        float minLength = FLT_MAX;
+        int blockIndex = -1;
+
+        for (int i = 0; i < blocks.size(); i++) {
+            if (!blocks.at(i)->stillAlive()) {
+                continue;
+            }
+
+            if (ballDir == E_RIGHT    ||
+                ballDir == E_RIGHT_UP ||
+                ballDir == E_RIGHT_DOWN) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::RIGHT);
+                blockSideToCheck = Block::SIDE::LEFTER;
+            } else if (ballDir == E_LEFT    ||
+                       ballDir == E_LEFT_UP ||
+                       ballDir == E_LEFT_DOWN) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::LEFT);
+                blockSideToCheck = Block::SIDE::RIGHTER;
+            }
+
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = blockSideToCheck;
+                        blockIndex = i;
+                    }
+                }
+            }
+
+            Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
+
+            if (ballDir == E_UP       ||
+                ballDir == E_RIGHT_UP ||
+                ballDir == E_LEFT_UP) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::UP);
+                blockSideToCheck = Block::SIDE::DOWNER;
+            } else if (ballDir == E_DOWN       ||
+                       ballDir == E_RIGHT_DOWN ||
+                       ballDir == E_LEFT_DOWN) {
+                v2d = tempBall.getVector2DFromCircumference(Ball::DOWN);
+                blockSideToCheck = Block::SIDE::UPPER;
+            }
+
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = blockSideToCheck;
+                        blockIndex = i;
+                    }
+                }
+            }
         }
-    }
 
-    // height edge (top) check
-    if (height <= current_position.y + ball->getSpeedY() + ball->getRadius() / 2) {
-        if (ball->getSpeedY() > 0) {
-            // turn over
-            deltaY = height - (current_position.y + ball->getSpeedY() + ball->getRadius() / 2);
-            BALL_REFLECT_Y();
+        if (minLength != FLT_MAX) {
+            // collision occurred
+            if (((blockSideActuallyUse == Block::SIDE::RIGHTER) && (tempBall.getSpeedX() < 0)) ||
+                ((blockSideActuallyUse == Block::SIDE::LEFTER)  && (tempBall.getSpeedX() > 0))) {
+                float newSpeedX = tempBall.getSpeedX() - minDistance.getVector().getTerminal().x;
+                float newSpeedY = tempBall.getSpeedY() * (newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + minDistance.getVector().getTerminal().x,
+                                     current_position.y + minDistance.getVector().getTerminal().y);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                onCollisionBallAndBlock(blockIndex, true);
+                continue;
+            } else if (((blockSideActuallyUse == Block::SIDE::UPPER)  && (tempBall.getSpeedY() < 0)) ||
+                       ((blockSideActuallyUse == Block::SIDE::DOWNER) && (tempBall.getSpeedY() > 0))) {
+                float newSpeedY = tempBall.getSpeedY() - minDistance.getVector().getTerminal().y;
+                float newSpeedX = tempBall.getSpeedX() * (newSpeedY / tempBall.getSpeedY());
+
+                Kona::Vector newVector(Kona::Point(newSpeedX, -1 * newSpeedY));
+                tempBall.setPosition(current_position.x + minDistance.getVector().getTerminal().x,
+                                     current_position.y + minDistance.getVector().getTerminal().y);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_Y();
+                onCollisionBallAndBlock(blockIndex, true);
+                continue;
+            }
         }
+
+        // check collision to window edge
+        // width edge check
+        if (tempBall.getSpeedX() > 0) {
+            if (width <= current_position.x + tempBall.getSpeedX() + radius) {
+                // turn over
+                float newSpeedX = width - (current_position.x + tempBall.getSpeedX() + radius);
+                float newSpeedY = tempBall.getSpeedY() * (-1 * newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                continue;
+            }
+        } 
+
+        if (tempBall.getSpeedX() < 0) {
+            if (0 >= current_position.x - (-1 * tempBall.getSpeedX()) - radius) {
+                // turn over
+                float newSpeedX = current_position.x - (-1 * tempBall.getSpeedX()) - radius;
+                float newSpeedY = tempBall.getSpeedY() * (-1 * newSpeedX / tempBall.getSpeedX());
+                Kona::Vector newVector(Kona::Point(-1 * newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() - newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_X();
+                continue;
+            }
+        }
+
+        // height edge (top) check
+        if (tempBall.getSpeedY() > 0) {
+            if (height <= current_position.y + tempBall.getSpeedY() + radius) {
+                // turn over
+                float newSpeedY = height - (current_position.y + tempBall.getSpeedY() + radius);
+                float newSpeedX = tempBall.getSpeedX() * (newSpeedY / tempBall.getSpeedY());
+                Kona::Vector newVector(Kona::Point(newSpeedX, newSpeedY));
+                tempBall.setPosition(current_position.x + tempBall.getSpeedX() - newSpeedX,
+                                     current_position.y + tempBall.getSpeedY() + newSpeedY);
+                tempBall.setVector(newVector);
+                BALL_REFLECT_Y();
+                continue;
+            }
+        }
+
+        // height edge (bottom) check
+        if (0 >= current_position.y - tempBall.getSpeedY() - radius) {
+            eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
+            return;
+        }
+
+        Position new_position;
+        new_position.x = current_position.x + tempBall.getSpeedX();
+        new_position.y = current_position.y + tempBall.getSpeedY();
+
+        ball->setPosition(new_position);
+        break;
     }
-
-    // height edge (bottom) check
-    if (0 >= current_position.y - ball->getSpeedY() - ball->getRadius() / 2) {
-        eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_FALL, NULL);
-        return;
-    }
-
-    int speed = ball->getSpeed();
-    float new_x = cos(rad2deg((float)ball->getDirection())) * (float)speed;
-    float new_y = sin(rad2deg((float)ball->getDirection())) * (float)speed;
-    Position new_position;
-    new_position.x = current_position.x + new_x - deltaX;
-    new_position.y = current_position.y + new_y - deltaY;
-
-    ball->setPosition(new_position);
+    
 }
 
 
@@ -275,16 +437,37 @@ ModelManager::initialize() {
     isAlreadyHitBySwing = false;
 }
 
+static bool
+hasCollisionWhileBarSwinging(Bar& in_bar, Ball& in_ball, bool in_isBarSwinging) {
+    if (!in_isBarSwinging) {
+        return false;
+    }
+
+    Position barPosition = in_bar.getPosition();
+    Position ballPosition = in_ball.getPosition();
+
+    float delta_x = std::abs(barPosition.x - ballPosition.x);
+    float delta_y = std::abs(barPosition.y - ballPosition.y);
+
+    float distance = std::sqrt(delta_x * delta_x + delta_y * delta_y);
+
+    if (distance < in_bar.getWidth() + in_ball.getRadius()) {
+        return true;
+    }
+
+    return false;
+}
+
 void
 ModelManager::progress(float delta) {
     moveBar(delta);
     moveBall(delta);
 
-    if (doCollideBallAndBar()) {
+    if (doCollideBallAndBar() ||
+        hasCollisionWhileBarSwinging(*bar, *ball, isBarSwinging)) {
         onCollisionBallAndBar();
     }
 }
-
 
 void
 ModelManager::onTouchBegan(int x, int y) {
@@ -389,8 +572,8 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 void
 ModelManager::initializeBlocks() {
     // ToDo: should refer configuration for blocks initialization.
-    int numOfBlocksPerLine = 8;
-    int lineNumOfBlocks = 4;
+    int numOfBlocksPerLine = 6;
+    int lineNumOfBlocks = 6;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
@@ -399,8 +582,8 @@ ModelManager::initializeBlocks() {
         for (int i = 0; i < numOfBlocksPerLine; i++) {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
-            block->setPosition((i * blockWidth) + (blockWidth / 2),
-                               fieldHeight - (blockHeight / 2) - (blockHeight * j));
+            block->setPosition((i * blockWidth) + (blockWidth / 2 ),
+                               fieldHeight - (blockHeight / 2) - (blockHeight * j) - 50);
             block->setLife(1);
             blocks.push_back(block);
         }
@@ -462,23 +645,6 @@ ModelManager::onCollisionBallAndBlock(int in_blockIndex, bool in_needBallTurnOve
 
     if (allBlocksDestroyed()) {
         eventNotify(ModelManagerEventListener::ModelManagerEvent::ALL_BLOCK_DESTROYED, NULL);
-    }
-
-    if (!in_needBallTurnOver) {
-        return;
-    }
-
-    Position ballPosition = ball->getPosition();
-    int ballRadius = ball->getRadius();
-
-    if (ballPosition.x + ballRadius > blockPosition.x - blockWidth / 2 &&
-        ballPosition.x - ballRadius < blockPosition.x + blockWidth / 2) {
-        // turn over (y)
-        BALL_REFLECT_Y();
-    } else if (ballPosition.y + ballRadius > blockPosition.y - blockHeight / 2 &&
-               ballPosition.y - ballRadius < blockPosition.y + blockHeight) {
-        // turn over (x)
-        BALL_REFLECT_X();
     }
 }
 

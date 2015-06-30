@@ -1,28 +1,25 @@
 #include "Ball.h"
 
-Ball::Ball() {
-    position.x = 100;
-    position.y = 100;
-    radius = 12;
-    vector.setAngle(60);
-    vector.setLength(0);
+Ball::Ball() : vector(Kona::Vector(0, 0), Kona::Point(0, 0)), radius(12) {
 }
 
 void
 Ball::setPosition(Position in_position) {
-    position.x = in_position.x;
-    position.y = in_position.y;
+    vector.setStartPosition(Kona::Point(in_position.x,
+                                        in_position.y));
 }
 
 void
-Ball::setPosition(int in_x, int in_y) {
-    position.x = in_x;
-    position.y = in_y;
+Ball::setPosition(float in_x, float in_y) {
+    vector.setStartPosition(Kona::Point(in_x, in_y));
 }
 
 Position
 Ball::getPosition() {
-    return position;
+    Position p;
+    p.x = vector.getStartPosition().x;
+    p.y = vector.getStartPosition().y;
+    return p;
 }
 
 void
@@ -57,20 +54,74 @@ Ball::getRadius() {
 
 void
 Ball::addVector(Kona::Vector in_vector) {
-    vector += in_vector;
+    vector.setVector(vector.getVector() + in_vector);
 }
 
 float
 Ball::getSpeedX() {
-    return vector.getTerminal().x;
+    return vector.getVector().getTerminal().x;
 }
 
 float
 Ball::getSpeedY() {
-    return vector.getTerminal().y;
+    return vector.getVector().getTerminal().y;
 }
 
-Kona::Vector&
+Kona::Vector
 Ball::getVector() {
-    return vector;
+    return vector.getVector();
 }
+
+void
+Ball::setVector(Kona::Vector in_vector) {
+    vector.setVector(in_vector);
+}
+
+bool
+Ball::isTowardRight() {
+    return vector.isTowardRight();
+}
+
+bool
+Ball::isTowardLeft() {
+    return vector.isTowardLeft();
+}
+
+bool
+Ball::isTowardUp() {
+    return vector.isTowardUp();
+}
+
+bool
+Ball::isTowardDown() {
+    return vector.isTowardDown();
+}
+
+Kona::Vector2D
+Ball::getVector2DFromCircumference(DIRECTION in_direction) {
+    Kona::Point startPosition;
+
+    switch (in_direction) {
+        case UP:
+            startPosition.x = vector.getStartPosition().x;
+            startPosition.y = vector.getStartPosition().y + radius;
+            break;
+        case DOWN:
+            startPosition.x = vector.getStartPosition().x;
+            startPosition.y = vector.getStartPosition().y - radius;
+            break;
+        case RIGHT:
+            startPosition.x = vector.getStartPosition().x + radius;
+            startPosition.y = vector.getStartPosition().y;
+            break;
+        case LEFT:
+            startPosition.x = vector.getStartPosition().x - radius;
+            startPosition.y = vector.getStartPosition().y;
+            break;
+        default:
+            break;
+    }
+
+    return Kona::Vector2D(vector.getVector(), startPosition);
+}
+

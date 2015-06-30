@@ -654,7 +654,7 @@ ModelManager::addModelManagerEventListener(ModelManagerEventListener* in_listene
 }
 
 void
-ModelManager::setBallAndBarPositionX(int in_x) {
+ModelManager::setBarPositionX(int in_x) {
     lastTouchedPosition.x = in_x;
 
     if (isTouchOnRightSideOfBar(in_x)) {
@@ -662,9 +662,12 @@ ModelManager::setBallAndBarPositionX(int in_x) {
     } else {
         bar->setDirection(BarDirection::LEFT);
     }
+}
 
+void
+ModelManager::setBallPositionX(int in_x) {
     Position p;
-    p.x = bar->getPosition().x;
+    p.x = in_x;
     p.y = ball->getPosition().y;
     ball->setPosition(p);
 }

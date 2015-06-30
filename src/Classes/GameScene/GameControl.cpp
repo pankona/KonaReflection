@@ -22,6 +22,10 @@ GameControl::update(float delta) {
 
     mm.progress(delta);
 
+    if (gameState == GameState::READY) {
+        mm.setBallPositionX(mm.getBarPosition().x);
+    }
+
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
@@ -112,14 +116,14 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
 
                 // let mm remember y position
                 mm.startVerticalDraw(p->y);
-                mm.setBallAndBarPositionX(p->x);
+                mm.setBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_MOVED:
                 p = (Position*) arg;
 
                 // let mm update y position
                 mm.updateVerticalDraw(p->y);
-                mm.setBallAndBarPositionX(p->x);
+                mm.setBarPositionX(p->x);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
                 // let mm decide y position

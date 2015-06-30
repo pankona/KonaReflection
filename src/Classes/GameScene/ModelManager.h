@@ -63,7 +63,8 @@ public:
     void setBallSpeed(int);
     void resetBall();
 
-    void setBallAndBarPositionX(int);
+    void setBarPositionX(int);
+    void setBallPositionX(int);
 
     void setFieldSize(int, int);
 

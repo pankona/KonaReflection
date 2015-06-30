@@ -28,9 +28,6 @@ GameControl::update(float delta) {
     if (!mm.barSwinging()) {
         vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
     }
-
-    collidedBlockNum = 0;
-    vm.updateView();
 }
 
 void
@@ -129,10 +126,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
                 // accoding to delta of y, mm fires "swing" event, then start game.
                 mm.endVerticalDraw();
                 break;
-            case ViewManagerEvent::BALL_AND_BAR_COLLISION:
-                mm.onCollisionBallAndBar();
-                gameState = GameState::STARTED;
-                break;
             default:
                 break;
         }
@@ -142,9 +135,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
     } else if (gameState == GameState::STARTED) {
 
         switch (in_event) {
-            case ViewManagerEvent::BALL_AND_BAR_COLLISION:
-                mm.onCollisionBallAndBar();
-                break;
             case ViewManagerEvent::TOUCH_BEGAN:
                 p = (Position*) arg;
                 mm.onTouchBegan(p->x, p->y);
@@ -158,21 +148,6 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             case ViewManagerEvent::TOUCH_ENDED:
                 mm.onTouchEnded();
                 mm.endVerticalDraw();
-                break;
-            case ViewManagerEvent::BALL_AND_BLOCK_COLLISION:
-                int* blockIndex;
-                blockIndex = (int*) arg;
-
-                // only one time ball can turn over by block per one frame.
-                // ToDo: this logic should be move to model manager.
-                bool needBallTurnOver;
-                if (collidedBlockNum == 0) {
-                    needBallTurnOver = true;
-                } else {
-                    needBallTurnOver = false;
-                }
-                mm.onCollisionBallAndBlock(*blockIndex, needBallTurnOver);
-                collidedBlockNum++;
                 break;
             default:
                 break;
@@ -250,7 +225,6 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
             vm.setVerticalDrawDelta(*barAngle);
             stopCount = 10;
             needStop = true;
-            printf ("GameState = %d\n", gameState);
             if (gameState == GameState::READY) {
                 gameState = GameState::STARTED;
             }

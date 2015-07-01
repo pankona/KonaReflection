@@ -80,15 +80,21 @@ enum EIGHT_DIRECTION {
 };
 
 static bool
-doCollideVector2DAndBlock(Kona::Vector2D in_v2d, Block* in_block, Block::SIDE in_blockSideToCheck,
+doCollideVector2DAndBlock(Ball* in_ball, Block* in_block, Block::SIDE in_blockSideToCheck,
                           Kona::Vector2D* out_distance) {
+    Kona::Vector2D in_v2d = in_ball->getVector2D();
+    int in_ballRadius = in_ball->getRadius();
     Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
-
-    Kona::Point crossPoint;
-    if (in_v2d.calcIntersectPoint(blockSide, &crossPoint)) {
-        *out_distance = Kona::Vector2D(in_v2d.getStartPosition(), crossPoint);
+    
+    float distance = blockSide.distanceToPoint(in_v2d.getTerminalPosition());
+    printf ("distance = %d\n", (int) distance);
+    sleep(1);
+    if (blockSide.distanceToPoint(in_v2d.getTerminalPosition()) <= in_ballRadius) {
+        *out_distance = in_ball->getVector2D();
+        out_distance->setLength(distance);
         return true;
     }
+
     return false;
 }
 
@@ -130,7 +136,6 @@ ModelManager::moveBall(float delta) {
         }
 
         // TODO: implement default constructor
-        Kona::Vector2D v2d(Kona::Vector(0, 0), Kona::Point(0, 0));
         Kona::Vector2D distance(Kona::Vector(0, 0), Kona::Point(0, 0));
         Kona::Vector2D minDistance(Kona::Vector(0, 0), Kona::Point(0, 0));
         Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
@@ -146,17 +151,15 @@ ModelManager::moveBall(float delta) {
             if (ballDir == E_RIGHT    ||
                 ballDir == E_RIGHT_UP ||
                 ballDir == E_RIGHT_DOWN) {
-                v2d = tempBall.getVector2DFromCircumference(Ball::RIGHT);
                 blockSideToCheck = Block::SIDE::LEFTER;
             } else if (ballDir == E_LEFT    ||
                        ballDir == E_LEFT_UP ||
                        ballDir == E_LEFT_DOWN) {
-                v2d = tempBall.getVector2DFromCircumference(Ball::LEFT);
                 blockSideToCheck = Block::SIDE::RIGHTER;
             }
 
             if (blockSideToCheck != Block::SIDE::UNKNOWN) {
-                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                if (doCollideVector2DAndBlock(ball, blocks.at(i), blockSideToCheck, &distance)) {
                     if (distance.getLength() < minLength) {
                         minLength = distance.getLength();
                         minDistance = distance;
@@ -171,17 +174,15 @@ ModelManager::moveBall(float delta) {
             if (ballDir == E_UP       ||
                 ballDir == E_RIGHT_UP ||
                 ballDir == E_LEFT_UP) {
-                v2d = tempBall.getVector2DFromCircumference(Ball::UP);
                 blockSideToCheck = Block::SIDE::DOWNER;
             } else if (ballDir == E_DOWN       ||
                        ballDir == E_RIGHT_DOWN ||
                        ballDir == E_LEFT_DOWN) {
-                v2d = tempBall.getVector2DFromCircumference(Ball::DOWN);
                 blockSideToCheck = Block::SIDE::UPPER;
             }
 
             if (blockSideToCheck != Block::SIDE::UNKNOWN) {
-                if (doCollideVector2DAndBlock(v2d, blocks.at(i), blockSideToCheck, &distance)) {
+                if (doCollideVector2DAndBlock(ball, blocks.at(i), blockSideToCheck, &distance)) {
                     if (distance.getLength() < minLength) {
                         minLength = distance.getLength();
                         minDistance = distance;
@@ -406,7 +407,9 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
 
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
-        ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
+        //ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
+        ball->setPosition(field->getWidth() / 2, ball->getPosition().y);
+        ball->addVector(Kona::Vector(hitSpeed, 90));
         return;
     }
 
@@ -414,7 +417,9 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         BALL_REFLECT_X();
     } else {
         float ballCross = calculateCrossOfBallAndBar (*ball, *bar, in_currentBarAngle);
-        ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+        //ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+        ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
+        ball->setPosition(ball->getPosition().x + 1, ball->getPosition().y);
     }
 }
 
@@ -571,20 +576,35 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 
 void
 ModelManager::initializeBlocks() {
+#if 0
     // ToDo: should refer configuration for blocks initialization.
     int numOfBlocksPerLine = 6;
     int lineNumOfBlocks = 6;
     int blockWidth = field->getWidth() / numOfBlocksPerLine;
     int blockHeight = 30;
     int fieldHeight = field->getHeight();
+#else
+    int numOfBlocksPerLine = 1;
+    int lineNumOfBlocks = 1;
+    int blockWidth = 50;
+    int blockHeight = 50;
+    int fieldHeight = field->getHeight();
+    int fieldWidth = field->getWidth();
+#endif
 
     for (int j = 0; j < lineNumOfBlocks; j++) {
         for (int i = 0; i < numOfBlocksPerLine; i++) {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
+#if 0
             block->setPosition((i * blockWidth) + (blockWidth / 2 ),
                                fieldHeight - (blockHeight / 2) - (blockHeight * j) - 50);
-            block->setLife(1);
+#else
+            block->setPosition(fieldWidth / 2,
+                               fieldHeight / 2);
+#endif
+
+            block->setLife(256);
             blocks.push_back(block);
         }
     }

@@ -24,6 +24,7 @@ public:
     float getSpeedX();
     float getSpeedY();
     Kona::Vector getVector();
+    Kona::Vector2D getVector2D();
     void setVector(Kona::Vector);
     bool isTowardRight();
     bool isTowardLeft();

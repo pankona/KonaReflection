@@ -72,6 +72,11 @@ Ball::getVector() {
     return vector.getVector();
 }
 
+Kona::Vector2D
+Ball::getVector2D() {
+    return vector;
+}
+
 void
 Ball::setVector(Kona::Vector in_vector) {
     vector.setVector(in_vector);

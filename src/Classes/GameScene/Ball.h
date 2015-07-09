@@ -3,6 +3,7 @@
 
 #include "Position.h"
 #include <KonaVector2D.h>
+#include <KonaRect.h>
 
 class Ball {
 private:    
@@ -37,6 +38,7 @@ public:
         LEFT
     };
     Kona::Vector2D getVector2DFromCircumference(DIRECTION);
+    Kona::Rect getRectFromSpeedAndRadius();
 };
 
 #endif // __BALL_H__

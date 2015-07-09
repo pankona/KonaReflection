@@ -130,3 +130,13 @@ Ball::getVector2DFromCircumference(DIRECTION in_direction) {
     return Kona::Vector2D(vector.getVector(), startPosition);
 }
 
+Kona::Rect
+Ball::getRectFromSpeedAndRadius() {
+    Kona::Vector2D left(Kona::Vector(vector.getLength(), vector.getAngle() + 90),
+                        vector.getStartPosition());
+    Kona::Vector2D right(Kona::Vector(vector.getLength(), vector.getAngle() - 90),
+                         vector.getStartPosition());
+    return Kona::Rect(Kona::Vector2D(vector.getVector(), left.getTerminalPosition()),
+                      Kona::Vector2D(vector.getVector(), right.getTerminalPosition()));
+}
+

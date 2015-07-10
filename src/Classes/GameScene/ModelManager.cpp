@@ -1,6 +1,8 @@
 #include "ModelManager.h"
 #include "BarDirection.h"
 #include "KonaVector2D.h"
+#include "KonaCircle.h"
+#include <iostream>
 #include <cmath>
 #include <stdio.h>
 #include <float.h>
@@ -78,24 +80,144 @@ enum EIGHT_DIRECTION {
     E_LEFT_DOWN,
     E_UNKNOWN
 };
+static bool
+doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_blockSideToCheck,
+                                Kona::Vector2D* out_distance, Block::SIDE* out_whichCorner) {
+    Kona::Circle circle1;
+    Kona::Circle circle2;
+
+    float radius = in_ball->getRadius();
+    Kona::Vector2D moveLine = in_ball->getVector2D();
+
+    Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
+    circle1 = Kona::Circle(blockSide.getStartPosition(), radius);
+    circle2 = Kona::Circle(blockSide.getTerminalPosition(), radius);
+
+    
+    Kona::Point intersectPoint1;
+    Kona::Point intersectPoint2;
+
+    Kona::Point intersectPointA;
+    int intersectPointNumA = circle1.intersectsVector2D(moveLine, &intersectPoint1, &intersectPoint2);
+    if (intersectPointNumA == 1) {
+        intersectPointA = intersectPoint1;
+    } else if (intersectPointNumA == 2) {
+        if (moveLine.distanceToPoint(intersectPoint1) < moveLine.distanceToPoint(intersectPoint2)) {
+            intersectPointA = intersectPoint1;
+        } else {
+            intersectPointA = intersectPoint2;
+        }
+    }
+
+    Kona::Point intersectPointB;
+    int intersectPointNumB = circle2.intersectsVector2D(moveLine, &intersectPoint1, &intersectPoint2);
+    if (intersectPointNumB == 1) {
+        intersectPointB = intersectPoint1;
+    } else if (intersectPointNumB == 2) {
+        if (moveLine.distanceToPoint(intersectPoint1) < moveLine.distanceToPoint(intersectPoint2)) {
+            intersectPointB = intersectPoint1;
+        } else {
+            intersectPointB = intersectPoint2;
+        }
+    }
+
+    Kona::Point intersectPoint;
+    if (intersectPointNumA != 0 && intersectPointNumB != 0) {
+        if (moveLine.distanceToPoint(intersectPointA) < moveLine.distanceToPoint(intersectPointB)) {
+            intersectPoint = intersectPointA;
+        } else {
+            intersectPoint = intersectPointB;
+        }
+    } else if (intersectPointNumA != 0) {
+        intersectPoint = intersectPointA;
+    } else if (intersectPointNumB != 0) {
+        intersectPoint = intersectPointB;
+    } else {
+        return false;
+    }
+
+    *out_distance = Kona::Vector2D(moveLine.getStartPosition(), intersectPoint);
+
+    Kona::Vector2D blockSideDowner = in_block->getVector2DOfBlockSide(Block::SIDE::DOWNER);
+    Kona::Vector2D blockSideUpper = in_block->getVector2DOfBlockSide(Block::SIDE::UPPER);
+    if (blockSideDowner.getStartPosition() == intersectPoint) {
+        *out_whichCorner = Block::SIDE::CORNER_LEFTER_DOWNER; 
+    } else if (blockSideDowner.getTerminalPosition() == intersectPoint) {
+        *out_whichCorner = Block::SIDE::CORNER_RIGHTER_DOWNER; 
+    } else if (blockSideUpper.getStartPosition() == intersectPoint) {
+        *out_whichCorner = Block::SIDE::CORNER_LEFTER_UPPER; 
+    } else if (blockSideUpper.getTerminalPosition() == intersectPoint) {
+        *out_whichCorner = Block::SIDE::CORNER_RIGHTER_UPPER; 
+    } else {
+        std::cout << "[" << __func__ << "][" << __LINE__ << "] should never reach here!" << std::endl;
+    }
+
+
+    return true;
+}
 
 static bool
 doCollideVector2DAndBlock(Ball* in_ball, Block* in_block, Block::SIDE in_blockSideToCheck,
                           Kona::Vector2D* out_distance) {
     Kona::Vector2D in_v2d = in_ball->getVector2D();
-    int in_ballRadius = in_ball->getRadius();
+    int ballRadius = in_ball->getRadius();
     Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
     
-    float distance = blockSide.distanceToPoint(in_v2d.getTerminalPosition());
-    printf ("distance = %d\n", (int) distance);
-    sleep(1);
-    if (blockSide.distanceToPoint(in_v2d.getTerminalPosition()) <= in_ballRadius) {
-        *out_distance = in_ball->getVector2D();
-        out_distance->setLength(distance);
-        return true;
+    Kona::Point startPosition = blockSide.getStartPosition();
+    switch (in_blockSideToCheck) {
+        case Block::UPPER:
+            blockSide.setStartPosition(Kona::Point(startPosition.x,
+                                                   startPosition.y + ballRadius));
+            break;
+        case Block::DOWNER:
+            blockSide.setStartPosition(Kona::Point(startPosition.x,
+                                                   startPosition.y - ballRadius));
+            break;
+        case Block::RIGHTER:
+            blockSide.setStartPosition(Kona::Point(startPosition.x + ballRadius,
+                                                   startPosition.y));
+            break;
+        case Block::LEFTER:
+            blockSide.setStartPosition(Kona::Point(startPosition.x - ballRadius,
+                                                   startPosition.y));
+            break;
+        case Block::UNKNOWN:
+        default:
+            return false;
     }
 
+    Kona::Point intersectPoint;
+    if (blockSide.calcIntersectPoint(in_v2d, &intersectPoint)) {
+        *out_distance = Kona::Vector2D(in_v2d.getStartPosition(), intersectPoint);
+        return true;
+    }
+    sleep(1);
     return false;
+}
+
+static float
+calcReflectAngleByCollideCorner(float in_currentBallAngle, Block::SIDE in_blockCorner) {
+    Kona::Vector v(1, in_currentBallAngle);
+
+    switch (in_blockCorner) {
+        case Block::SIDE::CORNER_LEFTER_DOWNER:
+            v += Kona::Vector(1, 180 + 45);
+            break;
+        case Block::SIDE::CORNER_LEFTER_UPPER:
+            v += Kona::Vector(1, 90 + 45);
+            break;
+        case Block::SIDE::CORNER_RIGHTER_DOWNER:
+            v += Kona::Vector(1, 270 + 45);
+            break;
+        case Block::SIDE::CORNER_RIGHTER_UPPER:
+            v += Kona::Vector(1, 0 + 45);
+            break;
+        default:
+            std::cout << "[" << __func__ << "][" << __LINE__ << "] should never reach here!" << std::endl;
+            return 0;
+    }
+
+    return v.getAngle();
 }
 
 #define rad2deg(a) ((a) / 180.0 * M_PI)
@@ -135,11 +257,11 @@ ModelManager::moveBall(float delta) {
             }
         }
 
-        // TODO: implement default constructor
-        Kona::Vector2D distance(Kona::Vector(0, 0), Kona::Point(0, 0));
-        Kona::Vector2D minDistance(Kona::Vector(0, 0), Kona::Point(0, 0));
+        Kona::Vector2D distance;
+        Kona::Vector2D minDistance;
         Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
         Block::SIDE blockSideActuallyUse = Block::SIDE::UNKNOWN;;
+        Block::SIDE whichCorner = Block::SIDE::UNKNOWN;
         float minLength = FLT_MAX;
         int blockIndex = -1;
 
@@ -169,6 +291,17 @@ ModelManager::moveBall(float delta) {
                 }
             }
 
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlockCorner(ball, blocks.at(i), blockSideToCheck, &distance, &whichCorner)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = whichCorner;
+                        blockIndex = i;
+                    }
+                }
+            }
+
             Block::SIDE blockSideToCheck = Block::SIDE::UNKNOWN;
 
             if (ballDir == E_UP       ||
@@ -191,6 +324,18 @@ ModelManager::moveBall(float delta) {
                     }
                 }
             }
+
+            if (blockSideToCheck != Block::SIDE::UNKNOWN) {
+                if (doCollideVector2DAndBlockCorner(ball, blocks.at(i), blockSideToCheck, &distance, &whichCorner)) {
+                    if (distance.getLength() < minLength) {
+                        minLength = distance.getLength();
+                        minDistance = distance;
+                        blockSideActuallyUse = whichCorner;
+                        blockIndex = i;
+                    }
+                }
+            }
+
         }
 
         if (minLength != FLT_MAX) {
@@ -218,6 +363,17 @@ ModelManager::moveBall(float delta) {
                 BALL_REFLECT_Y();
                 onCollisionBallAndBlock(blockIndex, true);
                 continue;
+            } else if (blockSideActuallyUse == Block::SIDE::CORNER_LEFTER_DOWNER  ||
+                       blockSideActuallyUse == Block::SIDE::CORNER_LEFTER_UPPER   ||
+                       blockSideActuallyUse == Block::SIDE::CORNER_RIGHTER_DOWNER ||
+                       blockSideActuallyUse == Block::SIDE::CORNER_RIGHTER_UPPER) {
+                float newAngle = calcReflectAngleByCollideCorner(ball->getVector2D().getAngle(), blockSideActuallyUse);
+                float newSpeed = tempBall.getSpeed() - minDistance.getLength();
+                tempBall.setPosition(minDistance.getTerminalPosition().x, 
+                                     minDistance.getTerminalPosition().y);
+                tempBall.setVector(Kona::Vector(newSpeed, newAngle));
+                ball->setVector(Kona::Vector(ball->getSpeed(), newAngle));
+                onCollisionBallAndBlock(blockIndex, true);
             }
         }
 
@@ -376,7 +532,7 @@ static int
 distanceOfBallFromBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 
     Kona::Point ball_p (in_ball.getPosition().x - (in_bar.getPosition().x - in_bar.getWidth() / 2) + in_ball.getRadius(),
-                         in_ball.getPosition().y - in_bar.getPosition().y);
+                        in_ball.getPosition().y - in_bar.getPosition().y);
     Kona::Vector bar_v (Kona::Point (in_bar.getWidth(), in_currentBarAngle));
 
     return bar_v.distance (ball_p);
@@ -417,9 +573,12 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         BALL_REFLECT_X();
     } else {
         float ballCross = calculateCrossOfBallAndBar (*ball, *bar, in_currentBarAngle);
-        //ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+#if 0
+        ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+#else /* for testing */ 
         ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
         ball->setPosition(ball->getPosition().x + 1, ball->getPosition().y);
+#endif
     }
 }
 

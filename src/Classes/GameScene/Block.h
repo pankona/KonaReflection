@@ -31,6 +31,10 @@ public:
         DOWNER,
         RIGHTER,
         LEFTER,
+        CORNER_RIGHTER_DOWNER,
+        CORNER_RIGHTER_UPPER,
+        CORNER_LEFTER_DOWNER,
+        CORNER_LEFTER_UPPER,
         UNKNOWN
     };
 

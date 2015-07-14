@@ -80,6 +80,26 @@ enum EIGHT_DIRECTION {
     E_LEFT_DOWN,
     E_UNKNOWN
 };
+
+static Block::SIDE
+calcWhichCornerByCircle(Block in_block, Kona::Circle in_circle) {
+
+    Kona::Vector2D blockUpperLine = in_block.getVector2DOfBlockSide(Block::SIDE::UPPER);
+    Kona::Vector2D blockBottomLine = in_block.getVector2DOfBlockSide(Block::SIDE::DOWNER);
+
+    if (blockUpperLine.getStartPosition() == in_circle.getPosition()) {
+        return Block::SIDE::CORNER_LEFTER_UPPER;
+    } else if (blockUpperLine.getTerminalPosition() == in_circle.getPosition()) {
+        return Block::SIDE::CORNER_RIGHTER_UPPER;
+    } else if (blockBottomLine.getStartPosition() == in_circle.getPosition()) {
+        return Block::SIDE::CORNER_LEFTER_DOWNER;
+    } else if (blockBottomLine.getTerminalPosition() == in_circle.getPosition()) {
+        return Block::SIDE::CORNER_RIGHTER_DOWNER;
+    }
+
+    return Block::SIDE::UNKNOWN;
+}
+
 static bool
 doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_blockSideToCheck,
                                 Kona::Vector2D* out_distance, Block::SIDE* out_whichCorner) {
@@ -92,7 +112,6 @@ doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_b
     Kona::Vector2D blockSide = in_block->getVector2DOfBlockSide(in_blockSideToCheck);
     circle1 = Kona::Circle(blockSide.getStartPosition(), radius);
     circle2 = Kona::Circle(blockSide.getTerminalPosition(), radius);
-
     
     Kona::Point intersectPoint1;
     Kona::Point intersectPoint2;
@@ -125,34 +144,22 @@ doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_b
     if (intersectPointNumA != 0 && intersectPointNumB != 0) {
         if (moveLine.distanceToPoint(intersectPointA) < moveLine.distanceToPoint(intersectPointB)) {
             intersectPoint = intersectPointA;
+            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
         } else {
             intersectPoint = intersectPointB;
+            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
         }
     } else if (intersectPointNumA != 0) {
         intersectPoint = intersectPointA;
+            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
     } else if (intersectPointNumB != 0) {
         intersectPoint = intersectPointB;
+            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
     } else {
         return false;
     }
 
     *out_distance = Kona::Vector2D(moveLine.getStartPosition(), intersectPoint);
-
-    Kona::Vector2D blockSideDowner = in_block->getVector2DOfBlockSide(Block::SIDE::DOWNER);
-    Kona::Vector2D blockSideUpper = in_block->getVector2DOfBlockSide(Block::SIDE::UPPER);
-    if (blockSideDowner.getStartPosition() == intersectPoint) {
-        *out_whichCorner = Block::SIDE::CORNER_LEFTER_DOWNER; 
-    } else if (blockSideDowner.getTerminalPosition() == intersectPoint) {
-        *out_whichCorner = Block::SIDE::CORNER_RIGHTER_DOWNER; 
-    } else if (blockSideUpper.getStartPosition() == intersectPoint) {
-        *out_whichCorner = Block::SIDE::CORNER_LEFTER_UPPER; 
-    } else if (blockSideUpper.getTerminalPosition() == intersectPoint) {
-        *out_whichCorner = Block::SIDE::CORNER_RIGHTER_UPPER; 
-    } else {
-        std::cout << "[" << __func__ << "][" << __LINE__ << "] should never reach here!" << std::endl;
-    }
-
-
     return true;
 }
 
@@ -191,26 +198,26 @@ doCollideVector2DAndBlock(Ball* in_ball, Block* in_block, Block::SIDE in_blockSi
         *out_distance = Kona::Vector2D(in_v2d.getStartPosition(), intersectPoint);
         return true;
     }
-    sleep(1);
     return false;
 }
 
 static float
 calcReflectAngleByCollideCorner(float in_currentBallAngle, Block::SIDE in_blockCorner) {
-    Kona::Vector v(1, in_currentBallAngle);
+    int unitLength = 1;
+    Kona::Vector v(unitLength, in_currentBallAngle);
 
     switch (in_blockCorner) {
         case Block::SIDE::CORNER_LEFTER_DOWNER:
-            v += Kona::Vector(1, 180 + 45);
+            v += Kona::Vector(std::sqrt(2), 180 + 45);
             break;
         case Block::SIDE::CORNER_LEFTER_UPPER:
-            v += Kona::Vector(1, 90 + 45);
+            v += Kona::Vector(std::sqrt(2), 90 + 45);
             break;
         case Block::SIDE::CORNER_RIGHTER_DOWNER:
-            v += Kona::Vector(1, 270 + 45);
+            v += Kona::Vector(std::sqrt(2), 270 + 45);
             break;
         case Block::SIDE::CORNER_RIGHTER_UPPER:
-            v += Kona::Vector(1, 0 + 45);
+            v += Kona::Vector(std::sqrt(2), 0 + 45);
             break;
         default:
             std::cout << "[" << __func__ << "][" << __LINE__ << "] should never reach here!" << std::endl;
@@ -374,6 +381,7 @@ ModelManager::moveBall(float delta) {
                 tempBall.setVector(Kona::Vector(newSpeed, newAngle));
                 ball->setVector(Kona::Vector(ball->getSpeed(), newAngle));
                 onCollisionBallAndBlock(blockIndex, true);
+                continue;
             }
         }
 
@@ -577,7 +585,7 @@ ModelManager::calculateBallReflection(int in_currentBarAngle) {
         ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
 #else /* for testing */ 
         ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
-        ball->setPosition(ball->getPosition().x + 1, ball->getPosition().y);
+        ball->setPosition(ball->getPosition().x - 1, ball->getPosition().y);
 #endif
     }
 }

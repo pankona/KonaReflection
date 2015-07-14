@@ -48,7 +48,7 @@ public:
     void onTouchBegan(int, int);
     void onTouchMoved(int, int);
     void onTouchEnded();
-    void onCollisionBallAndBar(Ball);
+    void onCollisionBallAndBar(Ball&);
     void onCollisionBallAndBlock(int, bool);
     bool doCollideBallAndBar(Ball);
 

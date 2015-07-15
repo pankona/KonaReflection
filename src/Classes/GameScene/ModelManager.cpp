@@ -8,6 +8,8 @@
 #include <float.h>
 #include <unistd.h>
 
+//#define TEST
+
 // private methods
 
 #define BALL_REFLECT_X() \
@@ -151,10 +153,10 @@ doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_b
         }
     } else if (intersectPointNumA != 0) {
         intersectPoint = intersectPointA;
-            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
+        *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
     } else if (intersectPointNumB != 0) {
         intersectPoint = intersectPointB;
-            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
+        *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
     } else {
         return false;
     }
@@ -255,6 +257,8 @@ ModelManager::moveBall(float delta) {
     int width = field->getWidth();
     int height = field->getHeight();
     int radius = ball->getRadius();
+
+    static int reflectCount = 0;
 
     // temp ball initialization
     Ball tempBall;
@@ -362,7 +366,6 @@ ModelManager::moveBall(float delta) {
                     }
                 }
             }
-
         }
 
         if (minLength != FLT_MAX) {
@@ -605,9 +608,10 @@ calcReflectAngleByCollideBar(Ball in_ball, Bar in_bar, float in_currentBarAngle)
 void
 ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) {
 
+    static int reflectCount = 0;
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
-#if 1
+#ifndef TEST
         ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
 #else /* for testing */
         ball->setPosition(field->getWidth() / 2, ball->getPosition().y);
@@ -619,14 +623,16 @@ ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) 
     if (doBallCollideOnSideOfBar(inout_ball, *bar, in_currentBarAngle)) {
         BALL_REFLECT_X();
     } else {
-#if 1
         float ballCross = calculateCrossOfBallAndBar (*ball, *bar, in_currentBarAngle);
+#ifndef TEST
         float newAngle = calcReflectAngleByCollideBar(*ball, *bar, in_currentBarAngle);
 
         ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
 #else /* for testing */ 
-        ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
-        ball->setPosition(ball->getPosition().x - 1, ball->getPosition().y);
+        //ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
+        ball->setSpeed(10);
+        ball->setDirection(45);
+        inout_ball.setPosition(field->getWidth() / 2, ball->getPosition().y);
 #endif
     }
 }
@@ -686,7 +692,7 @@ ModelManager::onTouchEnded() {
 }
 
 void
-ModelManager::onCollisionBallAndBar(Ball in_ball) {
+ModelManager::onCollisionBallAndBar(Ball& in_ball) {
     Position ballPosition = in_ball.getPosition();
     Position barPosition = bar->getPosition();
 
@@ -711,7 +717,12 @@ ModelManager::onCollisionBallAndBar(Ball in_ball) {
 void
 ModelManager::initializeBar() {
     // init bar position
+#ifndef TEST
     bar->setPosition(field->getWidth() / 2, field->getHeight() / 4);
+#else // for testing
+    bar->setPosition(field->getWidth() / 2, field->getHeight() / 4);
+    bar->setWidth(field->getWidth());
+#endif
 }
 
 Position
@@ -758,7 +769,7 @@ ModelManager::setFieldSize(int in_width, int in_height) {
 
 void
 ModelManager::initializeBlocks() {
-#if 1
+#ifndef TEST
     // ToDo: should refer configuration for blocks initialization.
     int numOfBlocksPerLine = 6;
     int lineNumOfBlocks = 6;
@@ -779,7 +790,7 @@ ModelManager::initializeBlocks() {
         for (int i = 0; i < numOfBlocksPerLine; i++) {
             Block* block = new Block();
             block->setSize(blockWidth, blockHeight);
-#if 1
+#ifndef TEST
             block->setPosition((i * blockWidth) + (blockWidth / 2 ),
                                fieldHeight - (blockHeight / 2) - (blockHeight * j) - 50);
             block->setLife(1);

@@ -153,10 +153,10 @@ doCollideVector2DAndBlockCorner(Ball* in_ball, Block* in_block, Block::SIDE in_b
         }
     } else if (intersectPointNumA != 0) {
         intersectPoint = intersectPointA;
-            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
+        *out_whichCorner = calcWhichCornerByCircle(*in_block, circle1);
     } else if (intersectPointNumB != 0) {
         intersectPoint = intersectPointB;
-            *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
+        *out_whichCorner = calcWhichCornerByCircle(*in_block, circle2);
     } else {
         return false;
     }
@@ -366,7 +366,6 @@ ModelManager::moveBall(float delta) {
                     }
                 }
             }
-
         }
 
         if (minLength != FLT_MAX) {
@@ -412,10 +411,6 @@ ModelManager::moveBall(float delta) {
         if (doCollideBallAndBar(tempBall) ||
             hasCollisionWhileBarSwinging(*bar, tempBall, isBarSwinging)) {
             onCollisionBallAndBar(tempBall);
-            current_position.x = field->getWidth() / 2 - 213;
-            current_position.y = 240;
-            std::cout << current_position.x << ", " << current_position.y << std::endl;
-
         }
 
         // check collision to window edge

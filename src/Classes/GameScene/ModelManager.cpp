@@ -258,8 +258,6 @@ ModelManager::moveBall(float delta) {
     int height = field->getHeight();
     int radius = ball->getRadius();
 
-    static int reflectCount = 0;
-
     // temp ball initialization
     Ball tempBall;
     tempBall.setPosition(ball->getPosition().x, ball->getPosition().y);
@@ -612,7 +610,6 @@ strechBarVector(Kona::Vector2D* inout_barVector2d, int in_length) {
 void
 ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) {
 
-    static int reflectCount = 0;
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
 #ifndef TEST

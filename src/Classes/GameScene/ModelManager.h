@@ -21,7 +21,6 @@ private:
     std::vector<ModelManagerEventListener*> listeners;
     Position verticalDrawStart;
     Position verticalDrawEnd;
-    bool isBarSwinging;
     int barSwingElapsedFrame;
     int barFollowthroughElapsedFrame;
     int currentSwingState;

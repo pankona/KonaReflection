@@ -19,6 +19,7 @@ private:
         CENTER
     };
     Pivot currentPivot;
+    bool is_swinging;
 
 public:
     Bar();
@@ -37,6 +38,9 @@ public:
     int getAngle();
     void setPivot(Pivot);
     Pivot getPivot();
+    bool isSwinging();
+    void startSwinging();
+    void endSwinging();
 };
 
 #endif // __BAR_H__

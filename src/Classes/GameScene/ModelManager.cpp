@@ -43,7 +43,7 @@ ModelManager::isTouchOnRightSideOfBar(int in_x) {
 void
 ModelManager::moveBar(float delta) {
 
-    if (isBarSwinging) {
+    if (bar->isSwinging()) {
         progressBarSwinging();
     }
 
@@ -415,7 +415,7 @@ ModelManager::moveBall(float delta) {
         }
 
         if (doCollideBallAndBar(tempBall) ||
-            hasCollisionWhileBarSwinging(*bar, tempBall, isBarSwinging)) {
+            hasCollisionWhileBarSwinging(*bar, tempBall, bar->isSwinging())) {
             onCollisionBallAndBar(tempBall);
         }
 
@@ -498,7 +498,7 @@ ModelManager::shouldSwingBar(int in_angle) {
 
 void
 ModelManager::startSwinging() {
-    isBarSwinging = true;
+    bar->startSwinging();
     barSwingElapsedFrame = 0;
     currentSwingState = 0;
     barFollowthroughElapsedFrame = 0;
@@ -507,7 +507,7 @@ ModelManager::startSwinging() {
 
 void
 ModelManager::endSwinging() {
-    isBarSwinging = false;
+    bar->endSwinging();
     isAlreadyHitBySwing = false;
     barSwingElapsedFrame = 0;
     currentSwingState = 0;
@@ -657,7 +657,6 @@ ModelManager::initialize() {
     int initialLife = 3;
     player = new Player(initialLife);
 
-    isBarSwinging = false;
     currentSwingState = 0;
     isAlreadyHitBySwing = false;
 }
@@ -702,7 +701,7 @@ ModelManager::onCollisionBallAndBar(Ball& in_ball) {
     Position ballPosition = in_ball.getPosition();
     Position barPosition = bar->getPosition();
 
-    if (isBarSwinging) {
+    if (bar->isSwinging()) {
         if (isAlreadyHitBySwing) {
             return;
         }
@@ -716,7 +715,7 @@ ModelManager::onCollisionBallAndBar(Ball& in_ball) {
         return;
     }
 
-    int currentBarAngle = getVerticalDrawDelta();
+    int currentBarAngle = bar->getAngle();
     calculateBallReflection(currentBarAngle, in_ball);
 }
 
@@ -838,7 +837,7 @@ ModelManager::getBlockPosition(int index) {
 bool
 ModelManager::doCollideBallAndBar(Ball in_ball) {
 
-    int currentBarAngle = getVerticalDrawDelta();
+    int currentBarAngle = bar->getAngle();
     float ballCross = calculateCrossOfBallAndBar (in_ball, *bar, currentBarAngle);
     if (ballCross > 0) {
         return false;
@@ -909,17 +908,18 @@ ModelManager::isPlayerStillAlive() {
 
 void
 ModelManager::startVerticalDraw(int in_y) {
-    if (isBarSwinging) {
+    if (bar->isSwinging()) {
         return;
     }
 
     verticalDrawStart.y = in_y;
     verticalDrawEnd.y = in_y;
+    bar->setAngle(getVerticalDrawDelta());
 }
 
 void
 ModelManager::updateVerticalDraw(int in_y) {
-    if (isBarSwinging) {
+    if (bar->isSwinging()) {
         return;
     }
 
@@ -930,6 +930,7 @@ ModelManager::updateVerticalDraw(int in_y) {
     if (verticalDrawEnd.y > verticalDrawStart.y) {
         verticalDrawStart.y = verticalDrawEnd.y;
     }
+    bar->setAngle(getVerticalDrawDelta());
 }
 
 static int
@@ -939,7 +940,7 @@ calculateVerticalDrawDelta(int start, int end) {
 
 void
 ModelManager::endVerticalDraw() {
-    if (isBarSwinging) {
+    if (bar->isSwinging()) {
         return;
     }
 
@@ -950,6 +951,7 @@ ModelManager::endVerticalDraw() {
 
     verticalDrawStart.y = 0;
     verticalDrawEnd.y = 0;
+    bar->setAngle(getVerticalDrawDelta());
 }
 
 int
@@ -967,5 +969,5 @@ ModelManager::getVerticalDrawDelta() {
 
 bool
 ModelManager::barSwinging() {
-    return isBarSwinging;
+    return bar->isSwinging();
 }

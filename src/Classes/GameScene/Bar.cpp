@@ -11,6 +11,7 @@ Bar::Bar() {
     speed = 10;
     angle = 0;
     currentPivot = LEFT;
+    is_swinging = false;
 }
 
 void
@@ -89,5 +90,20 @@ Bar::setPivot(Pivot in_pivot) {
 Bar::Pivot
 Bar::getPivot() {
     return currentPivot;
+}
+
+bool
+Bar::isSwinging() {
+    return is_swinging;
+}
+
+void
+Bar::startSwinging() {
+    is_swinging = true;
+}
+
+void
+Bar::endSwinging() {
+    is_swinging = false;
 }
 

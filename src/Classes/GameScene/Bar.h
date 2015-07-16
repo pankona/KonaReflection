@@ -12,6 +12,13 @@ private:
     int height;
     int direction;
     int speed;
+    int angle;
+    enum Pivot {
+        LEFT,
+        RIGHT,
+        CENTER
+    };
+    Pivot currentPivot;
 
 public:
     Bar();
@@ -26,6 +33,10 @@ public:
     int getSpeed();
     void setDirection(BarDirection);
     BarDirection getDirection();
+    void setAngle(int);
+    int getAngle();
+    void setPivot(Pivot);
+    Pivot getPivot();
 };
 
 #endif // __BAR_H__

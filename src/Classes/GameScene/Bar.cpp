@@ -9,6 +9,8 @@ Bar::Bar() {
     height = 10;
     direction = BarDirection::NONE;
     speed = 10;
+    angle = 0;
+    currentPivot = LEFT;
 }
 
 void
@@ -67,3 +69,25 @@ BarDirection
 Bar::getDirection() {
     return (BarDirection) direction;
 }
+
+
+void
+Bar::setAngle(int in_angle) {
+    angle = in_angle;
+}
+
+int
+Bar::getAngle() {
+    return angle;
+}
+
+void
+Bar::setPivot(Pivot in_pivot) {
+    currentPivot = in_pivot;
+}
+
+Bar::Pivot
+Bar::getPivot() {
+    return currentPivot;
+}
+

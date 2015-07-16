@@ -579,20 +579,27 @@ distanceOfBallFromBar (Ball& in_ball, Bar& in_bar, int in_currentBarAngle) {
 }
 
 static float
-calculateCrossOfBallAndBar(Ball& in_ball, Bar &in_bar, int in_currentBarAngle) {
+calculateCrossOfBallAndBar(Ball& in_ball, Bar &in_bar) {
     Kona::Vector ball_v = in_ball.getVector();
-    Kona::Vector bar_v(in_bar.getWidth(), in_currentBarAngle);
+    Kona::Vector bar_v(in_bar.getWidth(), in_bar.getAngle());
     return bar_v.cross (ball_v) / bar_v.getLength();
 }
 
 static float
-calcReflectAngleByCollideBar(Ball in_ball, Bar in_bar, float in_currentBarAngle) {
+calcReflectAngleByBarState(Ball in_ball, Bar in_bar) {
     int unitLength = 1;
     float currentBallAngle = in_ball.getVector2D().getAngle();
-    float ballCross = calculateCrossOfBallAndBar (in_ball, in_bar, in_currentBarAngle);
+    float ballCross = calculateCrossOfBallAndBar (in_ball, in_bar);
     Kona::Vector v(unitLength, currentBallAngle);
 
-    v += Kona::Vector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+    int currentBarAngle = in_bar.getAngle();
+    if (ballCross < 0) {
+        v += Kona::Vector(Kona::Vector(std::abs(ballCross * 2), currentBarAngle + 90));
+    } else if (ballCross > 0) {
+        v += Kona::Vector(Kona::Vector(std::abs(ballCross * 2), currentBarAngle - 90));
+    } else {
+        v += Kona::Vector(Kona::Vector(unitLength * 2, currentBallAngle + 180));
+    }
     return v.getAngle();
 }
 
@@ -613,7 +620,7 @@ ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) 
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
 #ifndef TEST
-        ball->addVector(Kona::Vector(hitSpeed, in_currentBarAngle + 90));
+        ball->addVector(Kona::Vector(hitSpeed, bar->getAngle() + 90));
 #else /* for testing */
         ball->setPosition(field->getWidth() / 2, ball->getPosition().y);
         ball->addVector(Kona::Vector(hitSpeed, 90));
@@ -627,12 +634,12 @@ ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) 
     Kona::Vector2D stretchedVector2D = strechBarVector(&barVector2d, inout_ball.getRadius());
     inout_ball.getVector2D().calcIntersectPoint(stretchedVector2D, &intersectPoint);
     Kona::Vector2D distanceVector(inout_ball.getVector2D().getStartPosition(), intersectPoint);
-    float newAngle = calcReflectAngleByCollideBar(*ball, *bar, in_currentBarAngle);
+    float newAngle = calcReflectAngleByBarState(*ball, *bar);
     float newSpeed = inout_ball.getSpeed() - distanceVector.getLength();
     inout_ball.setPosition(intersectPoint.x, intersectPoint.y);
     inout_ball.setSpeed(newSpeed);
     inout_ball.setDirection(newAngle);
-    float ballCross = calculateCrossOfBallAndBar (*ball, *bar, in_currentBarAngle);
+    float ballCross = calculateCrossOfBallAndBar (*ball, *bar);
     ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
 #else /* for testing */ 
     //ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
@@ -837,7 +844,7 @@ bool
 ModelManager::doCollideBallAndBar(Ball in_ball) {
 
     int currentBarAngle = bar->getAngle();
-    float ballCross = calculateCrossOfBallAndBar (in_ball, *bar, currentBarAngle);
+    float ballCross = calculateCrossOfBallAndBar (in_ball, *bar);
     if (ballCross > 0) {
         return false;
     }

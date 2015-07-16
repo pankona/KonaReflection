@@ -3,6 +3,7 @@
 
 #include "Position.h"
 #include "BarDirection.h"
+#include <KonaVector2D.h>
 
 class Bar {
 
@@ -41,6 +42,19 @@ public:
     bool isSwinging();
     void startSwinging();
     void endSwinging();
+    enum SIDE {
+        UPPER,
+        DOWNER,
+        RIGHTER,
+        LEFTER,
+        CORNER_RIGHTER_DOWNER,
+        CORNER_RIGHTER_UPPER,
+        CORNER_LEFTER_DOWNER,
+        CORNER_LEFTER_UPPER,
+        UNKNOWN
+    };
+    Kona::Vector2D getVector2DOfBarSide(SIDE);
+    Kona::Vector2D getVector2DOfBar();
 };
 
 #endif // __BAR_H__

@@ -286,6 +286,12 @@ ModelManager::moveBall(float delta) {
             } else {
                 ballDir = E_DOWN;
             }
+        } else if (ball->isTowardRight()) {
+            ballDir = E_RIGHT;
+        } else if (ball->isTowardLeft()) {
+            ballDir = E_LEFT;
+        } else {
+            ballDir = E_UNKNOWN;
         }
 
         Kona::Vector2D distance;

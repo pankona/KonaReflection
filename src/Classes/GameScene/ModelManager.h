@@ -38,7 +38,7 @@ private:
     bool isTimeToFollowThrough(int);
     static const int swingBarAngleTable[];
     bool doCollisionWhileBarSwinging(Position, Position, int*);
-    void calculateBallReflection(int, Ball&);
+    void calculateBallReflection(Ball&);
 
 public:
     ModelManager();

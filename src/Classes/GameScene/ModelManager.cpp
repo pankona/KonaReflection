@@ -542,6 +542,7 @@ ModelManager::progressBarSwinging() {
             }
         } else {
             barAngle = swingBarAngleTable[currentSwingState++];
+            bar->setAngle(barAngle);
             eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWINGING, &barAngle);
         }
 
@@ -615,7 +616,7 @@ strechBarVector(Kona::Vector2D* inout_barVector2d, int in_length) {
 }
 
 void
-ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) {
+ModelManager::calculateBallReflection(Ball& inout_ball) {
 
     if (ball->getSpeed() == 0) {
         int hitSpeed = 10;
@@ -640,7 +641,7 @@ ModelManager::calculateBallReflection(int in_currentBarAngle, Ball& inout_ball) 
     inout_ball.setSpeed(newSpeed);
     inout_ball.setDirection(newAngle);
     float ballCross = calculateCrossOfBallAndBar (*ball, *bar);
-    ball->addVector(Kona::Vector(-1 * ballCross * 2, in_currentBarAngle + 90));
+    ball->addVector(Kona::Vector(-1 * ballCross * 2, bar->getAngle() + 90));
 #else /* for testing */ 
     //ball->addVector(Kona::Vector(-1 * ballCross * 2, 90));
     ball->setSpeed(10);
@@ -715,14 +716,14 @@ ModelManager::onCollisionBallAndBar(Ball& in_ball) {
         int hitAngle;
         if (doCollisionWhileBarSwinging(ballPosition, barPosition, &hitAngle)) {
             isAlreadyHitBySwing = true;
-            calculateBallReflection(hitAngle, in_ball);
+            bar->setAngle(hitAngle);
+            calculateBallReflection(in_ball);
             eventNotify(ModelManagerEventListener::ModelManagerEvent::BAR_SWING_AT_HIT, &hitAngle);
         }
         return;
     }
 
-    int currentBarAngle = bar->getAngle();
-    calculateBallReflection(currentBarAngle, in_ball);
+    calculateBallReflection(in_ball);
 }
 
 void

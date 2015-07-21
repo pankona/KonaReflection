@@ -728,7 +728,7 @@ ModelManager::calcCollisionBallAndBar(Ball& in_ball) {
 void
 ModelManager::initializeBar() {
     // init bar position
-#ifndef TEST
+#if 1
     bar->setPosition(field->getWidth() / 2, field->getHeight() / 4);
 #else // for testing
     bar->setPosition(field->getWidth() / 2, field->getHeight() / 4);
@@ -853,6 +853,7 @@ ModelManager::doCollideBallAndBar(Ball in_ball) {
         return false;
     }
 
+    static int count = 0;
     Kona::Point intersectPoint;
     Kona::Vector2D stretchedBar = bar->getVector2DOfBar().getStrechedVector(in_ball.getRadius());
     if (in_ball.getVector2D().calcIntersectPoint(stretchedBar, &intersectPoint)) {

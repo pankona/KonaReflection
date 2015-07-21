@@ -106,6 +106,7 @@ Bar::startSwinging() {
 void
 Bar::endSwinging() {
     is_swinging = false;
+    angle = 0;
 }
 
 Kona::Vector2D

@@ -37,8 +37,9 @@ private:
     void progressBarSwinging();
     bool isTimeToFollowThrough(int);
     static const int swingBarAngleTable[];
-    bool doCollisionWhileBarSwinging(Position, Position, int*);
-    void calculateBallReflection(Ball&);
+    bool doCollideWhileBarSwinging(Position, Position, int*);
+    void calcBallReflection(Ball&);
+    void calcBallReflectionBySwing(Ball&);
 
 public:
     ModelManager();
@@ -47,7 +48,7 @@ public:
     void onTouchBegan(int, int);
     void onTouchMoved(int, int);
     void onTouchEnded();
-    void onCollisionBallAndBar(Ball&);
+    bool calcCollisionBallAndBar(Ball&);
     void onCollisionBallAndBlock(int, bool);
     bool doCollideBallAndBar(Ball);
 

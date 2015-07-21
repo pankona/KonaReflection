@@ -804,7 +804,7 @@ ModelManager::initializeBlocks() {
 #ifndef TEST
             block->setPosition((i * blockWidth) + (blockWidth / 2 ),
                                fieldHeight - (blockHeight / 2) - (blockHeight * j) - 50);
-            block->setLife(256);
+            block->setLife(1);
 #else // for testing
             block->setPosition(fieldWidth / 2,
                                fieldHeight / 2);

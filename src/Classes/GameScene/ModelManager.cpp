@@ -61,10 +61,15 @@ ModelManager::moveBar(float delta) {
     Position newPosition;
     if (bar->getDirection() == BarDirection::RIGHT) {
         newPosition.x = currentPosition.x + bar->getSpeed();
+        if (bar->getAngle() > -10) {
+            bar->setAngle(bar->getAngle() - 1);
+        }
     } else if (bar->getDirection() == BarDirection::LEFT) {
         newPosition.x = currentPosition.x - bar->getSpeed();
+        if (bar->getAngle() < 10) {
+            bar->setAngle(bar->getAngle() + 1);
+        }
     } else {
-        // should never reach
         newPosition.x = currentPosition.x;
     }
     newPosition.y = currentPosition.y;
@@ -663,6 +668,8 @@ ModelManager::initialize() {
 
     currentSwingState = 0;
     isAlreadyHitBySwing = false;
+
+    isDrawing = false;
 }
 
 void
@@ -749,6 +756,11 @@ ModelManager::getBarWidth() {
 int
 ModelManager::getBarHeight() {
     return bar->getHeight();
+}
+
+int
+ModelManager::getBarAngle() {
+    return bar->getAngle();
 }
 
 void
@@ -984,3 +996,53 @@ bool
 ModelManager::barSwinging() {
     return bar->isSwinging();
 }
+
+void
+ModelManager::startDraw(Position& in_position) {
+    Kona::Point touched_point(in_position.x, in_position.y);
+
+    auto ball_position = ball->getPosition();
+    Kona::Point ball_point(ball_position.x, ball_position.y);
+
+    auto distance = Kona::Vector2D(touched_point, ball_point).getLength();
+    if (distance < 50) {
+        std::cout << "start to draw" << std::endl;
+        // start draw callback
+        initialDrawPoint = touched_point;
+        lastDrawPoint = touched_point;
+        eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_DRAW_START, NULL);
+        isDrawing = true;
+    }
+}
+
+void
+ModelManager::updateDraw(Position& in_position) {
+    if (!isDrawing) {
+        return;
+    }
+
+    Kona::Point touched_point(in_position.x, in_position.y);
+    lastDrawPoint = touched_point;
+}
+
+void
+ModelManager::endDraw() {
+    if (!isDrawing) {
+        return;
+    }
+
+    isDrawing = false;
+
+    Kona::Vector2D drawResult(initialDrawPoint, lastDrawPoint);
+
+    Kona::Vector2D ballVector2D;
+    ballVector2D.setLength(drawResult.getLength());
+    ballVector2D.setAngle(drawResult.getAngle() + 180);
+
+    //ball->setSpeed(ballVector2D.getLength());
+    ball->setSpeed(10);
+    ball->setDirection(ballVector2D.getAngle());
+
+    eventNotify(ModelManagerEventListener::ModelManagerEvent::BALL_DRAW_END, NULL);
+}
+

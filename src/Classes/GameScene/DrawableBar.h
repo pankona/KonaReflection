@@ -27,6 +27,7 @@ public:
 
     void setPivotLeft();
     void setPivotRight();
+    void setPivotCenter();
     void setRotation(int);
 
     int getWidth();

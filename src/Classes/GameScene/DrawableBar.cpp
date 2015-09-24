@@ -55,6 +55,12 @@ DrawableBar::setPivotRight() {
 }
 
 void
+DrawableBar::setPivotCenter() {
+    currentPivot = Pivot::CENTER;
+    sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+}
+
+void
 DrawableBar::setRotation(int in_angle) {
     sprite->setRotation(in_angle);
 }

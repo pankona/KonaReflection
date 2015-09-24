@@ -12,6 +12,8 @@ public:
         BAR_SWINGING,
         BAR_SWING_AT_HIT,
         BAR_SWING_END,
+        BALL_DRAW_START,
+        BALL_DRAW_END
     };
 
    virtual void onModelManagerEvent(ModelManagerEvent, void*) = 0;

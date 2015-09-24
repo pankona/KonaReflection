@@ -6,6 +6,12 @@
 #include <KonaVector2D.h>
 
 class Bar {
+public:
+    enum Pivot {
+        LEFT,
+        RIGHT,
+        CENTER
+    };
 
 private:    
     Position position;
@@ -14,15 +20,11 @@ private:
     int direction;
     int speed;
     int angle;
-    enum Pivot {
-        LEFT,
-        RIGHT,
-        CENTER
-    };
     Pivot currentPivot;
     bool is_swinging;
 
 public:
+
     Bar();
     void setPosition(Position);
     void setPosition(int, int);

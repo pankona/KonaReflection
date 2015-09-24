@@ -25,6 +25,10 @@ private:
     int barFollowthroughElapsedFrame;
     int currentSwingState;
     bool isAlreadyHitBySwing;
+    bool isDrawing;
+
+    Kona::Point initialDrawPoint;
+    Kona::Point lastDrawPoint;
 
     bool allBlocksDestroyed();
     bool isTouchOnRightSideOfBar(int);
@@ -56,6 +60,7 @@ public:
     Position getBarPosition();
     int getBarWidth();
     int getBarHeight();
+    int getBarAngle();
 
     void initializeBall();
     Position getBallPosition();
@@ -86,6 +91,10 @@ public:
     int getVerticalDrawDelta();
 
     bool barSwinging();
+
+    void startDraw(Position& p);
+    void updateDraw(Position& p);
+    void endDraw();
 };
 
 #endif // __MODELMANAGER_H__

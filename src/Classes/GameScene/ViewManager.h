@@ -57,6 +57,7 @@ public:
     void showGameOver(int, int);
 
     void setVerticalDrawDelta(int);
+    void setBarRotation(int);
 
     void setIsBarSwinging(bool);
 };

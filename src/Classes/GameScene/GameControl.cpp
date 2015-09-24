@@ -29,9 +29,7 @@ GameControl::update(float delta) {
     // these should be treated on callback from model manager.
     vm.setBarPosition(mm.getBarPosition());
     vm.setBallPosition(mm.getBallPosition());
-    if (!mm.barSwinging()) {
-        vm.setVerticalDrawDelta(mm.getVerticalDrawDelta());
-    }
+    vm.setBarRotation(mm.getBarAngle());
 }
 
 void
@@ -113,22 +111,14 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
         switch (in_event) {
             case ViewManagerEvent::TOUCH_BEGAN:
                 p = (Position*) arg;
-
-                // let mm remember y position
-                mm.startVerticalDraw(p->y);
-                mm.setBarPositionX(p->x);
+                mm.startDraw(*p);
                 break;
             case ViewManagerEvent::TOUCH_MOVED:
                 p = (Position*) arg;
-
-                // let mm update y position
-                mm.updateVerticalDraw(p->y);
-                mm.setBarPositionX(p->x);
+                mm.updateDraw(*p);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
-                // let mm decide y position
-                // accoding to delta of y, mm fires "swing" event, then start game.
-                mm.endVerticalDraw();
+                mm.endDraw();
                 break;
             default:
                 break;
@@ -142,16 +132,13 @@ GameControl::onViewManagerEvent(ViewManagerEvent in_event, void* arg) {
             case ViewManagerEvent::TOUCH_BEGAN:
                 p = (Position*) arg;
                 mm.onTouchBegan(p->x, p->y);
-                mm.startVerticalDraw(p->y);
                 break;
             case ViewManagerEvent::TOUCH_MOVED:
                 p = (Position*) arg;
                 mm.onTouchMoved(p->x, p->y);
-                mm.updateVerticalDraw(p->y);
                 break;
             case ViewManagerEvent::TOUCH_ENDED:
                 mm.onTouchEnded();
-                mm.endVerticalDraw();
                 break;
             default:
                 break;
@@ -187,6 +174,9 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
     int* barAngle;
 
     switch (in_event) {
+        case ModelManagerEvent::BALL_DRAW_END:
+            gameState = GameState::STARTED;
+            break;
         case ModelManagerEvent::BLOCK_DIED:
             int* blockIndex;
             blockIndex = (int *)arg;
@@ -216,25 +206,6 @@ GameControl::onModelManagerEvent(ModelManagerEvent in_event, void* arg) {
                 delay_time_sec = 1;
                 vm.setTimer(delay_time_sec, (int) ModelManagerEvent::PLAYER_DEAD);
             }
-            break;
-        case ModelManagerEvent::BAR_SWING_START:
-            vm.setIsBarSwinging(true);
-            break;
-        case ModelManagerEvent::BAR_SWINGING:
-            barAngle = (int *)arg;
-            vm.setVerticalDrawDelta(*barAngle);
-            break;
-        case ModelManagerEvent::BAR_SWING_AT_HIT:
-            barAngle = (int *)arg;
-            vm.setVerticalDrawDelta(*barAngle);
-            stopCount = 10;
-            needStop = true;
-            if (gameState == GameState::READY) {
-                gameState = GameState::STARTED;
-            }
-            break;
-        case ModelManagerEvent::BAR_SWING_END:
-            vm.setIsBarSwinging(false);
             break;
         default:
             break;

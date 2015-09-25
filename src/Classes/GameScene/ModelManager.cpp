@@ -61,13 +61,13 @@ ModelManager::moveBar(float delta) {
     Position newPosition;
     if (bar->getDirection() == BarDirection::RIGHT) {
         newPosition.x = currentPosition.x + bar->getSpeed();
-        if (bar->getAngle() > -10) {
-            bar->setAngle(bar->getAngle() - 1);
+        if (bar->getAngle() < 10) {
+            bar->setAngle(bar->getAngle() + 1);
         }
     } else if (bar->getDirection() == BarDirection::LEFT) {
         newPosition.x = currentPosition.x - bar->getSpeed();
-        if (bar->getAngle() < 10) {
-            bar->setAngle(bar->getAngle() + 1);
+        if (bar->getAngle() > -10) {
+            bar->setAngle(bar->getAngle() - 1);
         }
     } else {
         newPosition.x = currentPosition.x;
